@@ -3112,8 +3112,8 @@ textarea::placeholder {
 }
 
 .action-btn {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3125,6 +3125,15 @@ textarea::placeholder {
     transition: all var(--transition-fast);
 }
 
+.action-btn i,
+.action-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 1.75px !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .action-btn:hover {
     background-color: #f1f5f9;
     color: #0f172a;
@@ -3134,6 +3143,10 @@ textarea::placeholder {
 .delete-btn:hover {
     background-color: #fee2e2;
     color: #dc2626;
+}
+
+td.text-center .action-btn + .action-btn {
+    margin-left: 0.35rem;
 }
 
 .btn-stock-opt,

@@ -316,8 +316,8 @@ function renderImportsTable(data = state.imports) {
                 <td class="fw-600">${formatCurrency(imp.amount)}</td>
                 <td><span class="status-pill ${statusBadge}"><span class="dot"></span> ${imp.status}</span></td>
                 <td class="text-center">
-                    <button class="action-btn" onclick="localStorage.setItem('taphoaxanh_last_import_id', '${imp.id}'); window.location.href='update-import.html?id=${imp.id}'" title="Cập nhật">
-                        <i data-lucide="edit-2"></i>
+                    <button class="action-btn" onclick="localStorage.setItem('taphoaxanh_last_import_id', '${imp.id}'); window.location.href='update-import.html?id=${imp.id}'" title="Xem chi tiết">
+                        <i data-lucide="eye"></i>
                     </button>
                     <button class="action-btn delete-btn" onclick="deleteImport('${imp.id}')" title="Xóa">
                         <i data-lucide="trash-2"></i>
@@ -400,20 +400,22 @@ function renderSuppliersTable(data = state.suppliers) {
 
     tbody.innerHTML = data.map(sup => `
         <tr>
-            <td class="fw-700" style="color: #16A34A;">
-                <a href="update-supplier.html?id=${sup.id}" style="color: #16A34A; text-decoration: none; font-weight: 700;">${sup.id}</a>
+            <td class="fw-700" style="color: #059669;">
+                <a href="update-supplier.html?id=${sup.id}" style="color: #059669; text-decoration: none; font-weight: 700;">${sup.id}</a>
             </td>
-            <td class="fw-700 flex-align" style="color: #0F172A;">
-                <i data-lucide="building-2" style="width: 18px; height: 18px; color: #16A34A; margin-right: 0.5rem;"></i>
-                <span>${sup.name}</span>
+            <td class="fw-700" style="color: #0F172A;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; vertical-align: middle;">
+                    <i data-lucide="building-2" style="width: 16px; height: 16px; color: #059669; flex-shrink: 0;"></i>
+                    <span>${sup.name}</span>
+                </div>
             </td>
             <td style="color: #334155; font-weight: 500;">${sup.phone}</td>
             <td class="text-center">
                 <button class="action-btn" onclick="window.location.href='update-supplier.html?id=${sup.id}'" title="Xem chi tiết / Sửa">
-                    <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                    <i data-lucide="eye"></i>
                 </button>
                 <button class="action-btn delete-btn" onclick="deleteSupplier('${sup.id}')" title="Xóa">
-                    <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                    <i data-lucide="trash-2"></i>
                 </button>
             </td>
         </tr>
@@ -480,8 +482,8 @@ function renderProductsTable(data = state.products) {
             <td>${p.unit}</td>
             <td class="${p.stock === 0 ? 'text-danger' : 'fw-600'}">${p.stock}</td>
             <td class="text-center">
-                <button class="action-btn" onclick="window.location.href='product-detail.html?id=${p.id}'" title="Chỉnh sửa thông tin">
-                    <i data-lucide="edit-2"></i>
+                <button class="action-btn" onclick="window.location.href='product-detail.html?id=${p.id}'" title="Xem chi tiết">
+                    <i data-lucide="eye"></i>
                 </button>
                 <button class="action-btn delete-btn" onclick="deleteProduct('${p.id}')" title="Xóa">
                     <i data-lucide="trash-2"></i>
@@ -649,7 +651,7 @@ function renderPricesTable(data = state.prices) {
                 <td>${pr.date}</td>
                 <td><span class="status-pill ${badgeClass}"><span class="dot"></span> ${pr.status}</span></td>
                 <td class="text-center">
-                    <button class="action-btn" onclick="openPriceHistoryModal('${pr.id}')" title="Xem lịch sử giá" style="color: #059669;">
+                    <button class="action-btn" onclick="openPriceHistoryModal('${pr.id}')" title="Xem lịch sử giá">
                         <i data-lucide="eye"></i>
                     </button>
                     <button class="action-btn delete-btn" onclick="deletePrice('${pr.id}')" title="Xóa">
@@ -783,11 +785,11 @@ function renderReturnSlipsTable(data = state.returnSlips) {
             <td style="color: #475569; padding: 0.85rem 1.25rem;">${item.date}</td>
             <td style="color: #475569; padding: 0.85rem 1.25rem;">${item.qty}</td>
             <td class="text-center" style="padding: 0.85rem 1.25rem;">
-                <button class="action-btn" onclick="localStorage.setItem('taphoaxanh_last_return_id', '${item.id}'); window.location.href='return-detail.html?id=${item.id}';" title="Chỉnh sửa" style="color: #16A34A; background: transparent; border: none; cursor: pointer; padding: 0.25rem 0.5rem;">
-                    <i data-lucide="edit-3" style="width: 18px; height: 18px;"></i>
+                <button class="action-btn" onclick="localStorage.setItem('taphoaxanh_last_return_id', '${item.id}'); window.location.href='return-detail.html?id=${item.id}';" title="Xem chi tiết">
+                    <i data-lucide="eye"></i>
                 </button>
-                <button class="action-btn delete-btn" onclick="deleteReturnSlip('${item.id}')" title="Xóa" style="color: #DC2626; background: transparent; border: none; cursor: pointer; padding: 0.25rem 0.5rem;">
-                    <i data-lucide="trash-2" style="width: 18px; height: 18px;"></i>
+                <button class="action-btn delete-btn" onclick="deleteReturnSlip('${item.id}')" title="Xóa">
+                    <i data-lucide="trash-2"></i>
                 </button>
             </td>
         </tr>
