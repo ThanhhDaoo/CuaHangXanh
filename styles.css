@@ -857,6 +857,22 @@ textarea::placeholder {
 /* --------------------------------------------------------------------------
    9. TABLES & BADGES (High-Density Professional Enterprise Standard)
    -------------------------------------------------------------------------- */
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+}
+
+th.text-center, td.text-center {
+    text-align: center !important;
+}
+
+th.text-right, td.text-right {
+    text-align: right !important;
+}
+
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -2798,10 +2814,37 @@ textarea::placeholder {
 .return-slips-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+    text-align: left;
     font-size: 0.8125rem;
 }
 
-.return-slips-table thead th,
+.return-slips-table thead th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-size: 0.725rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.return-slips-table thead th.text-center {
+    text-align: center !important;
+}
+
+.return-slips-table tbody td {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.return-slips-table tbody td.text-center {
+    text-align: center !important;
+}
+
 .table-return-header,
 .table-import-header,
 .history-table-header {
@@ -2811,8 +2854,21 @@ textarea::placeholder {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    padding: 0.65rem 0.95rem;
+    padding: 0.75rem 0.95rem;
     border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.history-table-header.text-center,
+.table-return-header.text-center,
+.table-import-header.text-center {
+    text-align: center !important;
+}
+
+.history-table-header.text-right,
+.table-return-header.text-right,
+.table-import-header.text-right {
+    text-align: right !important;
 }
 
 .import-card {
