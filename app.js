@@ -768,16 +768,44 @@ function confirmDeletePriceFromList() {
 // --------------------------------------------------------------------------
 // 10. RETURNS (RETURNS.HTML)
 // --------------------------------------------------------------------------
+let currentReturnSlipPage = 1;
+const returnSlipPageSize = 5;
+let currentReturnSlipsData = null;
+
+function setReturnSlipPage(page) {
+    const data = currentReturnSlipsData || state.returnSlips;
+    const totalPages = Math.ceil(data.length / returnSlipPageSize) || 1;
+    if (page < 1 || page > totalPages) return;
+    currentReturnSlipPage = page;
+    renderReturnSlipsTable(data);
+}
+
 function renderReturnSlipsTable(data = state.returnSlips) {
     const tbody = document.getElementById('return-slips-tbody');
     if (!tbody) return;
 
-    if (data.length === 0) {
+    currentReturnSlipsData = data;
+    const totalItems = data.length;
+    const totalPages = Math.ceil(totalItems / returnSlipPageSize) || 1;
+
+    if (currentReturnSlipPage > totalPages) currentReturnSlipPage = totalPages;
+    if (currentReturnSlipPage < 1) currentReturnSlipPage = 1;
+
+    const countInfo = document.getElementById('return-slips-count-info');
+    const paginationContainer = document.getElementById('return-slips-pagination');
+
+    if (totalItems === 0) {
         tbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding: 1.5rem; color: var(--text-muted);">Không tìm thấy phiếu đổi hàng nào.</td></tr>`;
+        if (countInfo) countInfo.textContent = 'Hiển thị 0 trên tổng số 0 phiếu đổi hàng';
+        if (paginationContainer) paginationContainer.innerHTML = '';
         return;
     }
 
-    tbody.innerHTML = data.map(item => `
+    const startIndex = (currentReturnSlipPage - 1) * returnSlipPageSize;
+    const endIndex = Math.min(startIndex + returnSlipPageSize, totalItems);
+    const pageItems = data.slice(startIndex, endIndex);
+
+    tbody.innerHTML = pageItems.map(item => `
         <tr style="height: 52px; border-bottom: 1px solid #E2E8F0;">
             <td class="fw-700" style="color: #0F172A; font-weight: 700; padding: 0.85rem 1.25rem;">
                 <a href="return-detail.html?id=${item.id}" onclick="localStorage.setItem('taphoaxanh_last_return_id', '${item.id}');" style="color: #0F172A; text-decoration: none; font-weight: 700;">${item.id}</a>
@@ -795,12 +823,33 @@ function renderReturnSlipsTable(data = state.returnSlips) {
         </tr>
     `).join('');
 
+    if (countInfo) {
+        countInfo.textContent = `Hiển thị ${startIndex + 1} - ${endIndex} trên tổng số ${totalItems} phiếu đổi hàng`;
+    }
+
+    if (paginationContainer) {
+        let buttonsHtml = '';
+        const prevDisabled = currentReturnSlipPage <= 1 ? 'disabled' : '';
+        buttonsHtml += `<button class="page-btn" ${prevDisabled} onclick="setReturnSlipPage(${currentReturnSlipPage - 1})" title="Trang trước"><i data-lucide="chevron-left"></i></button>`;
+
+        for (let p = 1; p <= totalPages; p++) {
+            const activeClass = p === currentReturnSlipPage ? 'active' : '';
+            buttonsHtml += `<button class="page-btn ${activeClass}" onclick="setReturnSlipPage(${p})">${p}</button>`;
+        }
+
+        const nextDisabled = currentReturnSlipPage >= totalPages ? 'disabled' : '';
+        buttonsHtml += `<button class="page-btn" ${nextDisabled} onclick="setReturnSlipPage(${currentReturnSlipPage + 1})" title="Trang sau"><i data-lucide="chevron-right"></i></button>`;
+
+        paginationContainer.innerHTML = buttonsHtml;
+    }
+
     refreshIcons();
 }
 
 function filterReturnSlips() {
     const searchVal = (document.getElementById('return-slips-search-input')?.value || '').toLowerCase().trim();
     const filtered = state.returnSlips.filter(r => r.id.toLowerCase().includes(searchVal) || r.date.includes(searchVal));
+    currentReturnSlipPage = 1;
     renderReturnSlipsTable(filtered);
 }
 
@@ -822,7 +871,17 @@ function confirmDeleteReturnSlip() {
     if (deletingReturnSlipId) {
         state.returnSlips = state.returnSlips.filter(r => r.id !== deletingReturnSlipId);
         saveStoredReturnSlips(state.returnSlips);
-        renderReturnSlipsTable();
+        
+        const data = (currentReturnSlipsData && currentReturnSlipsData !== state.returnSlips)
+            ? currentReturnSlipsData.filter(r => r.id !== deletingReturnSlipId)
+            : state.returnSlips;
+        
+        const totalPages = Math.ceil(data.length / returnSlipPageSize) || 1;
+        if (currentReturnSlipPage > totalPages) {
+            currentReturnSlipPage = totalPages;
+        }
+
+        renderReturnSlipsTable(data);
         closeModal('delete-return-slip-modal');
         showResultPopup('success', 'Xoá thành công');
         deletingReturnSlipId = null;

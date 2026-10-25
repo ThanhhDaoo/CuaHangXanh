@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="styles.css?v=9">
+    <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 
@@ -136,7 +136,7 @@
                 <div style="display: flex; align-items: center; gap: 0.75rem; width: 100%; margin-bottom: 1.25rem;">
                     <div class="search-pill-box full-width" style="flex: 1;">
                         <i data-lucide="search"></i>
-                        <input type="text" id="return-slips-search-input" placeholder="Nhập mã phiếu đổi hàng..." onkeyup="if(event.key==='Enter') filterReturnSlips()">
+                        <input type="text" id="return-slips-search-input" placeholder="Nhập mã phiếu đổi hàng..." onkeyup="if(event.key==='Enter') filterReturnSlips()" oninput="filterReturnSlips()">
                     </div>
                     <button type="button" class="btn btn-primary" onclick="filterReturnSlips()">
                         <i data-lucide="search"></i>
@@ -159,6 +159,14 @@
                             <!-- Dynamic Rows Rendered by app.js -->
                         </tbody>
                     </table>
+
+                    <!-- PAGINATION FOOTER -->
+                    <div class="table-footer flex-between" style="padding: 0.85rem 1.25rem; border-top: 1px solid #E2E8F0; background: #FFFFFF;">
+                        <span class="pagination-info" id="return-slips-count-info" style="font-size: 0.8125rem; color: #64748B;">Hiển thị 1 - 5 trên tổng số 9 phiếu đổi hàng</span>
+                        <div class="pagination" id="return-slips-pagination">
+                            <!-- Dynamically populated by app.js -->
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
@@ -198,6 +206,6 @@
     <!-- TOAST CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>
