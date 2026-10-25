@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Hóa Đơn - Tạp Hóa Xanh</title>
+    <meta name="description" content="Tạo hóa đơn bán hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="sales.html" class="nav-link active">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html" class="active-sub">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Tạo hóa đơn</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <div class="pos-container">
+                    <!-- LEFT / MAIN PRODUCT SEARCH AND GRID -->
+                    <div>
+                        <!-- SEARCH BAR WITH BUTTON OUTSIDE -->
+                        <div style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <div class="pos-search-pill-box" style="flex: 1;">
+                                <i data-lucide="search" style="width: 18px; height: 18px; color: #64748B;"></i>
+                                <input type="text" id="pos-search-input" placeholder="Tìm tên sản phẩm hoặc SKU (HH...)" onkeyup="filterPosProducts()">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="filterPosProducts()">
+                                <i data-lucide="search"></i>
+                                <span>Tìm kiếm</span>
+                            </button>
+                        </div>
+
+                        <!-- CATEGORY FILTER PILLS -->
+                        <div class="category-pills-row">
+                            <button type="button" class="cat-pill-btn active" onclick="filterPosCat('all', this)">
+                                <i data-lucide="layout-grid" style="width: 16px; height: 16px;"></i>
+                                <span>Tất cả</span>
+                            </button>
+                            <button type="button" class="cat-pill-btn inactive" onclick="filterPosCat('dokho', this)">
+                                <i data-lucide="package" style="width: 16px; height: 16px;"></i>
+                                <span>Đồ khô</span>
+                            </button>
+                            <button type="button" class="cat-pill-btn inactive" onclick="filterPosCat('giavi', this)">
+                                <i data-lucide="test-tube" style="width: 16px; height: 16px;"></i>
+                                <span>Gia vị</span>
+                            </button>
+                            <button type="button" class="cat-pill-btn inactive" onclick="filterPosCat('hoamypham', this)">
+                                <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+                                <span>Hóa mỹ phẩm</span>
+                            </button>
+                            <button type="button" class="cat-pill-btn inactive" onclick="showToast('Hiển thị thêm danh mục', 'info')">
+                                <span>•••</span>
+                            </button>
+                        </div>
+
+                        <!-- PRODUCT CARDS GRID (STANDARDIZED SKUS HH0000001, HH0000002...) -->
+                        <div class="pos-product-grid" id="pos-product-grid-container">
+                            <!-- Product 1 -->
+                            <div class="pos-product-card">
+                                <span class="pos-stock-badge in-stock">CÒN HÀNG</span>
+                                <div class="pos-img-box">
+                                    <i data-lucide="shopping-bag" style="width: 32px; height: 32px; color: #166534; opacity: 0.6;"></i>
+                                </div>
+                                <h4 class="pos-title">Mì tôm Hảo Hảo</h4>
+                                <div class="pos-sku">SKU: HH0000001 <br> HSD: 08/2025</div>
+                                <div class="pos-price-row">
+                                    <span class="pos-price-val">4.500đ</span>
+                                    <button type="button" class="pos-add-btn" onclick="addToCart('HH0000001', 'Mì tôm Hảo Hảo', 4500)">
+                                        <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Product 2 -->
+                            <div class="pos-product-card">
+                                <span class="pos-stock-badge in-stock">CÒN HÀNG</span>
+                                <div class="pos-img-box">
+                                    <i data-lucide="shopping-bag" style="width: 32px; height: 32px; color: #166534; opacity: 0.6;"></i>
+                                </div>
+                                <h4 class="pos-title">Dầu ăn Tường An 1L</h4>
+                                <div class="pos-sku">SKU: HH0000002 <br> HSD: 12/2026</div>
+                                <div class="pos-price-row">
+                                    <span class="pos-price-val">52.000đ</span>
+                                    <button type="button" class="pos-add-btn" onclick="addToCart('HH0000002', 'Dầu ăn Tường An 1L', 52000)">
+                                        <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Product 3 -->
+                            <div class="pos-product-card">
+                                <span class="pos-stock-badge in-stock">CÒN HÀNG</span>
+                                <div class="pos-img-box">
+                                    <i data-lucide="shopping-bag" style="width: 32px; height: 32px; color: #166534; opacity: 0.6;"></i>
+                                </div>
+                                <h4 class="pos-title">Sữa tươi TH True Milk 1L</h4>
+                                <div class="pos-sku">SKU: HH0000004 <br> HSD: 06/2026</div>
+                                <div class="pos-price-row">
+                                    <span class="pos-price-val">32.000đ</span>
+                                    <button type="button" class="pos-add-btn" onclick="addToCart('HH0000004', 'Sữa tươi TH True Milk 1L', 32000)">
+                                        <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Product 4 -->
+                            <div class="pos-product-card">
+                                <span class="pos-stock-badge out-stock">HẾT HÀNG</span>
+                                <div class="pos-img-box" style="background-color: #F1F5F9;">
+                                    <i data-lucide="image" style="width: 32px; height: 32px; color: #94A3B8; opacity: 0.5;"></i>
+                                </div>
+                                <h4 class="pos-title" style="color: #64748B;">Snack Tôm Oishi</h4>
+                                <div class="pos-sku">SKU: HH0000003 <br> HSD: 04/2025</div>
+                                <div class="pos-price-row">
+                                    <span class="pos-price-val" style="color: #64748B;">12.000đ</span>
+                                    <button type="button" class="pos-add-btn disabled" disabled>
+                                        <i data-lucide="ban" style="width: 14px; height: 14px;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT CART PANEL (FIGMA EXACT MATCH) -->
+                    <div class="pos-cart-panel">
+                        <div class="cart-header">
+                            <div>
+                                <h3 class="cart-title">Giỏ hàng</h3>
+                                <div class="cart-sub">Hóa đơn: <span id="current-pos-invoice-code">SON2405009</span></div>
+                            </div>
+                            <button type="button" class="cart-clear-btn" onclick="clearCart()" title="Xóa tất cả">
+                                <i data-lucide="trash-2" style="width: 18px; height: 18px;"></i>
+                            </button>
+                        </div>
+
+                        <!-- CART ITEMS CONTAINER (DYNAMICALLY PERSISTED ON CHECKOUT) -->
+                        <div class="cart-items-list" id="pos-cart-items-container">
+                            <!-- Dynamically rendered via JS -->
+                        </div>
+
+                        <!-- CART SUMMARY FOOTER -->
+                        <div class="cart-footer">
+                            <div class="cart-summary-line">
+                                <span>Tạm tính (<span id="cart-item-count">0</span> món)</span>
+                                <span id="cart-subtotal-val">0đ</span>
+                            </div>
+                            <div class="cart-total-line">
+                                <span>Tổng tiền</span>
+                                <span id="cart-grandtotal-val">0đ</span>
+                            </div>
+
+                            <!-- PAYMENT METHOD SELECTION -->
+                            <div class="payment-methods-grid">
+                                <button type="button" id="pay-cash-btn" class="payment-opt-btn active" onclick="selectPaymentMethod('cash')">
+                                    <i data-lucide="banknote" style="width: 16px; height: 16px;"></i>
+                                    <span>Tiền mặt</span>
+                                </button>
+                                <button type="button" id="pay-bank-btn" class="payment-opt-btn inactive" onclick="selectPaymentMethod('bank')">
+                                    <i data-lucide="landmark" style="width: 16px; height: 16px;"></i>
+                                    <span>Chuyển khoản</span>
+                                </button>
+                            </div>
+
+                            <!-- CHECKOUT BUTTON -->
+                            <button type="button" class="btn-checkout-cta" onclick="handlePosCheckout()">
+                                THANH TOÁN NGAY
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let posCart = [];
+        let currentPaymentMethod = 'cash';
+        const currentInvoiceId = 'SON2405009';
+
+        function renderPosCart() {
+            const container = document.getElementById('pos-cart-items-container');
+            if (!container) return;
+
+            let totalQty = 0;
+            let grandTotal = 0;
+
+            if (posCart.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding: 3rem 1rem; color: #94A3B8;">
+                        <i data-lucide="shopping-cart" style="width: 48px; height: 48px; stroke-width: 1.5; color: #CBD5E1; margin: 0 auto 0.75rem auto; display: block;"></i>
+                        <div style="font-weight: 700; color: #64748B; font-size: 0.9rem;">Giỏ hàng chưa có sản phẩm</div>
+                        <div style="font-size: 0.78rem; color: #94A3B8; margin-top: 0.25rem;">Bấm (+) trên sản phẩm để thêm vào giỏ</div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = posCart.map(item => {
+                    totalQty += item.qty;
+                    const itemTotal = item.price * item.qty;
+                    grandTotal += itemTotal;
+                    return `
+                        <div class="cart-item-row">
+                            <div class="cart-item-thumb">
+                                <i data-lucide="package" style="width: 20px; height: 20px;"></i>
+                            </div>
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-stepper">
+                                    <button class="stepper-btn" onclick="updateCartQty('${item.sku}', -1)">-</button>
+                                    <span class="stepper-val">${item.qty}</span>
+                                    <button class="stepper-btn" onclick="updateCartQty('${item.sku}', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="cart-item-total">${itemTotal.toLocaleString('vi-VN')}đ</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('cart-item-count').innerText = totalQty;
+            document.getElementById('cart-subtotal-val').innerText = grandTotal.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('cart-grandtotal-val').innerText = grandTotal.toLocaleString('vi-VN') + 'đ';
+            refreshIcons();
+        }
+
+        function addToCart(sku, name, price) {
+            const existing = posCart.find(i => i.sku === sku);
+            if (existing) {
+                existing.qty++;
+            } else {
+                posCart.push({ sku, name, price, qty: 1 });
+            }
+            renderPosCart();
+            showToast(`Đã thêm "${name}" vào giỏ hàng`, 'success');
+        }
+
+        function updateCartQty(sku, delta) {
+            const existing = posCart.find(i => i.sku === sku);
+            if (existing) {
+                existing.qty += delta;
+                if (existing.qty <= 0) {
+                    posCart = posCart.filter(i => i.sku !== sku);
+                }
+            }
+            renderPosCart();
+        }
+
+        function clearCart() {
+            if (posCart.length === 0) return;
+            posCart = [];
+            renderPosCart();
+            showToast('Đã xóa tất cả sản phẩm trong giỏ', 'info');
+        }
+
+        function selectPaymentMethod(method) {
+            currentPaymentMethod = method;
+            const cashBtn = document.getElementById('pay-cash-btn');
+            const bankBtn = document.getElementById('pay-bank-btn');
+            if (method === 'cash') {
+                cashBtn.className = 'payment-opt-btn active';
+                bankBtn.className = 'payment-opt-btn inactive';
+            } else {
+                cashBtn.className = 'payment-opt-btn inactive';
+                bankBtn.className = 'payment-opt-btn active';
+            }
+        }
+
+        function handlePosCheckout() {
+            if (posCart.length === 0) {
+                showToast('Vui lòng chọn sản phẩm vào giỏ hàng trước', 'error');
+                return;
+            }
+
+            const paymentText = currentPaymentMethod === 'cash' ? 'Tiền mặt' : 'Chuyển khoản';
+            let grandTotal = 0;
+            const formattedItems = posCart.map(item => {
+                const subtotal = item.price * item.qty;
+                grandTotal += subtotal;
+                return {
+                    code: item.sku,
+                    name: item.name,
+                    qty: item.qty,
+                    price: item.price,
+                    subtotal: subtotal
+                };
+            });
+
+            // Save created invoice dynamically to localStorage!
+            const newInvoice = {
+                id: currentInvoiceId,
+                date: '25/05/2024 22:50',
+                payment: paymentText,
+                amount: grandTotal,
+                items: formattedItems
+            };
+
+            let savedInvoices = JSON.parse(localStorage.getItem('taphoaxanh_invoices') || '{}');
+            savedInvoices[currentInvoiceId] = newInvoice;
+            localStorage.setItem('taphoaxanh_invoices', JSON.stringify(savedInvoices));
+
+            showToast(`Thanh toán thành công! Mã hóa đơn ${currentInvoiceId}`, 'success');
+            setTimeout(() => {
+                window.location.href = `invoice-detail.html?id=${currentInvoiceId}`;
+            }, 1000);
+        }
+
+        function filterPosProducts() {
+            const val = (document.getElementById('pos-search-input')?.value || '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.pos-product-card');
+            cards.forEach(card => {
+                const title = card.querySelector('.pos-title')?.innerText.toLowerCase() || '';
+                const sku = card.querySelector('.pos-sku')?.innerText.toLowerCase() || '';
+                if (title.includes(val) || sku.includes(val)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function filterPosCat(cat, btn) {
+            document.querySelectorAll('.cat-pill-btn').forEach(b => b.className = 'cat-pill-btn inactive');
+            btn.className = 'cat-pill-btn active';
+            showToast(`Đang lọc danh mục sản phẩm`, 'info');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPosCart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhập Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Quản lý phiếu nhập hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link active">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Nhập hàng</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- HEADER (FIGMA MATCH: TITLE ON LEFT, + TẠO PHIẾU NHẬP ON RIGHT) -->
+                <div class="page-header flex-between" style="align-items: flex-start; margin-bottom: 1.25rem;">
+                    <div>
+                        <h1 class="page-title" style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin-bottom: 0.25rem;">Phiếu nhập hàng</h1>
+                        <p class="page-subtitle" style="font-size: 0.85rem; color: #64748B;">Quản lý lịch sử và trạng thái các đợt nhập kho sản phẩm</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="window.location.href='create-import.html'">
+                            <i data-lucide="plus"></i>
+                            <span>Tạo phiếu nhập</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SEARCH ROW -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; width: 100%; margin-bottom: 1.25rem;">
+                    <div class="search-pill-box full-width" style="flex: 1;">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="import-search-input" placeholder="Tìm kiếm phiếu nhập..." onkeyup="if(event.key==='Enter') filterImports()">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="filterImports()">
+                        <i data-lucide="search"></i>
+                        <span>Tìm kiếm</span>
+                    </button>
+                </div>
+
+                <!-- UNIFIED FILTER TOOLBAR CARD -->
+                <div class="card" style="margin-bottom: 1.25rem; padding: 1rem 1.25rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1.25fr 1.15fr 1.4fr; gap: 1rem; align-items: flex-end;">
+                        <!-- MÃ PHIẾU -->
+                        <div>
+                            <label style="display: block; font-size: 0.725rem; font-weight: 600; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em;">MÃ PHIẾU</label>
+                            <input type="text" id="import-code-filter" placeholder="# NHxxxxxxx" class="form-control" onkeyup="filterImports()">
+                        </div>
+
+                        <!-- NHÀ CUNG CẤP -->
+                        <div>
+                            <label style="display: block; font-size: 0.725rem; font-weight: 600; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em;">NHÀ CUNG CẤP</label>
+                            <select id="import-supplier-filter" class="form-control" onchange="filterImports()">
+                                <option value="all">Tất cả nhà cung cấp</option>
+                                <option value="Nông sản Sạch Đà Lạt">Nông sản Sạch Đà Lạt</option>
+                                <option value="Công ty Thực phẩm Xanh">Công ty Thực phẩm Xanh</option>
+                                <option value="Hợp tác xã Organic">Hợp tác xã Organic</option>
+                                <option value="Vườn Rau 3 Miền">Vườn Rau 3 Miền</option>
+                            </select>
+                        </div>
+
+                        <!-- NGÀY NHẬP -->
+                        <div>
+                            <label style="display: block; font-size: 0.725rem; font-weight: 600; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em;">NGÀY NHẬP</label>
+                            <input type="date" id="import-date-filter" class="form-control" onchange="filterImports()">
+                        </div>
+
+                        <!-- TRẠNG THÁI -->
+                        <div>
+                            <label style="display: block; font-size: 0.725rem; font-weight: 600; color: #64748b; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.03em;">TRẠNG THÁI</label>
+                            <div class="status-pill-group" style="height: 36px; display: flex; align-items: center; width: 100%;">
+                                <button type="button" class="pill-filter active" onclick="setImportStatusFilter('all', this)" style="flex: 1; text-align: center;">Tất cả</button>
+                                <button type="button" class="pill-filter" onclick="setImportStatusFilter('Chưa thanh toán', this)" style="flex: 1; text-align: center;">Chưa thanh toán</button>
+                                <button type="button" class="pill-filter" onclick="setImportStatusFilter('Đã thanh toán', this)" style="flex: 1; text-align: center;">Đã thanh toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMPORTS TABLE CARD -->
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="data-table highlight-table">
+                            <thead>
+                                <tr>
+                                    <th>MÃ PHIẾU</th>
+                                    <th>NHÀ CUNG CẤP</th>
+                                    <th>NGÀY NHẬP</th>
+                                    <th>TỔNG TIỀN</th>
+                                    <th>TRẠNG THÁI</th>
+                                    <th class="text-center">THAO TÁC</th>
+                                </tr>
+                            </thead>
+                            <tbody id="import-tbody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="table-footer flex-between">
+                        <span class="pagination-info" id="import-count-info">Hiển thị 1 - 4 trên tổng số 42 phiếu nhập</span>
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL TẠO PHIẾU NHẬP -->
+    <div id="add-import-modal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Tạo phiếu nhập hàng</h3>
+                <button class="close-btn" onclick="closeModal('add-import-modal')">&times;</button>
+            </div>
+            <form onsubmit="handleCreateImport(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Mã phiếu nhập</label>
+                        <input type="text" id="new-import-code" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Nhà cung cấp</label>
+                        <select id="new-import-supplier" class="form-control" required>
+                            <option value="Nông sản Sạch Đà Lạt">Nông sản Sạch Đà Lạt</option>
+                            <option value="Công ty Thực phẩm Xanh">Công ty Thực phẩm Xanh</option>
+                            <option value="Hợp tác xã Organic">Hợp tác xã Organic</option>
+                            <option value="Vườn Rau 3 Miền">Vườn Rau 3 Miền</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tổng tiền (VNĐ)</label>
+                        <input type="number" id="new-import-amount" class="form-control" placeholder="Ví dụ: 10000000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái thanh toán</label>
+                        <select id="new-import-status" class="form-control">
+                            <option value="Đã thanh toán">Đã thanh toán</option>
+                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('add-import-modal')">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-primary">Tạo phiếu nhập</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN XÓA PHIẾU NHẬP HÀNG (FIGMA EXACT MATCH 100%) -->
+    <div id="delete-import-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa phiếu nhập hàng</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa phiếu này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Mã phiếu nhập hàng</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="modal-delete-imp-id">NH20231001</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Nhà cung cấp</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-delete-imp-supplier">Nông sản Sạch Đà Lạt</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Ngày tạo phiếu</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-delete-imp-date">25/10/2023</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">Tổng tiền</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="modal-delete-imp-amount">12,500,000 đ</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-import-modal')" style="flex: 1;">Hủy</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeleteImportFromList()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

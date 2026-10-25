@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Phiếu Đổi Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Chi tiết phiếu đổi hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="sales.html" class="nav-link active">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html" class="active-sub">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Bán hàng / Chi tiết phiếu đổi hàng</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <div class="return-detail-layout">
+                    <!-- BACK LINK (FIGMA EXACT MATCH) -->
+                    <div>
+                        <a href="returns.html" style="color: #0F172A; font-weight: 800; font-size: 1.05rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+                            <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+                            <span>Chi tiết phiếu đổi hàng</span>
+                        </a>
+                    </div>
+
+                    <!-- TOP ROW: 2 CARDS (FIGMA EXACT MATCH) -->
+                    <div class="meta-card-flex">
+                        <!-- LEFT CARD: THÔNG TIN CHUNG -->
+                        <div class="meta-card-main">
+                            <div style="font-weight: 700; font-size: 0.85rem; color: #166534; margin-bottom: 1rem;">Thông tin chung</div>
+                            <div class="meta-card-grid">
+                                <div>
+                                    <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.2rem;">Mã phiếu đổi hàng</div>
+                                    <div style="font-weight: 800; font-size: 0.95rem; color: #0F172A;" id="return-detail-id">PDH2405001</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.2rem;">Ngày tạo</div>
+                                    <div style="font-weight: 800; font-size: 0.95rem; color: #0F172A;" id="return-detail-createdate">25/05/2024</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.2rem;">Mã hoá đơn bán</div>
+                                    <div style="font-weight: 800; font-size: 0.95rem; color: #059669;" id="return-detail-invoicename">SON2405001</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 0.2rem;">Ngày bán</div>
+                                    <div style="font-weight: 800; font-size: 0.95rem; color: #0F172A;" id="return-detail-invoicedate">24/05/2024</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT CARD: GHI CHÚ -->
+                        <div class="meta-card-note">
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.8rem; color: #475569; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.35rem;">
+                                    <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                                    <span>Ghi chú</span>
+                                </div>
+                                <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.65rem; font-style: italic; font-size: 0.825rem; color: #334155;" id="return-detail-note">
+                                    "Dầu ăn hết hạn, bột giặt hư hỏng"
+                                </div>
+                            </div>
+                            <div style="font-size: 0.65rem; color: #94A3B8; font-weight: 800; text-align: right; letter-spacing: 0.5px;">
+                                INTERNAL LOG
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM TABLE CARD: DANH SÁCH SẢN PHẨM ĐỔI (FIGMA EXACT MATCH) -->
+                    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: var(--shadow-sm); overflow: hidden;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1.15rem 1.5rem; border-bottom: 1px solid #E2E8F0; background-color: #F8FAFC;">
+                            <span style="font-weight: 800; font-size: 0.95rem; color: #0F172A;">Danh sách sản phẩm đổi</span>
+                            <span style="background-color: #22C55E; color: #FFFFFF; font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.65rem; border-radius: 12px;" id="return-items-count">2 Items</span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px;">STT</th>
+                                        <th>MÃ HÀNG HÓA</th>
+                                        <th>TÊN HÀNG HÓA</th>
+                                        <th class="text-center">SỐ LƯỢNG</th>
+                                        <th class="text-center">SỐ LƯỢNG ĐỔI</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="return-detail-tbody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- ACTIONS FOOTER -->
+                        <div style="padding: 1.25rem 1.5rem; background-color: #FAFAFA; border-top: 1px solid #E2E8F0; display: flex; gap: 0.75rem; justify-content: flex-end;">
+                            <button type="button" class="btn btn-danger" onclick="openModal('delete-return-modal')">Xóa</button>
+                            <button type="button" class="btn btn-primary" onclick="window.location.href='update-return.html?id=' + (activeReturnNote ? activeReturnNote.id : 'PDH0000008')">
+                                <i data-lucide="edit-3"></i>
+                                <span>Chỉnh sửa</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL: XÁC NHẬN XÓA PHIẾU ĐỔI HÀNG (SYNCHRONIZED DATA) -->
+    <div id="delete-return-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa phiếu đổi hàng</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa phiếu này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Mã phiếu đổi hàng</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="delete-return-modal-id">PDH2405001</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Mã hoá đơn</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="delete-return-modal-invoicename">SON2405001</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Ngày tạo phiếu</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="delete-return-modal-createdate">25/05/2024</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">Tổng số lượng</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="delete-return-modal-totalqty">3</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-return-modal')" style="flex: 1;">Hủy</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeleteReturn()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let activeReturnNote = null;
+
+        function loadReturnDetailFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reqId = urlParams.get('id') || localStorage.getItem('taphoaxanh_last_return_id') || 'PDH0000008';
+            localStorage.setItem('taphoaxanh_last_return_id', reqId);
+
+            const savedReturns = JSON.parse(localStorage.getItem('taphoaxanh_returns') || '{}');
+
+            if (savedReturns[reqId]) {
+                activeReturnNote = savedReturns[reqId];
+            } else {
+                const presetReturnDb = {
+                    'PDH0000009': {
+                        id: 'PDH0000009',
+                        createDate: '25/10/2024',
+                        invoiceId: 'SON2405001',
+                        invoiceDate: '24/10/2024',
+                        note: '"Dầu ăn hết hạn, bột giặt hư hỏng"',
+                        items: [
+                            { code: 'HH0000001', name: 'Dầu ăn Tường An 1L', max: 3, qty: 1 },
+                            { code: 'HH0000002', name: 'Bột giặt Aba 3kg', max: 3, qty: 2 }
+                        ]
+                    },
+                    'PDH0000008': {
+                        id: 'PDH0000008',
+                        createDate: '20/03/2025',
+                        invoiceId: 'SON0000003',
+                        invoiceDate: '17/03/2025',
+                        note: '"Dầu ăn hết hạn, bột giặt hư hỏng"',
+                        items: [
+                            { code: 'HH0000003', name: 'Bánh oreo', max: 3, qty: 1 },
+                            { code: 'HH0000009', name: 'Sữa chua', max: 3, qty: 2 }
+                        ]
+                    },
+                    'PDH0000007': {
+                        id: 'PDH0000007',
+                        createDate: '22/07/2023',
+                        invoiceId: 'SON2405002',
+                        invoiceDate: '21/07/2023',
+                        note: '"Khách đổi sản phẩm chưa dùng"',
+                        items: [
+                            { code: 'HH0000002', name: 'Bột giặt Aba 3kg', max: 3, qty: 1 }
+                        ]
+                    },
+                    'PDH0000006': {
+                        id: 'PDH0000006',
+                        createDate: '10/07/2023',
+                        invoiceId: 'SON2405003',
+                        invoiceDate: '09/07/2023',
+                        note: '"Bia Tiger móp vỏ hộp"',
+                        items: [
+                            { code: 'HH0000008', name: 'Pepsi', max: 5, qty: 4 }
+                        ]
+                    },
+                    'PDH0000005': {
+                        id: 'PDH0000005',
+                        createDate: '15/11/2022',
+                        invoiceId: 'SON2404988',
+                        invoiceDate: '14/11/2022',
+                        note: '"Bột giặt rách bao bọc"',
+                        items: [
+                            { code: 'HH0000002', name: 'Bột giặt Aba 3kg', max: 10, qty: 10 }
+                        ]
+                    },
+                    'PDH0000004': {
+                        id: 'PDH0000004',
+                        createDate: '20/10/2022',
+                        invoiceId: 'SON2404987',
+                        invoiceDate: '19/10/2022',
+                        note: '"Hàng hóa móp méo vỏ"',
+                        items: [
+                            { code: 'HH0000006', name: 'Bánh quy Cosy', max: 3, qty: 3 }
+                        ]
+                    },
+                    'PDH0000003': {
+                        id: 'PDH0000003',
+                        createDate: '10/02/2021',
+                        invoiceId: 'SON2404986',
+                        invoiceDate: '09/02/2021',
+                        note: '"Sữa chua quá hạn sử dụng"',
+                        items: [
+                            { code: 'HH0000009', name: 'Sữa chua', max: 5, qty: 5 }
+                        ]
+                    },
+                    'PDH0000002': {
+                        id: 'PDH0000002',
+                        createDate: '30/01/2021',
+                        invoiceId: 'SON2405001',
+                        invoiceDate: '29/01/2021',
+                        note: '"Đổi hàng mới theo yêu cầu"',
+                        items: [
+                            { code: 'HH0000010', name: 'Bánh chocopie', max: 7, qty: 7 }
+                        ]
+                    },
+                    'PDH0000001': {
+                        id: 'PDH0000001',
+                        createDate: '30/01/2021',
+                        invoiceId: 'SON2405002',
+                        invoiceDate: '29/01/2021',
+                        note: '"Hàng hóa không vừa ý"',
+                        items: [
+                            { code: 'HH0000001', name: 'Dầu ăn Tường An 1L', max: 7, qty: 7 }
+                        ]
+                    }
+                };
+
+                activeReturnNote = presetReturnDb[reqId] || {
+                    id: reqId,
+                    createDate: '20/03/2025',
+                    invoiceId: 'SON' + reqId.replace('PDH', ''),
+                    invoiceDate: '17/03/2025',
+                    note: '"Lý do đổi hàng từ khách"',
+                    items: [
+                        { code: 'HH0000001', name: 'Dầu ăn Tường An 1L', max: 3, qty: 1 }
+                    ]
+                };
+            }
+
+            renderReturnDetailView(activeReturnNote);
+        }
+
+        function renderReturnDetailView(ret) {
+            document.getElementById('return-detail-id').innerText = ret.id;
+            document.getElementById('return-detail-createdate').innerText = ret.createDate;
+            document.getElementById('return-detail-invoicename').innerText = ret.invoiceId;
+            document.getElementById('return-detail-invoicedate').innerText = ret.invoiceDate;
+            document.getElementById('return-detail-note').innerText = ret.note.startsWith('"') ? ret.note : `"${ret.note}"`;
+
+            let totalQty = 0;
+            const tbody = document.getElementById('return-detail-tbody');
+            if (tbody && ret.items) {
+                tbody.innerHTML = ret.items.map((item, idx) => {
+                    totalQty += item.qty;
+                    return `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td class="fw-800" style="color: #059669;">${item.code}</td>
+                            <td class="fw-700">${item.name}</td>
+                            <td class="text-center"><span class="table-badge-gray">${item.max || 3}</span></td>
+                            <td class="text-center"><span class="table-badge-green">${item.qty}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('return-items-count').innerText = `${ret.items ? ret.items.length : 0} Items`;
+
+            // Delete Modal fields
+            document.getElementById('delete-return-modal-id').innerText = ret.id;
+            document.getElementById('delete-return-modal-invoicename').innerText = ret.invoiceId;
+            document.getElementById('delete-return-modal-createdate').innerText = ret.createDate;
+            document.getElementById('delete-return-modal-totalqty').innerText = totalQty;
+
+            refreshIcons();
+        }
+
+        function confirmDeleteReturn() {
+            closeModal('delete-return-modal');
+            showResultPopup('success', 'Xoá thành công', '', () => {
+                window.location.href = 'returns.html';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReturnDetailFromUrl();
+        });
+    </script>
+</body>
+</html>

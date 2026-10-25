@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Nhà Cung Cấp - Tạp Hóa Xanh</title>
+    <meta name="description" content="Thêm nhà cung cấp mới Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link active">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Thêm Nhà cung cấp</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- PAGE HEADER (FIGMA EXACT MATCH) -->
+                <div class="page-header" style="margin-bottom: 1rem;">
+                    <h1 class="page-title" style="font-size: 1.45rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem;">Quản lý nhà cung cấp</h1>
+                    <p class="page-subtitle" style="color: var(--text-secondary); font-size: 0.85rem; max-width: 600px; line-height: 1.4;">
+                        Danh sách các đối tác cung ứng hàng hóa cho hệ thống Tạp hóa Xanh. Quản lý thông tin liên hệ và trạng thái hợp tác.
+                    </p>
+                </div>
+
+                <!-- MAIN FORM CARD (FIGMA EXACT MATCH 100%) -->
+                <div class="supplier-form-container">
+                    <h2 class="supplier-form-title">Thêm nhà cung cấp</h2>
+
+                    <form onsubmit="handleCreateSupplierForm(event)">
+                        <!-- ROW 1: MÃ NCC (READONLY) & SỐ ĐIỆN THOẠI -->
+                        <div class="form-row-2col">
+                            <div>
+                                <label class="form-label-custom">Mã nhà cung cấp</label>
+                                <input type="text" class="form-control input-readonly-styled" value="NCC0000012" readonly>
+                            </div>
+                            <div>
+                                <label class="form-label-custom">Số điện thoại <span class="req">*</span></label>
+                                <input type="text" id="supplier-phone-input" class="form-control" placeholder="Bắt đầu bằng 0, gồm 10, 11 chữ số" required>
+                            </div>
+                        </div>
+
+                        <!-- ROW 2: TÊN NHÀ CUNG CẤP -->
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Tên nhà cung cấp <span class="req">*</span></label>
+                            <input type="text" id="supplier-name-input" class="form-control" placeholder="Nhập tên nhà cung cấp..." required>
+                        </div>
+
+                        <!-- ROW 3: ĐỊA CHỈ -->
+                        <div class="form-group-custom">
+                            <label class="form-label-custom">Địa chỉ</label>
+                            <textarea id="supplier-address-input" class="supplier-textarea" placeholder="Nhập địa chỉ nhà cung cấp..."></textarea>
+                        </div>
+
+                        <!-- BUTTONS ROW (FIGMA EXACT MATCH) -->
+                        <div style="display: flex; gap: 0.85rem; justify-content: flex-end; margin-top: 1.75rem;">
+                            <button type="button" class="btn-cancel-green" onclick="window.location.href='suppliers.html'">Hủy</button>
+                            <button type="submit" class="btn-save-green">Lưu</button>
+                        </div>
+                    </form>
+
+                    <div class="form-breadcrumb-note">
+                        Quản lý nhà cung cấp &gt; <span>Thêm mới</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        function handleCreateSupplierForm(e) {
+            e.preventDefault();
+            const name = document.getElementById('supplier-name-input').value.trim();
+            const phone = document.getElementById('supplier-phone-input').value.trim();
+            const address = document.getElementById('supplier-address-input').value.trim();
+
+            if (!name || !phone) {
+                showToast('Vui lòng nhập tên và số điện thoại nhà cung cấp', 'error');
+                return;
+            }
+
+            const newSup = {
+                id: 'NCC0000012',
+                name: name,
+                phone: phone,
+                address: address
+            };
+
+            let savedSuppliers = JSON.parse(localStorage.getItem('taphoaxanh_suppliers') || '[]');
+            savedSuppliers.unshift(newSup);
+            localStorage.setItem('taphoaxanh_suppliers', JSON.stringify(savedSuppliers));
+
+            showToast(`Thêm nhà cung cấp "${name}" thành công!`, 'success');
+            setTimeout(() => {
+                window.location.href = 'suppliers.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

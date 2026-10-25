@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống Kê Tổng Hợp - Tạp Hóa Xanh</title>
+    <meta name="description" content="Thống kê tổng hợp hiệu suất kinh doanh Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="reports.html" class="nav-link active">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html" class="active-sub">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Thống kê / Thống kê tổng hợp</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <div class="page-header flex-between">
+                    <div>
+                        <h1 class="page-title">Thống kê tổng hợp</h1>
+                        <p class="page-subtitle">Theo dõi và phân tích hiệu suất kinh doanh chi tiết.</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="status-pill-group">
+                            <button type="button" class="pill-filter active"
+                                onclick="setReportPeriod('day', this)">Ngày</button>
+                            <button type="button" class="pill-filter"
+                                onclick="setReportPeriod('week', this)">Tuần</button>
+                            <button type="button" class="pill-filter"
+                                onclick="setReportPeriod('month', this)">Tháng</button>
+                        </div>
+                        <button class="btn btn-primary" onclick="showToast('Đang xuất báo cáo thống kê tổng hợp...', 'success')">
+                            <i data-lucide="download"></i>
+                            <span>Xuất báo cáo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3 KPI SUMMARY CARDS (ELEGANT SAAS) -->
+                <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1.25rem;">
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Tổng doanh thu</span>
+                            <h2 class="kpi-value" style="color: #059669;">15.399.934 <span style="font-size: 0.85rem; font-weight: 500; color: #64748b;">VND</span></h2>
+                            <span class="badge badge-success" style="margin-top: 0.45rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <i data-lucide="trending-up" style="width: 12px; height: 12px;"></i> +12.4% so với kỳ trước
+                            </span>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="wallet"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Tổng đơn hàng</span>
+                            <h2 class="kpi-value">477 <span style="font-size: 0.85rem; font-weight: 500; color: #64748b;">đơn</span></h2>
+                            <span style="font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 0.35rem; margin-top: 0.45rem;">
+                                <i data-lucide="check-circle" style="width: 13px; height: 13px; color: #059669;"></i> Duy trì ổn định
+                            </span>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="shopping-bag"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Tổng lợi nhuận</span>
+                            <h2 class="kpi-value">9.101.277 <span style="font-size: 0.85rem; font-weight: 500; color: #64748b;">VND</span></h2>
+                            <span style="font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 0.35rem; margin-top: 0.45rem;">
+                                <i data-lucide="bar-chart-2" style="width: 13px; height: 13px; color: #059669;"></i> Tỷ suất lợi nhuận cao
+                            </span>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="credit-card"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7 DAYS DETAILED TABLE CARD -->
+                <div class="card">
+                    <div class="card-header flex-between">
+                        <h3>Bảng dữ liệu chi tiết 7 ngày gần nhất</h3>
+                        <div class="flex-align" style="gap: 0.5rem;">
+                            <button class="action-btn" onclick="showToast('Tùy chỉnh cột hiển thị', 'info')"><i
+                                    data-lucide="sliders-horizontal"></i></button>
+                            <button class="action-btn" onclick="showToast('Thao tác khác', 'info')"><i
+                                    data-lucide="more-vertical"></i></button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>NGÀY</th>
+                                    <th>TỔNG DOANH THU (VND)</th>
+                                    <th>SỐ ĐƠN HÀNG ĐÃ BÁN</th>
+                                    <th>TỔNG HÀNG HOÁ BÁN RA</th>
+                                    <th>LỢI NHUẬN (VND)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="general-report-tbody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="table-footer flex-between">
+                        <span class="pagination-info" id="general-report-count">Hiển thị 7 bản ghi từ ngày 23/11 -
+                            29/11/2025</span>
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i data-lucide="chevron-left"></i> Trước</button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">Sau <i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

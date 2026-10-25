@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Hàng Hóa - Tạp Hóa Xanh</title>
+    <meta name="description" content="Xem chi tiết hàng hóa Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link active">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Quản lý hàng hóa / Xem chi tiết hàng hóa</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- BACK LINK & PAGE HEADER -->
+                <div style="margin-bottom: 1rem;">
+                    <a href="products.html" class="back-link-btn">
+                        <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+                        <span>Quay lại danh sách hàng hóa</span>
+                    </a>
+                </div>
+
+                <div class="page-header" style="margin-bottom: 1.5rem;">
+                    <h1 class="page-title" style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0;">Xem chi tiết hàng hóa</h1>
+                </div>
+
+                <!-- MAIN DETAIL CARD (FIGMA EXACT MATCH 100%) -->
+                <div class="detail-main-card">
+                    <!-- TOP SECTION: FIELDS GRID & IMAGE BOX -->
+                    <div class="detail-top-flex">
+                        <div class="detail-fields-grid">
+                            <div class="detail-field-group">
+                                <label>Mã hàng hóa (Không thể sửa)</label>
+                                <input type="text" id="detail-prod-code" value="HH0000010" readonly style="background-color: #F1F5F9; color: #64748B; cursor: not-allowed;">
+                            </div>
+                            <div class="detail-field-group">
+                                <label>Tên hàng hóa *</label>
+                                <input type="text" id="detail-prod-name" value="Pepsi">
+                            </div>
+                            <div class="detail-field-group">
+                                <label>Mã loại hàng</label>
+                                <input type="text" id="detail-prod-catcode" value="LH0000002">
+                            </div>
+                            <div class="detail-field-group">
+                                <label>Tên loại hàng</label>
+                                <input type="text" id="detail-prod-catname" value="Đồ uống">
+                            </div>
+                            <div class="detail-field-group">
+                                <label>Đơn vị tính</label>
+                                <input type="text" id="detail-prod-unit" value="Lon">
+                            </div>
+                            <div class="detail-field-group">
+                                <label>Số lượng tồn kho</label>
+                                <input type="number" id="detail-prod-stock" value="12">
+                            </div>
+                        </div>
+
+                        <!-- RIGHT PRODUCT IMAGE BOX -->
+                        <div class="detail-img-box">
+                            <i data-lucide="package" style="width: 54px; height: 54px; color: #94A3B8; opacity: 0.6;"></i>
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM IMPORT HISTORY TABLE (FIGMA EXACT MATCH) -->
+                    <div class="table-responsive" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; margin-bottom: 1.75rem;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="history-table-header">Mã nhập</th>
+                                    <th class="history-table-header">Ngày nhập</th>
+                                    <th class="history-table-header text-center">Số lượng tồn</th>
+                                    <th class="history-table-header text-center">HSD</th>
+                                    <th class="history-table-header text-right">Giá vốn</th>
+                                    <th class="history-table-header text-right">Giá bán</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-700">NH0000020</td>
+                                    <td>03/12/2025</td>
+                                    <td class="text-center fw-700">8</td>
+                                    <td class="text-center">03/12/2026</td>
+                                    <td class="text-right">8,000</td>
+                                    <td class="text-right fw-700">10,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-700">NH0000014</td>
+                                    <td>20/01/2025</td>
+                                    <td class="text-center fw-700">4</td>
+                                    <td class="text-center">20/01/2026</td>
+                                    <td class="text-right">8,000</td>
+                                    <td class="text-right fw-700">10,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-700">NH0000012</td>
+                                    <td>12/12/2024</td>
+                                    <td class="text-center fw-800" style="color: #EF4444;">0</td>
+                                    <td class="text-center">12/12/2025</td>
+                                    <td class="text-right">8,000</td>
+                                    <td class="text-right fw-700">10,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-danger" onclick="openModal('delete-product-modal')">Xóa mặt hàng</button>
+                        <button type="button" class="btn btn-primary" onclick="handleSaveProductDetail()">
+                            <i data-lucide="save"></i>
+                            <span>Lưu thay đổi</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL: XÁC NHẬN XÓA HÀNG HÓA (FIGMA EXACT MATCH 100%) -->
+    <div id="delete-product-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa hàng hóa</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa phiếu này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Mã hàng hóa</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="modal-del-prod-code">HH0000010</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Tên hàng hóa</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-prod-name">Pepsi</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Giá bán</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-prod-saleprice">10,000</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Giá vốn</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-prod-costprice">8,000</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Tồn kho</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-prod-stock">12</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Đơn vị tính</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-del-prod-unit">Lon</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">HSD</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-del-prod-hsd">03/12/2026</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-product-modal')" style="flex: 1;">Hủy</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeleteProduct()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let activeProduct = null;
+
+        function loadProductDetailFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reqId = (urlParams.get('id') || 'HH00000010').trim();
+
+            const storedProds = getStoredProducts();
+            activeProduct = storedProds.find(p => p.id === reqId);
+
+            if (!activeProduct) {
+                const db = {
+                    'HH00000010': { id: 'HH00000010', name: 'Bánh chocopie', catCode: 'LH0000002', catName: 'Bánh', unit: 'Hộp', stock: 12, salePrice: '10,000', costPrice: '8,000', hsd: '03/12/2026' },
+                    'HH0000010':  { id: 'HH00000010', name: 'Bánh chocopie', catCode: 'LH0000002', catName: 'Bánh', unit: 'Hộp', stock: 12, salePrice: '10,000', costPrice: '8,000', hsd: '03/12/2026' },
+                    'HH00000009': { id: 'HH00000009', name: 'Bánh solite', catCode: 'LH0000002', catName: 'Bánh', unit: 'Hộp', stock: 15, salePrice: '40,000', costPrice: '32,000', hsd: '15/08/2026' },
+                    'HH0000009':  { id: 'HH00000009', name: 'Bánh solite', catCode: 'LH0000002', catName: 'Bánh', unit: 'Hộp', stock: 15, salePrice: '40,000', costPrice: '32,000', hsd: '15/08/2026' },
+                    'HH00000008': { id: 'HH00000008', name: 'Pepsi', catCode: 'LH0000002', catName: 'Đồ uống', unit: 'Lon', stock: 12, salePrice: '10,000', costPrice: '8,000', hsd: '03/12/2026' },
+                    'HH0000008':  { id: 'HH00000008', name: 'Pepsi', catCode: 'LH0000002', catName: 'Đồ uống', unit: 'Lon', stock: 12, salePrice: '10,000', costPrice: '8,000', hsd: '03/12/2026' },
+                    'HH00000007': { id: 'HH00000007', name: 'Bàn chải đ.răng P/S', catCode: 'LH0000007', catName: 'Hóa mỹ phẩm', unit: 'Cái', stock: 0, salePrice: '12,000', costPrice: '9,000', hsd: 'Không có' },
+                    'HH0000007':  { id: 'HH00000007', name: 'Bàn chải đ.răng P/S', catCode: 'LH0000007', catName: 'Hóa mỹ phẩm', unit: 'Cái', stock: 0, salePrice: '12,000', costPrice: '9,000', hsd: 'Không có' },
+                    'HH00000006': { id: 'HH00000006', name: 'Bánh quy Cosy', catCode: 'LH0000002', catName: 'Bánh', unit: 'Hộp', stock: 10, salePrice: '45,000', costPrice: '36,000', hsd: '10/10/2026' },
+                    'HH0000006':  { id: 'HH00000006', name: 'Bánh quy Cosy', catCode: 'LH0000002', catName: 'Bánh', unit: 'Hộp', stock: 10, salePrice: '45,000', costPrice: '36,000', hsd: '10/10/2026' }
+                };
+                activeProduct = db[reqId] || db['HH00000010'];
+            }
+
+            document.getElementById('detail-prod-code').value = activeProduct.id || activeProduct.code;
+            document.getElementById('detail-prod-name').value = activeProduct.name;
+            document.getElementById('detail-prod-catcode').value = activeProduct.catCode || 'LH0000002';
+            document.getElementById('detail-prod-catname').value = activeProduct.catName || 'Bánh';
+            document.getElementById('detail-prod-unit').value = activeProduct.unit;
+            document.getElementById('detail-prod-stock').value = activeProduct.stock;
+
+            // Delete modal fields
+            document.getElementById('modal-del-prod-code').innerText = activeProduct.id || activeProduct.code;
+            document.getElementById('modal-del-prod-name').innerText = activeProduct.name;
+            document.getElementById('modal-del-prod-saleprice').innerText = activeProduct.salePrice || '10,000';
+            document.getElementById('modal-del-prod-costprice').innerText = activeProduct.costPrice || '8,000';
+            document.getElementById('modal-del-prod-stock').innerText = activeProduct.stock;
+            document.getElementById('modal-del-prod-unit').innerText = activeProduct.unit;
+            document.getElementById('modal-del-prod-hsd').innerText = activeProduct.hsd || '03/12/2026';
+        }
+
+        function handleSaveProductDetail() {
+            const newName = document.getElementById('detail-prod-name').value.trim();
+            const newCatCode = document.getElementById('detail-prod-catcode').value.trim();
+            const newCatName = document.getElementById('detail-prod-catname').value.trim();
+            const newUnit = document.getElementById('detail-prod-unit').value.trim();
+            const newStock = parseInt(document.getElementById('detail-prod-stock').value) || 0;
+
+            if (!newName) {
+                showToast('Tên hàng hóa không được để trống!', 'warning');
+                return;
+            }
+
+            const targetId = activeProduct.id || activeProduct.code;
+            const storedProds = getStoredProducts();
+            const pIndex = storedProds.findIndex(p => p.id === targetId);
+
+            if (pIndex !== -1) {
+                storedProds[pIndex].name = newName;
+                storedProds[pIndex].catCode = newCatCode;
+                storedProds[pIndex].catName = newCatName;
+                storedProds[pIndex].unit = newUnit;
+                storedProds[pIndex].stock = newStock;
+            } else {
+                storedProds.push({
+                    id: targetId,
+                    name: newName,
+                    catCode: newCatCode,
+                    catName: newCatName,
+                    unit: newUnit,
+                    stock: newStock
+                });
+            }
+
+            saveStoredProducts(storedProds);
+            state.products = storedProds;
+
+            showToast(`Cập nhật thông tin hàng hóa "${newName}" thành công!`, 'success');
+            setTimeout(() => {
+                window.location.href = 'products.html';
+            }, 800);
+        }
+
+        function confirmDeleteProduct() {
+            closeModal('delete-product-modal');
+            const targetId = activeProduct.id || activeProduct.code;
+            const storedProds = getStoredProducts().filter(p => p.id !== targetId);
+            saveStoredProducts(storedProds);
+            state.products = storedProds;
+
+            showResultPopup('success', 'Xoá thành công', '', () => {
+                window.location.href = 'products.html';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProductDetailFromUrl();
+        });
+    </script>
+</body>
+</html>

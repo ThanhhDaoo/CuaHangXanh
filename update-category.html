@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Loại Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Chỉnh sửa loại hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link active">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Hàng hóa &gt; Loại hàng &gt; Chỉnh sửa</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- PAGE HEADER (FIGMA EXACT MATCH 100%) -->
+                <div style="max-width: 760px; margin: 0 auto 1.5rem auto;">
+                    <h1 class="page-title" style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin-bottom: 0.3rem;">Chỉnh sửa loại hàng</h1>
+                    <p style="font-size: 0.875rem; color: #64748B; margin-bottom: 0;">Cập nhật thông tin phân loại hàng hóa giúp bạn đồng bộ dữ liệu chính xác.</p>
+                </div>
+
+                <!-- MAIN FORM CARD (FIGMA EXACT MATCH 100%) -->
+                <div class="cat-create-card">
+                    <form onsubmit="handleSaveUpdateCategory(event)">
+                        <div class="cat-form-group">
+                            <label class="cat-form-label">Mã loại hàng</label>
+                            <input type="text" id="cat-id-input" class="cat-form-input" value="LH0000012" readonly>
+                        </div>
+
+                        <div class="cat-form-group">
+                            <label class="cat-form-label">Tên loại hàng *</label>
+                            <input type="text" id="cat-name-input" class="cat-form-input" value="Gia vị" placeholder="Ví dụ: Nước giải khát, Thực phẩm đóng hộp..." required>
+                            <div class="cat-form-footnote">Tên loại hàng nên ngắn gọn và dễ nhận biết.</div>
+                        </div>
+
+                        <div class="cat-form-group">
+                            <label class="cat-form-label">Mô tả</label>
+                            <textarea id="cat-desc-input" class="cat-form-input" rows="5" placeholder="Nhập mô tả chi tiết về các mặt hàng thuộc loại này...">Các sản phẩm gia vị nêm nếm như nước mắm, muối, đường, hạt nêm, tương ớt...</textarea>
+                        </div>
+
+                        <div class="cat-action-btns">
+                            <a id="cancel-link" href="categories.html" class="btn-cancel-white">Hủy bỏ</a>
+                            <button type="submit" class="btn-save-green-solid">
+                                <i data-lucide="save" style="width: 18px; height: 18px;"></i>
+                                <span>Cập nhật loại hàng</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id') || 'LH0000012';
+
+            const db = {
+                'LH0000011': { name: 'Gia vị', desc: 'Các sản phẩm gia vị nêm nếm như nước mắm, muối, đường, hạt nêm, tương ớt...' },
+                'LH0000012': { name: 'Rau củ tươi', desc: 'Cung cấp các loại rau củ quả tươi sạch nhập trực tiếp từ trang trại Đà Lạt...' },
+                'LH0000013': { name: 'Sữa & Chế phẩm', desc: 'Sữa tươi, sữa chua, phô mai và các chế phẩm từ sữa chất lượng cao...' },
+                'LH0000014': { name: 'Đồ uống', desc: 'Nước giải khát, nước ngọt có ga, trà xanh, nước ép trái cây các loại...' },
+                'LH0000015': { name: 'Hàng khô', desc: 'Miến, bún khô, nấm mèo, măng khô và thực phẩm sấy khô...' }
+            };
+
+            const item = db[id] || { name: 'Loại hàng', desc: 'Mô tả loại hàng hóa' };
+
+            const idInput = document.getElementById('cat-id-input');
+            const nameInput = document.getElementById('cat-name-input');
+            const descInput = document.getElementById('cat-desc-input');
+            const cancelLink = document.getElementById('cancel-link');
+
+            if (idInput) idInput.value = id;
+            if (nameInput) nameInput.value = item.name;
+            if (descInput) descInput.value = item.desc;
+            if (cancelLink) cancelLink.href = `category-detail.html?id=${id}`;
+        });
+
+        function handleSaveUpdateCategory(e) {
+            e.preventDefault();
+            const id = document.getElementById('cat-id-input').value;
+            const name = document.getElementById('cat-name-input').value.trim();
+            if (!name) {
+                showToast('Vui lòng nhập tên loại hàng', 'error');
+                return;
+            }
+
+            showToast(`Đã cập nhật loại hàng "${name}" thành công!`, 'success');
+            setTimeout(() => {
+                window.location.href = `category-detail.html?id=${id}`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

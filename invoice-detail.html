@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Hóa Đơn - Tạp Hóa Xanh</title>
+    <meta name="description" content="Chi tiết hóa đơn bán hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="sales.html" class="nav-link active">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html" class="active-sub">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Bán hàng / Chi tiết hóa đơn</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- BACK LINK -->
+                <div style="margin-bottom: 1.25rem;">
+                    <a href="sales.html" style="color: #0F172A; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+                        <span>Quay lại</span>
+                    </a>
+                </div>
+
+                <!-- MAIN CARD FOR INVOICE DETAIL (FIGMA EXACT MATCH) -->
+                <div class="card" style="padding: 0; overflow: hidden; border-radius: 12px;">
+                    <div class="card-header flex-between" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #E2E8F0; background: #FFFFFF;">
+                        <div class="flex-align" style="gap: 0.5rem;">
+                            <div style="width: 28px; height: 28px; border-radius: 6px; background-color: #DCFCE7; color: #166534; display: flex; align-items: center; justify-content: center;">
+                                <i data-lucide="banknote" style="width: 16px; height: 16px;"></i>
+                            </div>
+                            <h3 class="card-title" style="font-size: 1.1rem; font-weight: 800; color: #0F172A;">Thông tin chi tiết</h3>
+                        </div>
+                        <div style="display: flex; gap: 0.65rem;">
+                            <button type="button" class="btn btn-outline" onclick="openModal('print-receipt-modal')">
+                                <i data-lucide="printer"></i>
+                                <span>In hóa đơn</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="showToast('Đã xuất file PDF hóa đơn thành công', 'success')">
+                                <i data-lucide="file-text"></i>
+                                <span>Xuất file</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- META INFO GRID DYNAMIC BINDING -->
+                    <div class="detail-meta-grid">
+                        <div>
+                            <div class="meta-item-label">Mã hóa đơn</div>
+                            <div class="meta-item-val green-code" id="detail-inv-id">SON2405009</div>
+                        </div>
+                        <div>
+                            <div class="meta-item-label">Ngày bán</div>
+                            <div class="meta-item-val" id="detail-inv-date">25/05/2024 22:50</div>
+                        </div>
+                        <div>
+                            <div class="meta-item-label">Phương thức thanh toán</div>
+                            <div class="meta-item-val" id="detail-inv-payment" style="display: flex; align-items: center; gap: 0.35rem;">
+                                <i data-lucide="banknote" style="width: 18px; height: 18px; color: #16A34A;"></i>
+                                <span>Tiền mặt</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS TABLE DYNAMIC BINDING -->
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>MÃ HÀNG HÓA</th>
+                                    <th>TÊN HÀNG HÓA</th>
+                                    <th>SỐ LƯỢNG</th>
+                                    <th>ĐƠN GIÁ</th>
+                                    <th class="text-right">THÀNH TIỀN</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail-items-tbody">
+                                <!-- Dynamically filled from active invoice -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- FOOTER SUMMARY & DELETE ACTION DYNAMIC BINDING -->
+                    <div style="padding: 1.5rem; background-color: #FAFAFA; border-top: 1px solid #E2E8F0; display: flex; flex-direction: column; align-items: flex-end; gap: 1.25rem;">
+                        <div style="font-size: 1.25rem; font-weight: 800;">
+                            <span style="color: #0F172A; margin-right: 0.75rem;">Tổng tiền:</span>
+                            <span style="color: #059669;" id="detail-inv-total">84,000</span>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-danger-solid" onclick="openModal('delete-invoice-modal')">
+                                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                <span>Xóa</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL 1: IN HÓA ĐƠN BÁN HÀNG PREVIEW (DYNAMIC BINDING) -->
+    <div id="print-receipt-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="width: auto; max-width: 440px; background: transparent; box-shadow: none;">
+            <div class="receipt-paper">
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 0.5rem;" id="print-receipt-top-date">25/05/2024</div>
+                <div class="receipt-header">
+                    <div style="font-weight: 800; font-size: 1.1rem;">Tạp hóa Xanh</div>
+                    <div style="font-size: 0.8rem; color: #475569;">Địa chỉ: Chợ Đá Hai</div>
+                    <div style="font-size: 0.8rem; color: #475569;">Điện thoại: 0905692971</div>
+                    <div class="receipt-title">HÓA ĐƠN BÁN HÀNG</div>
+                    <div style="font-size: 0.8rem; color: #059669; font-weight: 700;" id="print-receipt-code">Số HĐ: SON2405009</div>
+                    <div style="font-size: 0.8rem; color: #64748B;" id="print-receipt-date">Ngày 25 tháng 05 năm 2024</div>
+                </div>
+
+                <table class="receipt-table">
+                    <thead>
+                        <tr>
+                            <th>Tên MH</th>
+                            <th style="text-align: center;">SL</th>
+                            <th style="text-align: right;">T.Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody id="print-receipt-tbody">
+                        <!-- Dynamically filled -->
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #0F172A; text-align: center;">
+                    <div style="font-size: 1.1rem; font-weight: 800;">
+                        <span>Tổng tiền: </span>
+                        <span id="print-receipt-total">84,000</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.25rem; text-align: center; font-style: italic; font-size: 0.8rem; color: #64748B;">
+                    Cám ơn và hẹn gặp lại!
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; margin-top: 1rem; justify-content: center;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('print-receipt-modal')">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="window.print()">
+                    <i data-lucide="printer"></i>
+                    <span>In ngay</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: XÁC NHẬN XÓA HÓA ĐƠN (DYNAMIC BINDING) -->
+    <div id="delete-invoice-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa</h3>
+            <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 1.5rem;">Bạn có chắc chắn muốn xóa hóa đơn này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.9rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B; font-weight: 500;">Mã hóa đơn</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="delete-modal-id">SON2405009</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B; font-weight: 500;">Ngày bán</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="delete-modal-date">25/05/2024</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B; font-weight: 500;">Tổng tiền</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="delete-modal-total">84,000</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-invoice-modal')" style="flex: 1;">Hủy</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeleteInvoice()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let activeInvoice = null;
+
+        function loadInvoiceFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reqId = urlParams.get('id') || 'SON2405009';
+
+            const savedInvoices = JSON.parse(localStorage.getItem('taphoaxanh_invoices') || '{}');
+
+            if (savedInvoices[reqId]) {
+                activeInvoice = savedInvoices[reqId];
+            } else {
+                const presetDb = {
+                    'SON2405009': {
+                        id: 'SON2405009',
+                        date: '25/05/2024 22:50',
+                        payment: 'Tiền mặt',
+                        amount: 84000,
+                        items: [
+                            { code: 'HH0000004', name: 'Sữa tươi TH True Milk 1L', qty: 1, price: 32000, subtotal: 32000 },
+                            { code: 'HH0000002', name: 'Dầu ăn Tường An 1L', qty: 1, price: 52000, subtotal: 52000 }
+                        ]
+                    },
+                    'SON2405001': {
+                        id: 'SON2405001',
+                        date: '25/05/2024 08:30',
+                        payment: 'Tiền mặt',
+                        amount: 1250000,
+                        items: [
+                            { code: 'HH0000001', name: 'Mì tôm Hảo Hảo', qty: 10, price: 4500, subtotal: 45000 },
+                            { code: 'HH0000002', name: 'Dầu ăn Tường An 1L', qty: 1, price: 52000, subtotal: 52000 },
+                            { code: 'HH0000005', name: 'Bột giặt Aba 3kg', qty: 10, price: 115300, subtotal: 1153000 }
+                        ]
+                    },
+                    'SON0000001': {
+                        id: 'SON0000001',
+                        date: '20/10/2025',
+                        payment: 'Tiền mặt',
+                        amount: 50000,
+                        items: [
+                            { code: 'HH0000002', name: 'Bánh Solite', qty: 1, price: 40000, subtotal: 40000 },
+                            { code: 'HH0000004', name: '7Up', qty: 1, price: 10000, subtotal: 10000 }
+                        ]
+                    }
+                };
+                activeInvoice = presetDb[reqId] || presetDb['SON2405009'];
+            }
+
+            renderInvoiceDetailView(activeInvoice);
+        }
+
+        function renderInvoiceDetailView(inv) {
+            document.getElementById('detail-inv-id').innerText = inv.id;
+            document.getElementById('detail-inv-date').innerText = inv.date;
+            document.getElementById('detail-inv-total').innerText = inv.amount.toLocaleString('vi-VN');
+
+            const paymentContainer = document.getElementById('detail-inv-payment');
+            if (paymentContainer) {
+                paymentContainer.innerHTML = `
+                    <i data-lucide="${inv.payment === 'Tiền mặt' ? 'banknote' : 'landmark'}" style="width: 18px; height: 18px; color: #16A34A;"></i>
+                    <span>${inv.payment}</span>
+                `;
+            }
+
+            const tbody = document.getElementById('detail-items-tbody');
+            if (tbody && inv.items) {
+                tbody.innerHTML = inv.items.map(item => `
+                    <tr>
+                        <td>${item.code}</td>
+                        <td class="fw-700">${item.name}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.price.toLocaleString('vi-VN')}</td>
+                        <td class="text-right fw-800">${item.subtotal.toLocaleString('vi-VN')}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Print Receipt Modal
+            document.getElementById('print-receipt-code').innerText = `Số HĐ: ${inv.id}`;
+            document.getElementById('print-receipt-date').innerText = `Ngày ${inv.date}`;
+            document.getElementById('print-receipt-total').innerText = inv.amount.toLocaleString('vi-VN');
+
+            const printTbody = document.getElementById('print-receipt-tbody');
+            if (printTbody && inv.items) {
+                printTbody.innerHTML = inv.items.map(item => `
+                    <tr>
+                        <td>
+                            <div>${item.name}</div>
+                            <div style="font-size: 0.75rem; color: #64748B; font-style: italic;">${item.price.toLocaleString('vi-VN')}</div>
+                        </td>
+                        <td style="text-align: center;">${item.qty}</td>
+                        <td style="text-align: right; font-weight: 700;">${item.subtotal.toLocaleString('vi-VN')}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Delete Modal
+            document.getElementById('delete-modal-id').innerText = inv.id;
+            document.getElementById('delete-modal-date').innerText = inv.date;
+            document.getElementById('delete-modal-total').innerText = inv.amount.toLocaleString('vi-VN');
+
+            refreshIcons();
+        }
+
+        function confirmDeleteInvoice() {
+            closeModal('delete-invoice-modal');
+            showResultPopup('success', 'Xoá thành công', '', () => {
+                window.location.href = 'sales.html';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInvoiceFromUrl();
+        });
+    </script>
+</body>
+</html>

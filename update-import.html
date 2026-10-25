@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập Nhật Phiếu Nhập Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Cập nhật phiếu nhập hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item open">
+                        <a href="imports.html" class="nav-link active">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Nhập hàng / Cập nhật phiếu nhập hàng</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- BACK BREADCRUMB -->
+                <div style="margin-bottom: 1.25rem;">
+                    <a href="imports.html" style="color: #0F172A; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+                        <span>Quay lại danh sách phiếu nhập</span>
+                    </a>
+                </div>
+
+                <div class="import-layout-grid">
+                    <!-- LEFT COLUMN: PRODUCTS TABLE (FIGMA EXACT MATCH) -->
+                    <div>
+                        <div class="import-card" style="margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h3 style="font-size: 1.1rem; font-weight: 800; color: #0F172A;">Danh sách sản phẩm nhập kho</h3>
+                                <span style="font-size: 0.8rem; color: #64748B; background: #F1F5F9; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;">2 sản phẩm</span>
+                            </div>
+
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="table-import-header">STT</th>
+                                        <th class="table-import-header">Sản phẩm</th>
+                                        <th class="table-import-header">Hạn sử dụng</th>
+                                        <th class="table-import-header" style="width: 110px;">Đơn giá</th>
+                                        <th class="table-import-header text-center">Số lượng</th>
+                                        <th class="table-import-header text-right">Thành tiền</th>
+                                        <th class="table-import-header text-center">Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="fw-700">Sữa chua Vinamilk 100g</div>
+                                            <div style="font-size: 0.75rem; color: #64748B;">SKU: HH0000004</div>
+                                        </td>
+                                        <td>
+                                            <span class="expiry-badge">12/2026</span>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control-sm" value="8,000" style="width: 75px;">
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="stepper-mini">
+                                                <button type="button" onclick="updateImportQty('SC', -1)">-</button>
+                                                <span id="qty-SC">50</span>
+                                                <button type="button" onclick="updateImportQty('SC', 1)">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-right fw-800" style="color: #059669;" id="subtotal-SC">400,000</td>
+                                        <td class="text-center">
+                                            <button type="button" class="action-btn delete-btn" onclick="removeUpdateImportRow(this)">
+                                                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            <div class="fw-700">Sữa tươi TH True Milk 1L</div>
+                                            <div style="font-size: 0.75rem; color: #64748B;">SKU: HH0000002</div>
+                                        </td>
+                                        <td>
+                                            <span class="expiry-badge">08/2026</span>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control-sm" value="32,000" style="width: 75px;">
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="stepper-mini">
+                                                <button type="button" onclick="updateImportQty('ST', -1)">-</button>
+                                                <span id="qty-ST">70</span>
+                                                <button type="button" onclick="updateImportQty('ST', 1)">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="text-right fw-800" style="color: #059669;" id="subtotal-ST">2,240,000</td>
+                                        <td class="text-center">
+                                            <button type="button" class="action-btn delete-btn" onclick="removeUpdateImportRow(this)">
+                                                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- ADD NEW PRODUCT LINK BUTTON -->
+                        <div style="text-align: right;">
+                            <button type="button" class="btn btn-outline" onclick="openAddImportProductModal()" style="font-size: 0.85rem; gap: 0.35rem;">
+                                <i data-lucide="plus-circle" style="width: 16px; height: 16px; color: #059669;"></i>
+                                <span>Thêm sản phẩm mới</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: SUPPLIER, DATE, INFO & BUTTONS (STANDARDIZED DATA BINDING) -->
+                    <div>
+                        <!-- CARD 1: NHA CUNG CAP & NGAY NHAP -->
+                        <div class="import-card" style="margin-bottom: 1.25rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.35rem;">Chọn Nhà cung cấp *</label>
+                                <select class="form-control" id="update-supplier-select" style="width: 100%; border-radius: 8px; font-size: 0.85rem;">
+                                    <option value="Nông sản Sạch Đà Lạt">Nông sản Sạch Đà Lạt</option>
+                                    <option value="Công ty Thực phẩm Xanh">Công ty Thực phẩm Xanh</option>
+                                    <option value="Hợp tác xã Organic">Hợp tác xã Organic</option>
+                                    <option value="Vườn Rau 3 Miền">Vườn Rau 3 Miền</option>
+                                    <option value="Nhà phân phối Orion">Nhà phân phối Orion</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.35rem;">Ngày nhập hàng *</label>
+                                <input type="date" class="form-control" id="update-import-date-input" value="2023-10-25" style="width: 100%; border-radius: 8px; font-size: 0.85rem;">
+                            </div>
+                        </div>
+
+                        <!-- CARD 2: THÔNG TIN PHIẾU NHẬP -->
+                        <div class="import-card" style="margin-bottom: 1.25rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 0.8rem; color: #64748B;">Mã phiếu nhập</span>
+                                <span style="background-color: #F1F5F9; color: #0F172A; font-weight: 800; font-size: 0.85rem; padding: 0.2rem 0.65rem; border-radius: 12px;" id="update-import-code-badge">NH20231001</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 0.8rem; color: #64748B;">Ngày tạo</span>
+                                <span style="font-weight: 700; font-size: 0.85rem; color: #0F172A;" id="update-created-date">25/10/2023</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <span style="font-size: 0.8rem; color: #64748B;">Tổng tiền hàng</span>
+                                <span style="font-weight: 800; font-size: 1.05rem; color: #059669;" id="update-total-amount">12,500,000 đ</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.8rem; color: #64748B;">Trạng thái thanh toán</span>
+                                <select id="update-status-select" class="form-control" style="width: auto; font-size: 0.85rem; font-weight: 700; border-radius: 8px; padding: 0.25rem 0.6rem; border: 1px solid #CBD5E1; color: #0F172A;">
+                                    <option value="Đã thanh toán">Đã thanh toán</option>
+                                    <option value="Chưa thanh toán">Chưa thanh toán</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- ACTION BUTTONS -->
+                        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                            <button type="button" class="btn btn-danger" onclick="openModal('delete-import-modal')">
+                                <i data-lucide="trash-2"></i>
+                                <span>Xóa</span>
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="window.location.href='imports.html'">Hủy</button>
+                            <button type="button" class="btn btn-primary" onclick="handleSaveUpdateImport()">
+                                <i data-lucide="save"></i>
+                                <span>Lưu phiếu</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL: XÁC NHẬN XÓA PHIẾU NHẬP HÀNG (STANDARDIZED DATA) -->
+    <div id="delete-import-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa phiếu nhập hàng</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa phiếu này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Mã phiếu nhập hàng</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="delete-modal-imp-id">NH20231001</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Nhà cung cấp</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="delete-modal-imp-supplier">Nông sản Sạch Đà Lạt</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Ngày tạo phiếu</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="delete-modal-imp-date">25/10/2023</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">Tổng tiền</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="delete-modal-imp-amount">12,500,000 đ</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-import-modal')" style="flex: 1;">Hủy</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeleteImport()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL THÊM SẢN PHẨM MỚI VÀO PHIẾU NHẬP (FIGMA MATCH) -->
+    <div id="add-import-product-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 520px; border-radius: 16px;">
+            <div class="modal-header">
+                <h3>
+                    <i data-lucide="package-plus"></i>
+                    <span>Thêm sản phẩm nhập kho</span>
+                </h3>
+                <button class="close-btn" onclick="closeModal('add-import-product-modal')">&times;</button>
+            </div>
+            <form onsubmit="handleAddProductToImport(event)">
+                <div class="modal-body" style="padding: 1.35rem 1.5rem;">
+                    <div class="form-group" style="margin-bottom: 1.1rem;">
+                        <label style="display: block; font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.35rem;">Chọn sản phẩm *</label>
+                        <select id="modal-add-product-select" class="form-control" onchange="onSelectAddProductChange()" style="width: 100%; border-radius: 8px; font-size: 0.875rem; padding: 0.6rem 0.85rem;" required>
+                            <option value="">-- Chọn sản phẩm có sẵn trong kho --</option>
+                            <option value="Dầu ăn Tường An 1L" data-sku="HH0000001" data-price="52000" data-expiry="05/2027">Dầu ăn Tường An 1L (SKU: HH0000001)</option>
+                            <option value="Bánh Chocopie 12 cái" data-sku="HH0000005" data-price="50000" data-expiry="11/2026">Bánh Chocopie 12 cái (SKU: HH0000005)</option>
+                            <option value="Mì Hảo Hảo Tôm Chua Cay" data-sku="HH0000006" data-price="4500" data-expiry="09/2026">Mì Hảo Hảo Tôm Chua Cay (SKU: HH0000006)</option>
+                            <option value="Nước ngọt Pepsi 330ml" data-sku="HH0000007" data-price="10000" data-expiry="01/2027">Nước ngọt Pepsi 330ml (SKU: HH0000007)</option>
+                            <option value="Gạo ST25 Ông Cua 5kg" data-sku="HH0000008" data-price="170000" data-expiry="12/2027">Gạo ST25 Ông Cua 5kg (SKU: HH0000008)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem;">
+                        <div class="form-group">
+                            <label style="display: block; font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.35rem;">Hạn sử dụng</label>
+                            <input type="text" id="modal-add-product-expiry" class="form-control" placeholder="12/2026" value="12/2026" style="border-radius: 8px; font-size: 0.875rem;">
+                        </div>
+
+                        <div class="form-group">
+                            <label style="display: block; font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.35rem;">Đơn giá nhập (VNĐ) *</label>
+                            <input type="number" id="modal-add-product-price" class="form-control" placeholder="50000" value="50000" min="100" style="border-radius: 8px; font-size: 0.875rem;" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <label style="display: block; font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.35rem;">Số lượng nhập *</label>
+                        <input type="number" id="modal-add-product-qty" class="form-control" placeholder="10" value="10" min="1" style="border-radius: 8px; font-size: 0.875rem;" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 1rem 1.5rem; background: #F8FAFC; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end; gap: 0.75rem; border-radius: 0 0 16px 16px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('add-import-product-modal')">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-primary">Thêm vào phiếu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let currentImportId = 'NH20231001';
+        let newProdCounter = 1;
+
+        function openAddImportProductModal() {
+            openModal('add-import-product-modal');
+        }
+
+        function onSelectAddProductChange() {
+            const select = document.getElementById('modal-add-product-select');
+            const selectedOpt = select.options[select.selectedIndex];
+            if (selectedOpt && selectedOpt.value) {
+                const price = selectedOpt.getAttribute('data-price') || 50000;
+                const expiry = selectedOpt.getAttribute('data-expiry') || '12/2026';
+                document.getElementById('modal-add-product-price').value = price;
+                document.getElementById('modal-add-product-expiry').value = expiry;
+            }
+        }
+
+        function handleAddProductToImport(e) {
+            e.preventDefault();
+            const select = document.getElementById('modal-add-product-select');
+            const prodName = select.value;
+            if (!prodName) {
+                showToast('Vui lòng chọn sản phẩm!', 'warning');
+                return;
+            }
+
+            const selectedOpt = select.options[select.selectedIndex];
+            const sku = selectedOpt.getAttribute('data-sku') || `HH000000${newProdCounter}`;
+            const expiry = document.getElementById('modal-add-product-expiry').value || '12/2026';
+            const price = parseInt(document.getElementById('modal-add-product-price').value) || 10000;
+            const qty = parseInt(document.getElementById('modal-add-product-qty').value) || 1;
+
+            const itemCode = 'NP_' + (newProdCounter++);
+            updateImportState[itemCode] = { price: price, qty: qty };
+
+            const tbody = document.querySelector('.import-card table tbody');
+            const stt = tbody.rows.length + 1;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${stt}</td>
+                <td>
+                    <div class="fw-700">${prodName}</div>
+                    <div style="font-size: 0.75rem; color: #64748B;">SKU: ${sku}</div>
+                </td>
+                <td>
+                    <span class="expiry-badge">${expiry}</span>
+                </td>
+                <td>
+                    <input type="text" class="form-control-sm" value="${price.toLocaleString('vi-VN')}" style="width: 75px;" onchange="updateImportPriceCustom('${itemCode}', this.value)">
+                </td>
+                <td class="text-center">
+                    <div class="stepper-mini">
+                        <button type="button" onclick="updateImportQty('${itemCode}', -1)">-</button>
+                        <span id="qty-${itemCode}">${qty}</span>
+                        <button type="button" onclick="updateImportQty('${itemCode}', 1)">+</button>
+                    </div>
+                </td>
+                <td class="text-right fw-800" style="color: #059669;" id="subtotal-${itemCode}">${(price * qty).toLocaleString('vi-VN')}</td>
+                <td class="text-center">
+                    <button type="button" class="action-btn delete-btn" onclick="removeUpdateImportRow(this, '${itemCode}')" title="Xóa">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            // Update badge count
+            const countBadge = document.querySelector('.import-card span[style*="border-radius: 12px"]');
+            if (countBadge) countBadge.innerText = `${tbody.rows.length} sản phẩm`;
+
+            // Recalculate totals
+            recalculateGrandTotal();
+
+            // Hide Modal
+            closeModal('add-import-product-modal');
+            const modalElem = document.getElementById('add-import-product-modal');
+            if (modalElem) {
+                modalElem.classList.add('hidden');
+                modalElem.style.setProperty('display', 'none', 'important');
+            }
+            select.value = '';
+            refreshIcons();
+            showToast(`Đã thêm "${prodName}" vào phiếu nhập kho!`, 'success');
+        }
+
+        function updateImportPriceCustom(code, val) {
+            const cleanVal = parseInt(val.replace(/[^0-9]/g, '')) || 0;
+            if (updateImportState[code]) {
+                updateImportState[code].price = cleanVal;
+                updateImportQty(code, 0);
+            }
+        }
+
+        const updateImportState = {
+            'SC': { price: 8000, qty: 50 },
+            'ST': { price: 32000, qty: 70 }
+        };
+
+        function initUpdateImportPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reqId = urlParams.get('id') || localStorage.getItem('taphoaxanh_last_import_id') || 'NH20231001';
+            currentImportId = reqId;
+            localStorage.setItem('taphoaxanh_last_import_id', currentImportId);
+
+            // Fallback db mapping matching NH20231001, NH20231002, NH20231003, NH20231004
+            const db = {
+                'NH20231001': { id: 'NH20231001', supplier: 'Nông sản Sạch Đà Lạt', date: '25/10/2023', amount: 12500000, status: 'Đã thanh toán' },
+                'NH20231002': { id: 'NH20231002', supplier: 'Công ty Thực phẩm Xanh', date: '24/10/2023', amount: 8200000, status: 'Chưa thanh toán' },
+                'NH20231003': { id: 'NH20231003', supplier: 'Hợp tác xã Organic', date: '23/10/2023', amount: 15000000, status: 'Chưa thanh toán' },
+                'NH20231004': { id: 'NH20231004', supplier: 'Vườn Rau 3 Miền', date: '22/10/2023', amount: 5450000, status: 'Đã thanh toán' }
+            };
+
+            const imp = state.imports.find(i => i.id === currentImportId) || db[currentImportId] || { id: currentImportId, supplier: 'Nông sản Sạch Đà Lạt', date: '25/10/2023', amount: 12500000, status: 'Đã thanh toán' };
+
+            // Update main card fields
+            document.getElementById('update-import-code-badge').innerText = imp.id;
+            document.getElementById('update-supplier-select').value = imp.supplier;
+            document.getElementById('update-created-date').innerText = imp.date;
+            document.getElementById('update-total-amount').innerText = imp.amount.toLocaleString('vi-VN') + ' đ';
+            
+            const dateInput = document.getElementById('update-import-date-input');
+            if (dateInput && imp.date) {
+                const parts = imp.date.split('/');
+                if (parts.length === 3) {
+                    dateInput.value = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                }
+            }
+
+            const statusSelect = document.getElementById('update-status-select');
+            if (statusSelect) statusSelect.value = imp.status;
+
+            // Update delete modal fields
+            document.getElementById('delete-modal-imp-id').innerText = imp.id;
+            document.getElementById('delete-modal-imp-supplier').innerText = imp.supplier;
+            document.getElementById('delete-modal-imp-date').innerText = imp.date;
+            document.getElementById('delete-modal-imp-amount').innerText = imp.amount.toLocaleString('vi-VN') + ' đ';
+        }
+
+        function updateImportQty(code, delta) {
+            if (!updateImportState[code]) return;
+            updateImportState[code].qty = Math.max(1, updateImportState[code].qty + delta);
+            document.getElementById(`qty-${code}`).innerText = updateImportState[code].qty;
+
+            const subtotal = updateImportState[code].qty * updateImportState[code].price;
+            document.getElementById(`subtotal-${code}`).innerText = subtotal.toLocaleString('vi-VN');
+
+            let grandTotal = 0;
+            Object.values(updateImportState).forEach(item => {
+                grandTotal += item.qty * item.price;
+            });
+            document.getElementById('update-total-amount').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('delete-modal-imp-amount').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
+        }
+
+        function removeUpdateImportRow(btn, code) {
+            if (code && updateImportState[code]) {
+                delete updateImportState[code];
+            }
+            const tbody = btn.closest('tbody');
+            btn.closest('tr').remove();
+
+            // Recalculate STT
+            if (tbody) {
+                Array.from(tbody.rows).forEach((row, idx) => {
+                    row.cells[0].innerText = idx + 1;
+                });
+                // Update badge count
+                const countBadge = document.querySelector('.import-card span[style*="border-radius: 12px"]');
+                if (countBadge) countBadge.innerText = `${tbody.rows.length} sản phẩm`;
+            }
+
+            // Recalculate totals
+            let grandTotal = 0;
+            Object.values(updateImportState).forEach(item => {
+                grandTotal += item.qty * item.price;
+            });
+            document.getElementById('update-total-amount').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('delete-modal-imp-amount').innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
+
+            showResultPopup('success', 'Xoá thành công');
+        }
+
+        function handleSaveUpdateImport() {
+            const newStatus = document.getElementById('update-status-select')?.value || 'Đã thanh toán';
+            const newSupplier = document.getElementById('update-supplier-select')?.value;
+            const dateVal = document.getElementById('update-import-date-input')?.value;
+
+            let formattedDate = null;
+            if (dateVal) {
+                const parts = dateVal.split('-');
+                if (parts.length === 3) {
+                    formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                }
+            }
+
+            const impObj = state.imports.find(i => i.id === currentImportId);
+            if (impObj) {
+                impObj.status = newStatus;
+                if (newSupplier) impObj.supplier = newSupplier;
+                if (formattedDate) impObj.date = formattedDate;
+            } else {
+                state.imports.push({
+                    id: currentImportId,
+                    supplier: newSupplier || 'Nông sản Sạch Đà Lạt',
+                    date: formattedDate || '25/10/2023',
+                    amount: 12500000,
+                    status: newStatus
+                });
+            }
+
+            saveStoredImports(state.imports);
+
+            showToast(`Đã lưu phiếu nhập ${currentImportId} với trạng thái: ${newStatus}!`, 'success');
+            setTimeout(() => {
+                window.location.href = 'imports.html';
+            }, 800);
+        }
+
+        function confirmDeleteImport() {
+            closeModal('delete-import-modal');
+            state.imports = state.imports.filter(i => i.id !== currentImportId);
+            saveStoredImports(state.imports);
+            showResultPopup('success', 'Xoá thành công', '', () => {
+                window.location.href = 'imports.html';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initUpdateImportPage();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Giá Hàng Hóa - Tạp Hóa Xanh</title>
+    <meta name="description" content="Bảng giá hàng hóa Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link active">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Giá hàng hóa</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- PAGE HEADER (FIGMA EXACT MATCH) -->
+                <div class="page-header flex-between" style="align-items: flex-end; margin-bottom: 1.25rem;">
+                    <div>
+                        <h1 class="page-title" style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 0;">Quản lý giá hàng hóa</h1>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <button type="button" class="btn btn-outline" onclick="showToast('Mở bộ lọc giá nâng cao', 'info')">
+                            <i data-lucide="sliders-horizontal"></i>
+                            <span>Bộ lọc</span>
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="openModal('add-price-modal')">
+                            <i data-lucide="plus"></i>
+                            <span>Thiết lập giá mới</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2 KPI STATUS CARDS (UNIFIED SAAS) -->
+                <div class="kpi-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 1.25rem;">
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Đang áp dụng</span>
+                            <h2 class="kpi-value">1,248</h2>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="check-circle-2"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Ngừng áp dụng</span>
+                            <h2 class="kpi-value" style="color: #dc2626;">15</h2>
+                        </div>
+                        <div class="kpi-icon icon-danger">
+                            <i data-lucide="ban"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRICES TABLE CARD -->
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="data-table highlight-table">
+                            <thead>
+                                <tr>
+                                    <th>MÃ GIÁ</th>
+                                    <th>TÊN HÀNG HÓA</th>
+                                    <th>GIÁ BÁN</th>
+                                    <th>NGÀY ÁP DỤNG</th>
+                                    <th>TRẠNG THÁI</th>
+                                    <th class="text-center">THAO TÁC</th>
+                                </tr>
+                            </thead>
+                            <tbody id="price-tbody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="table-footer flex-between">
+                        <span class="pagination-info" id="price-count-info">Hiển thị 1 - 10 trên tổng số 1,305 hàng hóa</span>
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn">...</button>
+                            <button class="page-btn">131</button>
+                            <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL THÊM GIÁ (FIGMA EXACT MATCH 100% CAN BALANCED) -->
+    <div id="add-price-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 540px; border-radius: 16px; padding: 0; overflow: hidden;">
+            <div class="modal-header flex-between" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #f1f5f9; background: #ffffff;">
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="credit-card" style="width: 18px; height: 18px; color: #059669;"></i>
+                    <span>Thêm giá</span>
+                </h3>
+                <button class="modal-close" onclick="closeModal('add-price-modal')">&times;</button>
+            </div>
+            <form onsubmit="handleCreatePrice(event)">
+                <div class="modal-body" style="padding: 1.5rem 1.75rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: start;">
+                        <div>
+                            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.5px; margin-bottom: 0.35rem;">MÃ GIÁ</label>
+                            <input type="text" id="new-price-code" value="GIA0000011" readonly style="width: 100%; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.6rem 0.85rem; font-weight: 700; color: #0F172A; font-size: 0.875rem; outline: none;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.5px; margin-bottom: 0.35rem;">NGÀY ÁP DỤNG</label>
+                            <div style="position: relative; width: 100%;">
+                                <input type="text" id="new-price-date" value="29/11/2025" style="width: 100%; background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 0.6rem 2.25rem 0.6rem 0.85rem; font-weight: 600; color: #0F172A; font-size: 0.875rem; outline: none;">
+                                <i data-lucide="calendar" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #64748B; pointer-events: none;"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.5px; margin-bottom: 0.35rem;">TÊN HÀNG HÓA <span style="color: #EF4444;">*</span></label>
+                        <div id="box-price-name" style="position: relative; width: 100%; border: 1px solid #CBD5E1; border-radius: 8px; background: #FFFFFF;">
+                            <input type="text" id="new-price-name" value="" placeholder="Nhập tên hàng hóa..." style="width: 100%; border: none; background: transparent; padding: 0.6rem 2.25rem 0.6rem 0.85rem; font-weight: 600; color: #0F172A; font-size: 0.875rem; outline: none;">
+                            <i data-lucide="search" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #64748B; pointer-events: none;"></i>
+                        </div>
+                        <div id="err-price-name" style="font-size: 0.75rem; color: #EF4444; margin-top: 0.25rem; font-style: italic; display: none;">* Hàng hóa không tồn tại. Vui lòng nhập lại</div>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.5px; margin-bottom: 0.35rem;">MÃ HÀNG HÓA</label>
+                        <input type="text" id="new-price-sku" value="SP000452" readonly style="width: 100%; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.6rem 0.85rem; font-weight: 700; color: #0F172A; font-size: 0.875rem; outline: none;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; align-items: start;">
+                        <div>
+                            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.5px; margin-bottom: 0.35rem;">GIÁ VỐN</label>
+                            <div style="display: flex; align-items: center; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.6rem 0.85rem;">
+                                <input type="text" value="40,000" readonly style="width: 100%; border: none; background: transparent; text-align: right; font-weight: 700; color: #0F172A; font-size: 0.875rem; outline: none;">
+                                <span style="font-size: 0.85rem; color: #64748B; margin-left: 0.35rem; font-weight: 600;">đ</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #475569; letter-spacing: 0.5px; margin-bottom: 0.35rem;">GIÁ BÁN <span style="color: #EF4444;">*</span></label>
+                            <div id="box-price-val" style="display: flex; align-items: center; background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 8px; padding: 0.6rem 0.85rem;">
+                                <input type="text" id="new-price-val" placeholder="Nhập giá mới" style="width: 100%; border: none; background: transparent; text-align: right; font-weight: 600; color: #0F172A; font-size: 0.875rem; outline: none;">
+                                <span style="font-size: 0.85rem; color: #64748B; margin-left: 0.35rem; font-weight: 600;">đ</span>
+                            </div>
+                            <div id="err-price-val" style="font-size: 0.72rem; color: #EF4444; margin-top: 0.25rem; font-style: italic; line-height: 1.2; display: none;">* Giá bán mới không hợp lệ. Không thể thêm giá mới. Vui lòng nhập lại.</div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: var(--color-primary-50); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; gap: 0.75rem; align-items: flex-start;">
+                        <i data-lucide="info" style="width: 20px; height: 20px; color: var(--color-primary-dark); flex-shrink: 0; margin-top: 0.1rem;"></i>
+                        <div style="font-size: 0.78rem; color: var(--color-primary-dark); line-height: 1.45; font-weight: 500;">
+                            Hệ thống sẽ tự động cập nhật bảng giá trên tất cả các thiết bị bán lẻ ngay sau khi bạn nhấn "Lưu". Vui lòng kiểm tra kỹ giá bán để tránh sai sót.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="background-color: #f8fafc; border-top: 1px solid var(--border-color); padding: 1rem 1.75rem; display: flex; justify-content: flex-end; gap: 0.75rem; align-items: center;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('add-price-modal')">Hủy</button>
+                    <button type="submit" class="btn btn-primary" style="display: flex; align-items: center; gap: 0.4rem;">
+                        <i data-lucide="save" style="width: 16px; height: 16px;"></i>
+                        <span>Lưu thay đổi</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL LỊCH SỬ GIÁ HÀNG HÓA (FIGMA EXACT MATCH 100%) -->
+    <div id="price-history-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 580px; border-radius: 16px; overflow: hidden; padding: 0;">
+            <div class="modal-header flex-between" style="padding: 1.15rem 1.5rem; border-bottom: 1px solid #f1f5f9; background: #ffffff;">
+                <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 0.5rem;">
+                    <i data-lucide="eye" style="width: 18px; height: 18px; color: #059669;"></i>
+                    <span>Lịch sử giá hàng hóa</span>
+                </h3>
+                <button type="button" class="modal-close" onclick="closeModal('price-history-modal')">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 1.5rem 1.75rem;">
+                <div style="background-color: #F8FAFC; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; border: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.75rem; color: #64748B; font-weight: 700; text-transform: uppercase;">MÃ GIÁ</div>
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #059669;" id="hist-price-code">GIA0000011</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; color: #64748B; font-weight: 700; text-transform: uppercase;">TÊN HÀNG HÓA</div>
+                        <div style="font-size: 0.95rem; font-weight: 800; color: #0F172A;" id="hist-price-name">Bánh chocopie</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; color: #64748B; font-weight: 700; text-transform: uppercase;">GIÁ BÁN HIỆN TẠI</div>
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #059669;" id="hist-price-current-sale">40,000 đ</div>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="border: 1px solid #E2E8F0; border-radius: 10px; overflow: hidden;">
+                    <table class="data-table" style="width: 100%;">
+                        <thead>
+                            <tr style="background-color: #F1F5F9;">
+                                <th style="padding: 0.65rem 0.85rem; font-size: 0.75rem;">NGÀY ÁP DỤNG</th>
+                                <th style="padding: 0.65rem 0.85rem; font-size: 0.75rem; text-align: right;">GIÁ VỐN</th>
+                                <th style="padding: 0.65rem 0.85rem; font-size: 0.75rem; text-align: right;">GIÁ BÁN</th>
+                                <th style="padding: 0.65rem 0.85rem; font-size: 0.75rem; text-align: center;">TRẠNG THÁI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="price-history-tbody">
+                            <!-- Dynamic history rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="background-color: #F8FAFC; border-top: 1px solid #E2E8F0; padding: 0.85rem 1.75rem; display: flex; justify-content: flex-end;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('price-history-modal')">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN XÓA GIÁ (HẾT HIỆU LỰC - CHO PHÉP XÓA) (FIGMA EXACT MATCH 100%) -->
+    <div id="delete-price-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa giá</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa phiếu này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Mã giá</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="modal-del-price-code">GIA000010</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Tên hàng hóa</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-price-name">Bánh chocopie</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Giá bán</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-price-saleprice">35,000</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Giá vốn</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-del-price-costprice">30,000</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Ngày áp dụng</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-del-price-date">20/06/2025</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Ngày kết thúc</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-del-price-enddate">28/11/2025</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">Trạng thái</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-del-price-status">Ngưng áp dụng</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-price-modal')" style="flex: 1;">Hủy</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeletePriceFromList()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CẢNH BÁO XÓA GIÁ KHÔNG THÀNH CÔNG (CÒN HIỆU LỰC) (FIGMA EXACT MATCH 100%) -->
+    <div id="delete-price-error-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Thông báo</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem; font-weight: 600; line-height: 1.45;">Xóa không thành công! Giá bán này còn đang được sử dụng, vui lòng thử lại sau</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Mã giá</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="modal-delerr-price-code">GIA000011</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Tên hàng hóa</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-delerr-price-name">Bánh chocopie</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Giá bán</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-delerr-price-saleprice">40,000</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Giá vốn</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-delerr-price-costprice">30,000</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Ngày áp dụng</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-delerr-price-date">28/11/2025</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.55rem;">
+                    <span style="color: #64748B;">Ngày kết thúc</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-delerr-price-enddate">khống</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">Trạng thái</span>
+                    <span style="font-weight: 600; color: #0F172A;" id="modal-delerr-price-status">Đang áp dụng</span>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="handleCloseDeletePriceError()" style="min-width: 120px;">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

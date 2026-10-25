@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống Kê Tồn Kho - Tạp Hóa Xanh</title>
+    <meta name="description" content="Báo cáo thống kê tồn kho sản phẩm Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="reports.html" class="nav-link active">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html" class="active-sub">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Thống kê / Thống kê tồn kho</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <div class="page-header">
+                    <h1 class="page-title">Thống kê tồn kho</h1>
+                </div>
+
+                <!-- 3 KPI CARDS (ELEGANT SAAS) -->
+                <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1.25rem;">
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Tổng mặt hàng</span>
+                            <h2 class="kpi-value">1,284</h2>
+                            <span class="badge badge-success" style="margin-top: 0.45rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                                <i data-lucide="trending-up" style="width: 12px; height: 12px;"></i> +12% tháng này
+                            </span>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="package-check"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Sắp hết hàng</span>
+                            <h2 class="kpi-value" style="color: #dc2626;">24</h2>
+                            <a href="imports.html" class="kpi-subtext-red" style="font-size: 0.75rem; color: #dc2626; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.45rem;">
+                                <span>Nhập hàng ngay</span>
+                                <i data-lucide="arrow-right" style="width: 12px; height: 12px;"></i>
+                            </a>
+                        </div>
+                        <div class="kpi-icon icon-danger">
+                            <i data-lucide="alert-triangle"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Sắp hết hạn</span>
+                            <h2 class="kpi-value" style="color: #059669;">08</h2>
+                            <span style="font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 0.35rem; margin-top: 0.45rem;">
+                                <i data-lucide="clock" style="width: 13px; height: 13px; color: #059669;"></i> Trong 7 ngày tới
+                            </span>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="calendar"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTER BAR CARD WITH EXPORT & PRINT (EXACT SCREENSHOT MATCH) -->
+                <div class="card filter-card" style="padding: 1.15rem 1.65rem; background: #F7FAF7; border-radius: 14px; border: 1px solid #E2E8F0; box-shadow: var(--shadow-sm); margin-bottom: 1.25rem; overflow: visible !important;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- LEFT FILTERS INCLUDING CŨ - MỚI & MỚI - CŨ -->
+                        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                            <span style="font-size: 0.85rem; font-weight: 700; color: #475569;">Bộ lọc:</span>
+                            
+                            <!-- CUSTOM FLOATING DROPDOWN FOR SỐ LƯỢNG TỒN -->
+                            <div style="position: relative; display: inline-block;">
+                                <button type="button" class="btn btn-outline" id="inv-stock-dropdown-btn" onclick="toggleStockDropdown(event)" style="font-size: 0.85rem; font-weight: 600; gap: 0.5rem;">
+                                    <span id="inv-stock-selected-label">Số lượng tồn</span>
+                                    <i data-lucide="chevron-down" style="width: 16px; height: 16px; color: #64748B;"></i>
+                                </button>
+
+                                <!-- FLOATING STACKED CARDS DROPDOWN MENU -->
+                                <div id="inv-stock-menu" class="hidden" style="position: absolute; top: calc(100% + 8px); left: 0; z-index: 9999; display: flex; flex-direction: column; gap: 0.35rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.35rem; min-width: 140px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                                    <button type="button" class="btn-stock-opt" onclick="selectStockSort('asc', 'Tăng dần')" style="background: #FFFFFF; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; color: #0F172A; cursor: pointer; text-align: left; width: 100%;">
+                                        Tăng dần
+                                    </button>
+                                    <button type="button" class="btn-stock-opt" onclick="selectStockSort('desc', 'Giảm dần')" style="background: #FFFFFF; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; color: #0F172A; cursor: pointer; text-align: left; width: 100%;">
+                                        Giảm dần
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- CUSTOM FLOATING DROPDOWN FOR HẠN SỬ DỤNG (CŨ - MỚI & MỚI - CŨ) -->
+                            <div style="position: relative; display: inline-block;">
+                                <button type="button" class="btn btn-outline" id="inv-expiry-dropdown-btn" onclick="toggleExpiryDropdown(event)" style="font-size: 0.85rem; font-weight: 600; gap: 0.4rem;">
+                                    <span id="inv-expiry-selected-label">Hạn sử dụng</span>
+                                    <i data-lucide="calendar" style="width: 16px; height: 16px; color: #64748B;"></i>
+                                </button>
+
+                                <!-- FLOATING STACKED CAPSULE DROPDOWN MENU FOR CŨ - MỚI & MỚI - CŨ -->
+                                <div id="inv-expiry-menu" class="hidden" style="position: absolute; top: calc(100% + 8px); left: 0; z-index: 9999; display: flex; flex-direction: column; gap: 0.35rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 0.35rem; min-width: 140px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                                    <button type="button" class="btn-pill-sort" onclick="selectExpirySort('oldest', 'Cũ - Mới')" style="background: #FFFFFF; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; color: #0F172A; cursor: pointer; text-align: left; width: 100%;">
+                                        Cũ - Mới
+                                    </button>
+                                    <button type="button" class="btn-pill-sort" onclick="selectExpirySort('newest', 'Mới - Cũ')" style="background: #FFFFFF; border: none; border-radius: 6px; padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; color: #0F172A; cursor: pointer; text-align: left; width: 100%;">
+                                        Mới - Cũ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT ACTION ICONS -->
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <button type="button" class="btn btn-outline" onclick="showToast('Xuất báo cáo tồn kho sang Excel/CSV', 'success')" title="Xuất dữ liệu" style="padding: 0.45rem 0.65rem;">
+                                <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="window.print()" title="In báo cáo" style="padding: 0.45rem 0.65rem;">
+                                <i data-lucide="printer" style="width: 16px; height: 16px;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INVENTORY TABLE CARD -->
+                <div class="card" style="background: #FFFFFF; border-radius: 14px; border: 1px solid #E2E8F0; box-shadow: var(--shadow-sm); overflow: hidden;">
+                    <div class="table-responsive">
+                        <table class="data-table highlight-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th>Mã loại hàng</th>
+                                    <th>Tên loại hàng</th>
+                                    <th>Mã hàng hóa</th>
+                                    <th>Tên hàng hóa</th>
+                                    <th>Đơn vị tính</th>
+                                    <th class="text-center">Số lượng tồn</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-report-tbody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="table-footer flex-between">
+                        <span class="pagination-info" id="inventory-report-count">Hiển thị 7 trên 1,284 sản phẩm</span>
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

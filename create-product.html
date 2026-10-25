@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Hàng Hóa Mới - Tạp Hóa Xanh</title>
+    <meta name="description" content="Thêm hàng hóa mới Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link active">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Quản lý hàng hóa / Thêm mới</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- PAGE HEADER (FIGMA EXACT MATCH) -->
+                <div class="page-header" style="margin-bottom: 1.25rem;">
+                    <h1 class="page-title" style="font-size: 1.45rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0;">Thêm hàng hóa mới</h1>
+                </div>
+
+                <div class="product-create-grid">
+                    <!-- LEFT COLUMN: FORM CARDS (FIGMA EXACT MATCH 100%) -->
+                    <div>
+                        <!-- CARD 1: THÔNG TIN CƠ BẢN -->
+                        <div class="prod-card">
+                            <h3 class="prod-card-title">
+                                <i data-lucide="info" style="width: 18px; height: 18px; color: #059669;"></i>
+                                <span>Thông tin cơ bản</span>
+                            </h3>
+
+                            <div class="form-group-custom">
+                                <label class="form-label-custom">Tên sản phẩm *</label>
+                                <input type="text" id="prod-name-input" class="form-control" placeholder="VD: Sữa tươi Vinamilk 180ml" required>
+                            </div>
+
+                            <div class="form-row-2col">
+                                <div>
+                                    <label class="form-label-custom">Mã SKU (Tự động sinh)</label>
+                                    <div class="sku-refresh-box">
+                                        <input type="text" id="prod-sku-input" value="SP - 00892" readonly>
+                                        <button type="button" class="sku-refresh-btn" onclick="regenerateSku()" title="Tạo mã mới">
+                                            <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label-custom">Loại hàng</label>
+                                    <select id="prod-cat-select" class="form-control">
+                                        <option value="Sữa & Chế phẩm sữa">Sữa & Chế phẩm sữa</option>
+                                        <option value="Bánh">Bánh</option>
+                                        <option value="Gia vị">Gia vị</option>
+                                        <option value="Đồ uống">Đồ uống</option>
+                                        <option value="Hàng khô">Hàng khô</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group-custom" style="margin-bottom: 0;">
+                                <label class="form-label-custom">Đơn vị tính</label>
+                                <input type="text" id="prod-unit-input" class="form-control" placeholder="VD: Hộp, Lốc, Thùng">
+                            </div>
+                        </div>
+
+                        <!-- CARD 2: GIÁ & KHO HÀNG -->
+                        <div class="prod-card" style="margin-bottom: 0;">
+                            <h3 class="prod-card-title">
+                                <i data-lucide="package" style="width: 18px; height: 18px; color: #059669;"></i>
+                                <span>Giá & Kho hàng</span>
+                            </h3>
+
+                            <div class="form-row-2col">
+                                <div>
+                                    <label class="form-label-custom">Giá nhập (VNĐ)</label>
+                                    <div class="price-curr-input">
+                                        <input type="text" id="prod-import-price-input" value="0">
+                                        <span>đ</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label-custom">Giá bán (VNĐ)</label>
+                                    <div class="price-curr-input">
+                                        <input type="text" id="prod-sale-price-input" value="0">
+                                        <span>đ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row-2col" style="margin-bottom: 0;">
+                                <div>
+                                    <label class="form-label-custom">Số lượng tồn kho ban đầu</label>
+                                    <div class="alert-bell-box">
+                                        <input type="text" id="prod-stock-input" value="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label-custom">Định mức tồn tối thiểu</label>
+                                    <div class="alert-bell-box">
+                                        <input type="text" id="prod-min-stock-input" value="10">
+                                        <i data-lucide="bell" style="width: 16px; height: 16px; color: #EF4444; margin-left: 0.4rem;"></i>
+                                    </div>
+                                    <div style="font-size: 0.72rem; color: #64748B; margin-top: 0.25rem;">
+                                        Hệ thống sẽ cảnh báo khi số lượng thấp hơn mức này.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: IMAGE UPLOAD & ACTION CARD (FIGMA EXACT MATCH 100%) -->
+                    <div>
+                        <div class="prod-card">
+                            <h3 class="prod-card-title">
+                                <i data-lucide="image" style="width: 18px; height: 18px; color: #059669;"></i>
+                                <span>Hình ảnh</span>
+                            </h3>
+
+                            <div class="image-dropzone" onclick="showToast('Chọn hình ảnh từ máy tính', 'info')">
+                                <i data-lucide="upload-cloud" style="width: 36px; height: 36px; color: #059669; margin-bottom: 0.5rem;"></i>
+                                <div style="font-weight: 700; font-size: 0.85rem; color: #0F172A; margin-bottom: 0.2rem;">Tải ảnh lên hoặc kéo thả</div>
+                                <div style="font-size: 0.72rem; color: #64748B;">Hỗ trợ JPG, PNG (Tối đa 5MB)</div>
+                            </div>
+
+                            <div class="thumb-slots-row">
+                                <div class="thumb-slot" onclick="showToast('Thêm ảnh 1', 'info')">+</div>
+                                <div class="thumb-slot" onclick="showToast('Thêm ảnh 2', 'info')">+</div>
+                                <div class="thumb-slot" onclick="showToast('Thêm ảnh 3', 'info')">+</div>
+                            </div>
+
+                            <button type="button" class="btn-save-product" onclick="handleSaveCreateProduct()">
+                                <i data-lucide="save" style="width: 18px; height: 18px;"></i>
+                                <span>Lưu hàng hóa</span>
+                            </button>
+
+                            <a href="products.html" class="btn-cancel-link">Hủy bỏ</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        function regenerateSku() {
+            const rand = Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('prod-sku-input').value = `SP - ${rand}`;
+            showToast('Đã tạo mã SKU mới', 'info');
+        }
+
+        function handleSaveCreateProduct() {
+            const name = document.getElementById('prod-name-input').value.trim();
+            if (!name) {
+                showToast('Vui lòng nhập tên sản phẩm', 'error');
+                return;
+            }
+
+            const sku = document.getElementById('prod-sku-input').value;
+            showToast(`Thêm hàng hóa "${name}" thành công!`, 'success');
+            setTimeout(() => {
+                window.location.href = 'products.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Tạp Hóa Xanh</title>
+    <meta name="description" content="Đăng nhập hệ thống quản lý cửa hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="login-page-bg">
+        <div class="login-modal-card">
+            <!-- Left Side Hero -->
+            <div class="login-hero">
+                <div class="login-hero-overlay"></div>
+                <div class="login-hero-content">
+                    <div class="brand-badge-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <p class="hero-slogan">
+                        Đồng hành cùng hàng ngàn cửa hàng mang sản phẩm sạch và bền vững tới tận tay người tiêu dùng Việt.
+                    </p>
+                    <div class="hero-stats-grid">
+                        <div class="hero-stat-card">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Hỗ trợ</span>
+                        </div>
+                        <div class="hero-stat-card">
+                            <span class="stat-number">99%</span>
+                            <span class="stat-label">Chính xác</span>
+                        </div>
+                        <div class="hero-stat-card">
+                            <span class="stat-number">1k+</span>
+                            <span class="stat-label">Đối tác</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Form -->
+            <div class="login-form-container">
+                <div class="login-form-box">
+                    <div class="login-header">
+                        <h2 class="brand-title">Tạp hóa Xanh</h2>
+                        <h1 class="login-title">Chào mừng trở lại!</h1>
+                        <p class="login-subtitle">Vui lòng đăng nhập để quản lý cửa hàng của bạn.</p>
+                    </div>
+
+                    <form id="login-form" onsubmit="handleLoginPageSubmit(event)">
+                        <div class="form-group" style="margin-bottom: 1.15rem; text-align: left;">
+                            <label for="login-email" style="display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 0.4rem;">Email hoặc Số điện thoại</label>
+                            <div class="input-with-icon">
+                                <i data-lucide="user" class="input-icon"></i>
+                                <input type="text" id="login-email" placeholder="Nhập email hoặc số điện thoại" value="" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.15rem; text-align: left;">
+                            <label for="login-password" style="display: block; font-size: 0.8rem; font-weight: 600; color: #475569; margin-bottom: 0.4rem;">Mật khẩu</label>
+                            <div class="input-with-icon">
+                                <i data-lucide="lock" class="input-icon"></i>
+                                <input type="password" id="login-password" placeholder="Nhập mật khẩu" value="" required>
+                                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('login-password', this)">
+                                    <i data-lucide="eye" id="password-eye-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox">
+                                <span>Ghi nhớ đăng nhập</span>
+                            </label>
+                            <a href="forgot-password.html" class="forgot-password">Quên mật khẩu?</a>
+                        </div>
+
+                        <button type="submit" class="btn-login-darkgreen">
+                            <span>Đăng nhập</span>
+                            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

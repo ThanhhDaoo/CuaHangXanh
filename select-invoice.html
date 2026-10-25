@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Hóa Đơn Đổi Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Chọn hóa đơn để đổi hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="sales.html" class="nav-link active">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html" class="active-sub">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Quản lý đổi hàng</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <div class="page-header" style="margin-bottom: 1.25rem;">
+                    <h1 class="page-title" style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin-bottom: 0.25rem;">Chọn hóa đơn để đổi hàng</h1>
+                    <p class="page-subtitle" style="font-size: 0.85rem; color: #64748B;">Vui lòng tìm và chọn đúng hóa đơn mà khách hàng muốn thay đổi sản phẩm.</p>
+                </div>
+
+                <!-- SEARCH INPUT & SEPARATE BUTTON OUTSIDE -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; width: 100%; margin-bottom: 1.5rem;">
+                    <div class="search-pill-box full-width" style="flex: 1;">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="returns-search-input" placeholder="Nhập mã hóa đơn..." onkeyup="if(event.key==='Enter') filterReturns()">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="filterReturns()" style="padding: 0.65rem 1.75rem; white-space: nowrap;">
+                        <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+                        <span>Tìm kiếm</span>
+                    </button>
+                </div>
+
+                <!-- RECENT INVOICES CARD FOR RETURN -->
+                <div class="card" style="padding: 1.25rem 1.5rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <h3 style="font-size: 1.1rem; font-weight: 800; color: #0F172A;">Danh sách hóa đơn gần đây</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table highlight-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left;">Mã hóa đơn</th>
+                                    <th style="text-align: left;">Ngày bán</th>
+                                    <th style="text-align: left;">Tổng tiền</th>
+                                    <th style="text-align: center;">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returns-tbody">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="table-footer flex-between" style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+                        <span class="pagination-info" id="returns-count-info" style="font-size: 0.85rem; color: #64748B;">Hiển thị 1-5 của 128 hóa đơn</span>
+                        <div class="pagination" style="display: flex; gap: 0.35rem;">
+                            <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Loại Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Chi tiết loại hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link active">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Hàng hóa &gt; Loại hàng &gt; Xem chi tiết</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <!-- PAGE HEADER ROW (FIGMA EXACT MATCH 100%) -->
+                <div class="cat-detail-header">
+                    <div style="display: flex; align-items: center; gap: 0.85rem;">
+                        <a href="categories.html" class="back-circle-btn" title="Quay lại">
+                            <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+                        </a>
+                        <div>
+                            <h1 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin: 0;">Chi tiết loại hàng</h1>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <button type="button" class="btn btn-danger" onclick="openModal('delete-category-modal')">
+                            <i data-lucide="trash-2"></i>
+                            <span>Xóa</span>
+                        </button>
+
+                        <a id="edit-cat-btn" href="update-category.html?id=LH0000012" class="btn btn-primary">
+                            <i data-lucide="edit-3"></i>
+                            <span>Chỉnh sửa</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3 STAT KPI CARDS (FIGMA EXACT MATCH 100%) -->
+                <div class="stat-cards-grid">
+                    <!-- CARD 1: TÊN LOẠI HÀNG -->
+                    <div class="stat-card-custom">
+                        <div class="stat-card-label">TÊN LOẠI HÀNG</div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #059669; margin-bottom: 0.35rem;" id="cat-detail-name">Gia vị</div>
+                        <div style="font-size: 0.78rem; color: #64748B; display: flex; align-items: center; gap: 0.3rem;">
+                            <i data-lucide="calendar" style="width: 14px; height: 14px;"></i>
+                            <span>Ngày tạo: 12/03/2024</span>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: MÃ LOẠI HÀNG -->
+                    <div class="stat-card-custom">
+                        <div class="stat-card-label">
+                            <i data-lucide="fingerprint" style="width: 16px; height: 16px; color: #059669;"></i>
+                            <span>MÃ LOẠI HÀNG</span>
+                        </div>
+                        <div class="badge-green-box" id="cat-detail-code">LH0000012</div>
+                    </div>
+
+                    <!-- CARD 3: SỐ LƯỢNG MẶT HÀNG -->
+                    <div class="stat-card-custom">
+                        <div class="stat-card-label">
+                            <i data-lucide="boxes" style="width: 16px; height: 16px; color: #059669;"></i>
+                            <span>SỐ LƯỢNG MẶT HÀNG</span>
+                        </div>
+                        <div class="badge-green-box" id="cat-detail-count">5</div>
+                    </div>
+                </div>
+
+                <!-- BOTTOM PRODUCTS LIST CARD (FIGMA EXACT MATCH 100%) -->
+                <div class="card" style="border-radius: 12px; padding: 1.25rem 1.5rem; background: #FFFFFF; border: 1px solid #E2E8F0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 0.95rem; color: #0F172A;">
+                            <i data-lucide="list" style="width: 18px; height: 18px; color: #059669;"></i>
+                            <span>Danh sách hàng hóa</span>
+                        </div>
+                        <div style="display: flex; gap: 0.65rem; align-items: center;">
+                            <select style="border: 1px solid #E2E8F0; border-radius: 6px; padding: 0.45rem 0.75rem; font-size: 0.825rem; color: #64748B; background: #F8FAFC; outline: none;">
+                                <option>Tất cả trạng thái</option>
+                            </select>
+                            <button type="button" class="btn btn-outline" onclick="showToast('Xuất danh sách file Excel', 'info')" style="padding: 0.45rem 0.65rem;" title="Tải xuống">
+                                <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="history-table-header">MÃ HÀNG HÓA</th>
+                                    <th class="history-table-header">TÊN HÀNG HÓA</th>
+                                    <th class="history-table-header">ĐƠN VỊ TÍNH</th>
+                                    <th class="history-table-header text-center">TỒN KHO</th>
+                                    <th class="history-table-header text-center">THAO TÁC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="fw-800" style="color: #059669;">HH000102</td>
+                                    <td class="fw-700">Nước mắm Nam Ngư</td>
+                                    <td>Chai (500ml)</td>
+                                    <td class="text-center"><span class="stock-badge high">120</span></td>
+                                    <td class="text-center">
+                                        <button class="action-btn delete-btn" onclick="removeCategoryProductRow(this)" title="Xóa">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-800" style="color: #059669;">HH000105</td>
+                                    <td class="fw-700">Muối i-ốt Visalco</td>
+                                    <td>Gói (450g)</td>
+                                    <td class="text-center"><span class="stock-badge high">85</span></td>
+                                    <td class="text-center">
+                                        <button class="action-btn delete-btn" onclick="removeCategoryProductRow(this)" title="Xóa">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-800" style="color: #059669;">HH000118</td>
+                                    <td class="fw-700">Đường trắng Biên Hòa</td>
+                                    <td>Gói (1kg)</td>
+                                    <td class="text-center"><span class="stock-badge low">5</span></td>
+                                    <td class="text-center">
+                                        <button class="action-btn delete-btn" onclick="removeCategoryProductRow(this)" title="Xóa">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-800" style="color: #059669;">HH000122</td>
+                                    <td class="fw-700">Hạt nêm Knorr</td>
+                                    <td>Gói (900g)</td>
+                                    <td class="text-center"><span class="stock-badge high">42</span></td>
+                                    <td class="text-center">
+                                        <button class="action-btn delete-btn" onclick="removeCategoryProductRow(this)" title="Xóa">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-800" style="color: #059669;">HH000140</td>
+                                    <td class="fw-700">Tương ớt Chinsu</td>
+                                    <td>Chai (250g)</td>
+                                    <td class="text-center"><span class="stock-badge high">15</span></td>
+                                    <td class="text-center">
+                                        <button class="action-btn delete-btn" onclick="removeCategoryProductRow(this)" title="Xóa">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-footer flex-between" style="padding: 0;">
+                        <span class="pagination-info" style="font-size: 0.85rem; color: #64748B;">Hiển thị 5 trên tổng số 5 mặt hàng</span>
+                        <div class="pagination">
+                            <button class="page-btn" disabled><i data-lucide="chevron-left"></i></button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn" disabled><i data-lucide="chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL CẢNH BÁO XÓA LOẠI HÀNG (FIGMA EXACT MATCH 100%) -->
+    <div id="delete-category-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 450px; border-radius: 20px; padding: 2.25rem 2rem 1.75rem 2rem; text-align: center;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: #FEE2E2; color: #DC2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto;">
+                <i data-lucide="trash-2" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 0.4rem;">Xác nhận xóa loại hàng</h3>
+            <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem; font-weight: 600;">Bạn có chắc chắn muốn xóa loại hàng hóa này không?</p>
+
+            <div style="background-color: #F8FAFC; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.875rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+                    <span style="color: #64748B;">Mã loại hàng</span>
+                    <span style="font-weight: 800; color: #0F172A;" id="modal-cat-code">LH0000011</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <span style="color: #64748B;">Tên loại hàng</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-cat-name">Gia vị</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #64748B;">Số lượng hàng hóa</span>
+                    <span style="font-weight: 700; color: #0F172A;" id="modal-cat-count">5</span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('delete-category-modal')" style="flex: 1;">Hủy bỏ</button>
+                <button type="button" class="btn btn-danger-solid" onclick="confirmDeleteCategoryFromDetail()" style="flex: 1;">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let activeCategory = null;
+
+        function removeCategoryProductRow(btn) {
+            const tr = btn.closest('tr');
+            if (tr) tr.remove();
+
+            const countElem = document.getElementById('cat-detail-count');
+            if (countElem) {
+                let currentCount = parseInt(countElem.innerText) || 0;
+                currentCount = Math.max(0, currentCount - 1);
+                countElem.innerText = currentCount;
+            }
+            showResultPopup('success', 'Xoá thành công');
+        }
+
+        function confirmDeleteCategoryFromDetail() {
+            closeModal('delete-category-modal');
+            const catCode = activeCategory ? activeCategory.code : 'LH0000011';
+            state.categories = state.categories.filter(c => c.id !== catCode);
+            saveStoredCategories(state.categories);
+            showResultPopup('success', 'Xoá thành công', '', () => {
+                window.location.href = 'categories.html';
+            });
+        }
+
+        function loadCategoryDetailFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reqId = urlParams.get('id') || 'LH0000011';
+
+            const db = {
+                'LH0000011': { code: 'LH0000011', name: 'Gia vị', count: 5, products: [
+                    { id: 'HH000102', name: 'Nước mắm Nam Ngư', unit: 'Chai (500ml)', stock: 120, badge: 'badge-emerald' },
+                    { id: 'HH000105', name: 'Muối i-ốt Visalco', unit: 'Gói (450g)', stock: 85, badge: 'badge-emerald' },
+                    { id: 'HH000118', name: 'Đường trắng Biên Hòa', unit: 'Gói (1kg)', stock: 5, badge: 'badge-rose' },
+                    { id: 'HH000122', name: 'Hạt nêm Knorr', unit: 'Gói (900g)', stock: 42, badge: 'badge-emerald' },
+                    { id: 'HH000140', name: 'Tương ớt Chinsu', unit: 'Chai (250g)', stock: 15, badge: 'badge-emerald' }
+                ]},
+                'LH0000012': { code: 'LH0000012', name: 'Rau củ tươi', count: 12, products: [
+                    { id: 'HH000201', name: 'Cà rốt Đà Lạt', unit: 'Kg', stock: 45, badge: 'badge-emerald' },
+                    { id: 'HH000202', name: 'Khoai tây củ', unit: 'Kg', stock: 60, badge: 'badge-emerald' },
+                    { id: 'HH000203', name: 'Bắp cải thảo', unit: 'Kg', stock: 8, badge: 'badge-rose' },
+                    { id: 'HH000204', name: 'Cà chua bi', unit: 'Kg', stock: 25, badge: 'badge-emerald' },
+                    { id: 'HH000205', name: 'Hành tây tím', unit: 'Kg', stock: 30, badge: 'badge-emerald' }
+                ]},
+                'LH0000013': { code: 'LH0000013', name: 'Sữa & Chế phẩm', count: 8, products: [
+                    { id: 'HH000301', name: 'Sữa tươi Vinamilk 100%', unit: 'Hộp (1L)', stock: 90, badge: 'badge-emerald' },
+                    { id: 'HH000302', name: 'Sữa chua TH True Milk', unit: 'Lốc (4 hộp)', stock: 35, badge: 'badge-emerald' },
+                    { id: 'HH000303', name: 'Phô mai Con Bò Cười', unit: 'Hộp (8 miếng)', stock: 12, badge: 'badge-emerald' }
+                ]},
+                'LH0000014': { code: 'LH0000014', name: 'Đồ uống', count: 25, products: [
+                    { id: 'HH000401', name: 'Pepsi lon 330ml', unit: 'Lon', stock: 150, badge: 'badge-emerald' },
+                    { id: 'HH000402', name: 'Coca-Cola chai 1.5L', unit: 'Chai', stock: 40, badge: 'badge-emerald' },
+                    { id: 'HH000403', name: 'Nước ép cam Teppy', unit: 'Chai (327ml)', stock: 4, badge: 'badge-rose' }
+                ]},
+                'LH0000015': { code: 'LH0000015', name: 'Hàng khô', count: 42, products: [
+                    { id: 'HH000501', name: 'Miến dong cao bằng', unit: 'Gói (500g)', stock: 50, badge: 'badge-emerald' },
+                    { id: 'HH000502', name: 'Mộc nhĩ khô', unit: 'Gói (200g)', stock: 20, badge: 'badge-emerald' }
+                ]}
+            };
+
+            const cat = db[reqId] || { code: reqId, name: 'Loại hàng', count: 5, products: db['LH0000011'].products };
+            activeCategory = cat;
+
+            document.getElementById('cat-detail-code').innerText = cat.code;
+            document.getElementById('cat-detail-name').innerText = cat.name;
+            document.getElementById('cat-detail-count').innerText = cat.count;
+
+            const editBtn = document.getElementById('edit-cat-btn');
+            if (editBtn) editBtn.href = `update-category.html?id=${cat.code}`;
+
+            document.getElementById('modal-cat-code').innerText = cat.code;
+            document.getElementById('modal-cat-name').innerText = cat.name;
+            document.getElementById('modal-cat-count').innerText = cat.count;
+
+            // Render dynamic table rows
+            const tbody = document.getElementById('cat-products-tbody');
+            if (tbody && cat.products) {
+                tbody.innerHTML = cat.products.map(p => `
+                    <tr>
+                        <td class="fw-600" style="color: var(--color-primary-dark);">${p.id}</td>
+                        <td class="fw-600">${p.name}</td>
+                        <td>${p.unit}</td>
+                        <td><span class="badge ${p.badge}">${p.stock}</span></td>
+                        <td class="text-center">
+                            <button class="action-btn delete-btn" onclick="removeCategoryProductRow(this)" title="Xóa"><i data-lucide="trash-2"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+                refreshIcons();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategoryDetailFromUrl();
+        });
+    </script>
+</body>
+</html>

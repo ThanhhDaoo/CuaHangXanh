@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Phiếu Đổi Hàng - Tạp Hóa Xanh</title>
+    <meta name="description" content="Tạo phiếu đổi hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="sales.html" class="nav-link active">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html" class="active-sub">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Tạo phiếu đổi hàng</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-view">
+                <div class="return-grid-layout">
+                    <!-- LEFT CARD: THÔNG TIN HÓA ĐƠN (SYNCHRONIZED DATA) -->
+                    <div class="return-card">
+                        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 1.25rem;">Thông tin hoá đơn</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.25rem;">Mã hoá đơn</div>
+                                <div class="meta-pill" id="return-invoice-id">SON2405001</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.25rem;">Ngày bán</div>
+                                <div class="meta-pill" id="return-invoice-date">24/05/2024</div>
+                            </div>
+                        </div>
+
+                        <!-- ITEMS TABLE WITH STEPPERS -->
+                        <div class="table-responsive" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="table-return-header">Mã hàng hoá</th>
+                                        <th class="table-return-header">Tên hàng hoá</th>
+                                        <th class="table-return-header">Số lượng bán</th>
+                                        <th class="table-return-header text-center">Số lượng đổi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoice-items-tbody">
+                                    <tr>
+                                        <td>HH0000001</td>
+                                        <td class="fw-700">Dầu Ăn Tường An 1L</td>
+                                        <td>3</td>
+                                        <td class="text-center">
+                                            <div class="stepper-mini">
+                                                <button type="button" onclick="updateReturnQty('HH0000001', -1)">-</button>
+                                                <span id="return-qty-HH0000001">1</span>
+                                                <button type="button" onclick="updateReturnQty('HH0000001', 1)">+</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>HH0000002</td>
+                                        <td class="fw-700">Bột giặt Aba 3kg</td>
+                                        <td>3</td>
+                                        <td class="text-center">
+                                            <div class="stepper-mini">
+                                                <button type="button" onclick="updateReturnQty('HH0000002', -1)">-</button>
+                                                <span id="return-qty-HH0000002">2</span>
+                                                <button type="button" onclick="updateReturnQty('HH0000002', 1)">+</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>HH0000003</td>
+                                        <td class="fw-700">Bia Tiger 330ml</td>
+                                        <td>3</td>
+                                        <td class="text-center">
+                                            <div class="stepper-mini">
+                                                <button type="button" onclick="updateReturnQty('HH0000003', -1)">-</button>
+                                                <span id="return-qty-HH0000003">0</span>
+                                                <button type="button" onclick="updateReturnQty('HH0000003', 1)">+</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT CARD: THÔNG TIN PHIẾU ĐỔI (SYNCHRONIZED DATA) -->
+                    <div class="return-card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+                            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A;">Thông tin phiếu đổi</h3>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.75rem; color: #059669; font-weight: 600;" id="return-note-date">25/05/2024</div>
+                                <div style="font-weight: 800; color: #059669; font-size: 0.95rem;" id="return-note-id">PDH2405001</div>
+                            </div>
+                        </div>
+
+                        <!-- RETURN SUMMARY TABLE -->
+                        <div class="table-responsive" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="table-return-header">Mã hàng hoá</th>
+                                        <th class="table-return-header">Tên hàng hoá</th>
+                                        <th class="table-return-header text-center">Số lượng đổi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="return-summary-tbody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- REASON TEXTAREA FLEX FILL -->
+                        <div class="reason-box-container">
+                            <label style="display: block; font-weight: 600; font-size: 0.85rem; color: #334155; margin-bottom: 0.35rem;">Lý do đổi hàng:</label>
+                            <textarea id="return-reason-input" class="reason-textarea" placeholder="Nhập lý do đổi hàng..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS ROW BELOW GRID CARDS -->
+                <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.25rem;">
+                    <button type="button" class="btn btn-outline" onclick="window.location.href='returns.html'">Hủy</button>
+                    <button type="button" class="btn btn-primary" onclick="handleSaveReturnNote()">
+                        <i data-lucide="save"></i>
+                        <span>Lưu phiếu</span>
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        let currentInvoiceId = 'SON2405001';
+        let currentReturnNoteId = 'PDH2405001';
+
+        const returnItemsState = {
+            'HH0000001': { code: 'HH0000001', name: 'Dầu Ăn Tường An 1L', max: 3, qty: 1 },
+            'HH0000002': { code: 'HH0000002', name: 'Bột giặt Aba 3kg', max: 3, qty: 2 },
+            'HH0000003': { code: 'HH0000003', name: 'Bia Tiger 330ml', max: 3, qty: 0 }
+        };
+
+        function initCreateReturnPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reqInvId = urlParams.get('id') || 'SON2405001';
+            currentInvoiceId = reqInvId;
+
+            // Dynamically generate matching Return Note ID based on Invoice ID!
+            // e.g. SON2405001 -> PDH2405001, SON2405002 -> PDH2405002, SON2405003 -> PDH2405003
+            if (currentInvoiceId.startsWith('SON')) {
+                currentReturnNoteId = 'PDH' + currentInvoiceId.substring(3);
+            } else {
+                currentReturnNoteId = 'PDH_' + currentInvoiceId;
+            }
+
+            document.getElementById('return-invoice-id').innerText = currentInvoiceId;
+            document.getElementById('return-note-id').innerText = currentReturnNoteId;
+
+            renderReturnSummaryTable();
+        }
+
+        function updateReturnQty(code, delta) {
+            const item = returnItemsState[code];
+            if (!item) return;
+            item.qty = Math.max(0, Math.min(item.max, item.qty + delta));
+            document.getElementById(`return-qty-${code}`).innerText = item.qty;
+            renderReturnSummaryTable();
+        }
+
+        function renderReturnSummaryTable() {
+            const tbody = document.getElementById('return-summary-tbody');
+            if (!tbody) return;
+            const activeItems = Object.values(returnItemsState).filter(i => i.qty > 0);
+
+            if (activeItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center" style="padding: 1.25rem; color: #94A3B8;">Chưa chọn số lượng đổi</td></tr>`;
+            } else {
+                tbody.innerHTML = activeItems.map(i => `
+                    <tr>
+                        <td>${i.code}</td>
+                        <td class="fw-700">${i.name}</td>
+                        <td class="text-center fw-800" style="color: #059669;">${i.qty}</td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function handleSaveReturnNote() {
+            const activeItems = Object.values(returnItemsState).filter(i => i.qty > 0);
+            if (activeItems.length === 0) {
+                showToast('Vui lòng chọn ít nhất 1 sản phẩm để đổi', 'error');
+                return;
+            }
+
+            const reasonText = document.getElementById('return-reason-input').value.trim() || 'Dầu ăn hết hạn, bột giặt hư hỏng';
+
+            const returnNoteObj = {
+                id: currentReturnNoteId,
+                createDate: '25/05/2024',
+                invoiceId: currentInvoiceId,
+                invoiceDate: '24/05/2024',
+                note: reasonText,
+                items: activeItems
+            };
+
+            let savedReturns = JSON.parse(localStorage.getItem('taphoaxanh_returns') || '{}');
+            savedReturns[currentReturnNoteId] = returnNoteObj;
+            localStorage.setItem('taphoaxanh_returns', JSON.stringify(savedReturns));
+
+            if (window.state && window.state.returnSlips) {
+                window.state.returnSlips.unshift({
+                    id: currentReturnNoteId,
+                    date: new Date().toLocaleDateString('vi-VN'),
+                    qty: activeItems.reduce((acc, curr) => acc + curr.qty, 0)
+                });
+            }
+
+            showToast(`Tạo phiếu đổi hàng ${currentReturnNoteId} thành công!`, 'success');
+            setTimeout(() => {
+                window.location.href = `return-detail.html?id=${currentReturnNoteId}`;
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCreateReturnPage();
+        });
+    </script>
+</body>
+</html>

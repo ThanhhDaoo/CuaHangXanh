@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Tạp Hóa Xanh</title>
+    <meta name="description" content="Trang chủ quản lý cửa hàng Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=8">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu open">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="boxes"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" onclick="showToast('Mở cài đặt hệ thống', 'info'); return false;">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Trang chủ</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="avatar-circle">A</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Chủ cửa hàng</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- DASHBOARD CONTENT -->
+            <main class="content-view">
+                <div class="welcome-banner">
+                    <h1>Chào mừng trở lại, Chủ cửa hàng! 👋</h1>
+                    <p>Hôm nay là ngày 24 tháng 5, 2024. Cùng xem qua tình hình kinh doanh của bạn.</p>
+                </div>
+
+                <!-- 4 SUMMARY CARDS (ELEGANT SAAS KPI METRIC CARDS) -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Tổng doanh thu</span>
+                            <h2 class="kpi-value">45.280.000đ</h2>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="wallet"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Tổng số đơn hàng</span>
+                            <h2 class="kpi-value">1,248</h2>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="shopping-bag"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Số lượng sản phẩm</span>
+                            <h2 class="kpi-value">3,852</h2>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="package"></i>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div>
+                            <span class="kpi-label">Lợi nhuận dự kiến</span>
+                            <h2 class="kpi-value">12.640.000đ</h2>
+                        </div>
+                        <div class="kpi-icon icon-emerald">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DASHBOARD LOWER SECTION -->
+                <div class="dashboard-grid">
+                    <!-- Left: Best Selling Products (NO PRODUCT ICONS & TÊN HÀNG HÓA TITLE) -->
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h3>Tên hàng hoá</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên hàng hóa</th>
+                                        <th>Số lượng bán</th>
+                                        <th>Doanh thu</th>
+                                        <th>Trạng thái kho</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="top-products-tbody">
+                                    <tr>
+                                        <td class="fw-600">Giấy ăn sợi tre Xanh</td>
+                                        <td>189 đơn</td>
+                                        <td class="fw-600">3.213.000đ</td>
+                                        <td><span class="status-pill status-warning"><span class="dot"></span> Sắp hết</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-600">Cà phê Robusta cao cấp</td>
+                                        <td>156 đơn</td>
+                                        <td class="fw-600">12.480.000đ</td>
+                                        <td><span class="status-pill status-success"><span class="dot"></span> Còn hàng</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-600">Nước mắm Nam Ngư 750ml</td>
+                                        <td>142 đơn</td>
+                                        <td class="fw-600">5.680.000đ</td>
+                                        <td><span class="status-pill status-success"><span class="dot"></span> Còn hàng</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-600">Gạo Tám Thái 5kg</td>
+                                        <td>118 đơn</td>
+                                        <td class="fw-600">14.160.000đ</td>
+                                        <td><span class="status-pill status-success"><span class="dot"></span> Còn hàng</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Right: Revenue Chart -->
+                    <div class="card card-chart">
+                        <div class="card-header flex-between">
+                            <h3>Biểu đồ doanh thu (7 ngày qua)</h3>
+                            <div class="chart-legend">
+                                <span class="legend-item"><span class="legend-dot green"></span> Doanh thu</span>
+                                <span class="legend-item"><span class="legend-dot gray"></span> Mục tiêu</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart" height="220"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
