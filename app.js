@@ -288,7 +288,33 @@ function initRoleBasedUI() {
     const currentPath = window.location.pathname;
     const pageName = currentPath.split('/').pop() || 'index.html';
 
-    // 1. UPDATE TOPBAR USER BADGES & ATTACH FLOATING DROPDOWN MENU
+    // 1. INJECT ROLE SWITCHER WIDGET & UPDATE TOPBAR USER PROFILE
+    const topbar = document.querySelector('header.topbar');
+    if (topbar) {
+        const oldWidget = topbar.querySelector('.topbar-role-selector-widget');
+        if (oldWidget) oldWidget.remove();
+
+        const roleWidget = document.createElement('div');
+        roleWidget.className = 'topbar-role-selector-widget';
+        roleWidget.innerHTML = `
+            <button type="button" class="role-tab-btn ${isStaff ? 'active staff' : ''}" onclick="setCurrentRole('staff')" title="Chuyển sang vai trò Nhân viên bán hàng">
+                <i data-lucide="user-check" style="width: 14px; height: 14px;"></i>
+                <span>NV Bán hàng</span>
+            </button>
+            <button type="button" class="role-tab-btn ${!isStaff ? 'active admin' : ''}" onclick="setCurrentRole('admin')" title="Chuyển sang vai trò Chủ cửa hàng">
+                <i data-lucide="shield" style="width: 14px; height: 14px;"></i>
+                <span>Chủ cửa hàng</span>
+            </button>
+        `;
+
+        const topbarUser = topbar.querySelector('.topbar-user');
+        if (topbarUser) {
+            topbar.insertBefore(roleWidget, topbarUser);
+        } else {
+            topbar.appendChild(roleWidget);
+        }
+    }
+
     const topbarUserElements = document.querySelectorAll('.topbar-user');
     topbarUserElements.forEach(el => {
         el.style.position = 'relative';
@@ -344,16 +370,16 @@ function initRoleBasedUI() {
             <div class="dropdown-divider"></div>
             <div class="dropdown-role-switch-title">Chuyển vai trò trải nghiệm:</div>
 
-            <button type="button" class="dropdown-item ${user.roleKey === 'staff' ? 'active-role' : ''}" onclick="setCurrentRole('staff'); event.stopPropagation();" style="width: 100%; border: none; background: ${user.roleKey === 'staff' ? '#ecfdf5' : 'transparent'}; font-weight: ${user.roleKey === 'staff' ? '700' : '500'};">
+            <button type="button" class="dropdown-item ${isStaff ? 'active-role' : ''}" onclick="setCurrentRole('staff'); event.stopPropagation();" style="width: 100%; border: none; background: ${isStaff ? '#ecfdf5' : 'transparent'}; font-weight: ${isStaff ? '700' : '500'};">
                 <i data-lucide="user-check" style="width: 16px; height: 16px; color: #059669;"></i>
-                <span style="color: ${user.roleKey === 'staff' ? '#047857' : '#334155'};">Nhân viên bán hàng (Mỹ Linh)</span>
-                ${user.roleKey === 'staff' ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #059669;"></i>' : ''}
+                <span style="color: ${isStaff ? '#047857' : '#334155'};">Nhân viên bán hàng (Mỹ Linh)</span>
+                ${isStaff ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #059669;"></i>' : ''}
             </button>
 
-            <button type="button" class="dropdown-item ${user.roleKey === 'admin' ? 'active-role' : ''}" onclick="setCurrentRole('admin'); event.stopPropagation();" style="width: 100%; border: none; background: ${user.roleKey === 'admin' ? '#eff6ff' : 'transparent'}; font-weight: ${user.roleKey === 'admin' ? '700' : '500'};">
+            <button type="button" class="dropdown-item ${!isStaff ? 'active-role' : ''}" onclick="setCurrentRole('admin'); event.stopPropagation();" style="width: 100%; border: none; background: ${!isStaff ? '#eff6ff' : 'transparent'}; font-weight: ${!isStaff ? '700' : '500'};">
                 <i data-lucide="shield" style="width: 16px; height: 16px; color: #2563eb;"></i>
-                <span style="color: ${user.roleKey === 'admin' ? '#1d4ed8' : '#334155'};">Chủ cửa hàng (Admin)</span>
-                ${user.roleKey === 'admin' ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #2563eb;"></i>' : ''}
+                <span style="color: ${!isStaff ? '#1d4ed8' : '#334155'};">Chủ cửa hàng (Admin)</span>
+                ${!isStaff ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #2563eb;"></i>' : ''}
             </button>
 
             <div class="dropdown-divider"></div>
@@ -380,31 +406,143 @@ function initRoleBasedUI() {
         }
     });
 
-    // 2. SIDEBAR NAVIGATION MANAGEMENT & INJECTING PROFILE LINK
+    // 2. REBUILD SIDEBAR NAVIGATION BASED ON ACTIVE ROLE
     const navList = document.querySelector('.sidebar-nav .nav-list');
     if (navList) {
-        // Add "Thông tin cá nhân & Vai trò" if not present
-        const hasProfileLink = navList.querySelector('a[href="profile.html"]');
-        if (!hasProfileLink) {
-            const profileLi = document.createElement('li');
-            profileLi.className = 'nav-item';
-            profileLi.innerHTML = `
-                <a href="profile.html" class="nav-link ${pageName === 'profile.html' ? 'active' : ''}">
-                    <i data-lucide="user-check"></i>
-                    <span>Thông tin & Vai trò</span>
-                </a>
+        if (isStaff) {
+            // STAFF MENU: ONLY POS, SALES, INVENTORY INQUIRY, PROFILE
+            navList.innerHTML = `
+                <div class="sidebar-section-heading">BÁN HÀNG & THU NGÂN</div>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link ${pageName === 'index.html' || pageName === '' ? 'active' : ''}">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Bàn làm việc ca</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create-invoice.html" class="nav-link ${pageName === 'create-invoice.html' ? 'active' : ''}">
+                        <i data-lucide="plus-circle"></i>
+                        <span>Tạo hóa đơn (POS)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="sales.html" class="nav-link ${pageName === 'sales.html' || pageName === 'invoice-detail.html' || pageName === 'select-invoice.html' ? 'active' : ''}">
+                        <i data-lucide="receipt"></i>
+                        <span>Danh sách hóa đơn</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="returns.html" class="nav-link ${pageName === 'returns.html' || pageName === 'create-return.html' || pageName === 'return-detail.html' || pageName === 'update-return.html' ? 'active' : ''}">
+                        <i data-lucide="refresh-cw"></i>
+                        <span>Đổi trả hàng hóa</span>
+                    </a>
+                </li>
+
+                <div class="sidebar-section-heading">KHO HÀNG</div>
+                <li class="nav-item">
+                    <a href="products.html" class="nav-link ${pageName === 'products.html' || pageName === 'product-detail.html' ? 'active' : ''}">
+                        <i data-lucide="boxes"></i>
+                        <span>Tra cứu tồn kho</span>
+                    </a>
+                </li>
+
+                <div class="sidebar-section-heading">TÀI KHOẢN CÁ NHÂN</div>
+                <li class="nav-item">
+                    <a href="profile.html" class="nav-link ${pageName === 'profile.html' ? 'active' : ''}">
+                        <i data-lucide="user-check"></i>
+                        <span>Thông tin & Vai trò</span>
+                    </a>
+                </li>
             `;
-            navList.appendChild(profileLi);
+        } else {
+            // ADMIN MENU: FULL 8 MANAGEMENT MODULES
+            navList.innerHTML = `
+                <div class="sidebar-section-heading">TỔNG QUAN</div>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link ${pageName === 'index.html' || pageName === '' ? 'active' : ''}">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                </li>
+
+                <div class="sidebar-section-heading">GIAO DỊCH</div>
+                <li class="nav-item has-submenu ${['sales.html', 'returns.html', 'create-invoice.html', 'invoice-detail.html', 'return-detail.html', 'update-return.html'].includes(pageName) ? 'open' : ''}">
+                    <a href="sales.html" class="nav-link ${['sales.html', 'returns.html', 'create-invoice.html', 'invoice-detail.html', 'return-detail.html', 'update-return.html'].includes(pageName) ? 'active' : ''}">
+                        <i data-lucide="shopping-cart"></i>
+                        <span>Bán hàng</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="sales.html" class="${pageName === 'sales.html' ? 'active-sub' : ''}">Hóa đơn</a></li>
+                        <li><a href="returns.html" class="${pageName === 'returns.html' ? 'active-sub' : ''}">Đổi hàng</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="imports.html" class="nav-link ${['imports.html', 'create-import.html', 'import-detail.html', 'update-import.html'].includes(pageName) ? 'active' : ''}">
+                        <i data-lucide="package-plus"></i>
+                        <span>Nhập hàng</span>
+                    </a>
+                </li>
+
+                <div class="sidebar-section-heading">DANH MỤC & ĐỐI TÁC</div>
+                <li class="nav-item">
+                    <a href="suppliers.html" class="nav-link ${['suppliers.html', 'create-supplier.html', 'supplier-detail.html', 'update-supplier.html'].includes(pageName) ? 'active' : ''}">
+                        <i data-lucide="truck"></i>
+                        <span>Nhà cung cấp</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="products.html" class="nav-link ${['products.html', 'product-detail.html', 'create-product.html'].includes(pageName) ? 'active' : ''}">
+                        <i data-lucide="boxes"></i>
+                        <span>Hàng hóa</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="categories.html" class="nav-link ${['categories.html', 'create-category.html', 'category-detail.html', 'update-category.html'].includes(pageName) ? 'active' : ''}">
+                        <i data-lucide="layers"></i>
+                        <span>Loại hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="prices.html" class="nav-link ${pageName === 'prices.html' ? 'active' : ''}">
+                        <i data-lucide="tag"></i>
+                        <span>Giá hàng hóa</span>
+                    </a>
+                </li>
+
+                <div class="sidebar-section-heading">BÁO CÁO & THỐNG KÊ</div>
+                <li class="nav-item has-submenu ${['reports.html', 'inventory-report.html'].includes(pageName) ? 'open' : ''}">
+                    <a href="reports.html" class="nav-link ${['reports.html', 'inventory-report.html'].includes(pageName) ? 'active' : ''}">
+                        <i data-lucide="bar-chart-3"></i>
+                        <span>Thống kê</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="reports.html" class="${pageName === 'reports.html' ? 'active-sub' : ''}">Thống kê tổng hợp</a></li>
+                        <li><a href="inventory-report.html" class="${pageName === 'inventory-report.html' ? 'active-sub' : ''}">Thống kê tồn kho</a></li>
+                    </ul>
+                </li>
+
+                <div class="sidebar-section-heading">QUẢN TRỊ VIÊN</div>
+                <li class="nav-item">
+                    <a href="profile.html" class="nav-link ${pageName === 'profile.html' ? 'active' : ''}">
+                        <i data-lucide="shield"></i>
+                        <span>Hồ sơ & Phân quyền</span>
+                    </a>
+                </li>
+            `;
         }
 
         // Add role indicator below sidebar header
         const sidebarHeader = document.querySelector('.sidebar-header');
-        if (sidebarHeader && !sidebarHeader.parentNode.querySelector('.sidebar-role-indicator')) {
-            const roleIndicator = document.createElement('div');
-            roleIndicator.className = 'sidebar-role-indicator';
+        if (sidebarHeader) {
+            let roleIndicator = sidebarHeader.parentNode.querySelector('.sidebar-role-indicator');
+            if (!roleIndicator) {
+                roleIndicator = document.createElement('div');
+                roleIndicator.className = 'sidebar-role-indicator';
+                sidebarHeader.parentNode.insertBefore(roleIndicator, navList.parentNode);
+            }
             roleIndicator.style.cssText = `
                 margin: 0.65rem 1rem 0.25rem 1rem;
-                padding: 0.45rem 0.75rem;
+                padding: 0.5rem 0.75rem;
                 border-radius: 8px;
                 display: flex;
                 align-items: center;
@@ -418,40 +556,102 @@ function initRoleBasedUI() {
             roleIndicator.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 6px;">
                     <i data-lucide="${isStaff ? 'user-check' : 'shield'}" style="width: 14px; height: 14px;"></i>
-                    <span>${isStaff ? 'NV Bán hàng' : 'Chủ cửa hàng'}</span>
+                    <span>${isStaff ? 'NV: Huỳnh Thị Mỹ Linh' : 'Chủ: Admin Quản lý'}</span>
                 </div>
                 <button type="button" onclick="toggleCurrentRole()" title="Bấm để đổi vai trò" style="background: none; border: none; cursor: pointer; color: inherit; padding: 2px; display: flex; align-items: center;">
-                    <i data-lucide="arrow-left-right" style="width: 12px; height: 12px;"></i>
+                    <i data-lucide="arrow-left-right" style="width: 13px; height: 13px;"></i>
                 </button>
             `;
-            sidebarHeader.parentNode.insertBefore(roleIndicator, navList.parentNode);
-        }
-
-        // IF STAFF ROLE: FILTER OUT ADMIN-ONLY MODULES
-        if (isStaff) {
-            const adminOnlyHrefs = [
-                'imports.html',
-                'suppliers.html',
-                'categories.html',
-                'prices.html',
-                'reports.html',
-                'inventory-report.html'
-            ];
-
-            const navItems = navList.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                const link = item.querySelector('a');
-                if (link) {
-                    const href = link.getAttribute('href');
-                    if (adminOnlyHrefs.some(adminHref => href && href.includes(adminHref))) {
-                        item.style.display = 'none';
-                    }
-                }
-            });
         }
     }
 
-    // 3. ROLE-SPECIFIC CUSTOMIZATIONS PER PAGE
+    // 3. STRICT ACCESS CONTROL (403 ACCESS DENIED) FOR STAFF ON ADMIN PAGES
+    const ADMIN_ONLY_PAGES = [
+        'imports.html',
+        'create-import.html',
+        'import-detail.html',
+        'update-import.html',
+        'suppliers.html',
+        'create-supplier.html',
+        'supplier-detail.html',
+        'update-supplier.html',
+        'categories.html',
+        'create-category.html',
+        'category-detail.html',
+        'update-category.html',
+        'prices.html',
+        'reports.html',
+        'inventory-report.html',
+        'create-product.html'
+    ];
+
+    if (isStaff && ADMIN_ONLY_PAGES.includes(pageName)) {
+        const contentView = document.querySelector('.content-view');
+        if (contentView) {
+            contentView.innerHTML = `
+                <div class="access-denied-wrapper">
+                    <div class="access-denied-card">
+                        <div class="access-denied-icon">
+                            <i data-lucide="shield-alert" style="width: 38px; height: 38px;"></i>
+                        </div>
+                        <span class="role-pill-badge staff" style="font-size: 0.8rem; padding: 0.3rem 0.9rem; margin-bottom: 0.85rem; display: inline-flex;">
+                            Vai trò: Nhân viên bán hàng (Huỳnh Thị Mỹ Linh - NV002)
+                        </span>
+                        <h2 style="font-size: 1.45rem; font-weight: 800; color: #0f172a; margin: 0.85rem 0 0.5rem 0;">
+                            Giới hạn quyền truy cập
+                        </h2>
+                        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.75rem;">
+                            Chức năng này thuộc quyền quản lý của <strong>Chủ cửa hàng (Admin)</strong> (Quản lý nhập hàng, Nhà cung cấp, Loại hàng, Giá vốn, Báo cáo tài chính).<br>
+                            Tài khoản <strong>Nhân viên bán hàng</strong> không được phép truy cập nội dung này.
+                        </p>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; text-align: left; margin-bottom: 2rem;">
+                            <div style="font-weight: 700; font-size: 0.775rem; color: #475569; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                Chức năng được phép của Nhân viên bán hàng:
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; font-size: 0.85rem; color: #047857;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="check-circle" style="width: 16px; height: 16px; color: #10b981;"></i>
+                                    <span>Tạo hóa đơn & bán hàng (POS)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="check-circle" style="width: 16px; height: 16px; color: #10b981;"></i>
+                                    <span>Xem danh sách hóa đơn</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="check-circle" style="width: 16px; height: 16px; color: #10b981;"></i>
+                                    <span>Tiếp nhận đổi trả hàng</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <i data-lucide="check-circle" style="width: 16px; height: 16px; color: #10b981;"></i>
+                                    <span>Tra cứu số lượng tồn kho</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+                            <a href="create-invoice.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.65rem 1.25rem;">
+                                <i data-lucide="shopping-cart"></i>
+                                <span>Đến Bán hàng & Tạo hóa đơn</span>
+                            </a>
+                            <a href="profile.html" class="btn" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.65rem 1.25rem; background: #ffffff; border: 1px solid #cbd5e1; color: #334155;">
+                                <i data-lucide="user"></i>
+                                <span>Xem thông tin cá nhân</span>
+                            </a>
+                            <button type="button" class="btn" onclick="setCurrentRole('admin')" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.65rem 1.25rem; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe;">
+                                <i data-lucide="shield"></i>
+                                <span>Chuyển sang Chủ cửa hàng</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            refreshIcons();
+            return;
+        }
+    }
+
+    // 4. ROLE-SPECIFIC CUSTOMIZATIONS PER PERMITTED PAGE
     // A) PRODUCTS.HTML (Tra cứu hàng hóa & Số lượng tồn)
     if (pageName === 'products.html') {
         if (isStaff) {
@@ -479,11 +679,15 @@ function initRoleBasedUI() {
             if (actionContainer) {
                 actionContainer.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 8px; padding: 0.6rem 1rem; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; color: #047857; font-size: 0.85rem; font-weight: 600;">
-                        <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i>
-                        <span>Chế độ tra cứu dành cho Nhân viên bán hàng (Không có quyền chỉnh sửa / xóa hàng hóa)</span>
+                        <i data-lucide="shield-check" style="width: 18px; height: 18px;"></i>
+                        <span>Chế độ tra cứu dành cho Nhân viên bán hàng (Chỉ xem số lượng tồn và giá bán niêm yết)</span>
                     </div>
                 `;
             }
+            const costPriceCells = document.querySelectorAll('.detail-main-card table tbody td:nth-child(5)');
+            costPriceCells.forEach(td => {
+                td.innerHTML = `<span style="color: #94a3b8; font-style: italic; font-weight: 500;">*** (Bảo mật)</span>`;
+            });
         }
     }
 
@@ -507,8 +711,8 @@ function initRoleBasedUI() {
                     shortcutBanner.className = 'pos-shortcut-banner';
                     shortcutBanner.innerHTML = `
                         <div class="pos-shortcut-info">
-                            <h4>Bàn làm việc Bán hàng & Thu ngân</h4>
-                            <p>Tạo hóa đơn tức thì, tính tiền và in biên lai hoặc tra cứu tồn kho sản phẩm</p>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.35rem; font-weight: 800;">Bàn làm việc Bán hàng & Thu ngân</h4>
+                            <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Tạo hóa đơn tức thì, tính tiền và in biên lai hoặc tra cứu tồn kho sản phẩm</p>
                         </div>
                         <div class="pos-shortcut-actions">
                             <a href="create-invoice.html" class="pos-shortcut-btn primary">
@@ -558,41 +762,7 @@ function initRoleBasedUI() {
         }
     }
 
-    // D) RESTRICTED ADMIN PAGES (When staff tries to access directly)
-    const adminPages = ['imports.html', 'suppliers.html', 'categories.html', 'prices.html', 'reports.html', 'inventory-report.html'];
-    if (isStaff && adminPages.some(p => pageName === p)) {
-        const contentView = document.querySelector('.content-view');
-        if (contentView) {
-            const warningBanner = document.createElement('div');
-            warningBanner.style.cssText = `
-                background: #fffbeb;
-                border: 1.5px solid #fde68a;
-                border-radius: 10px;
-                padding: 1.25rem;
-                margin-bottom: 1.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                color: #92400e;
-            `;
-            warningBanner.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.85rem;">
-                    <i data-lucide="shield-alert" style="width: 28px; height: 28px; color: #d97706; flex-shrink: 0;"></i>
-                    <div>
-                        <div style="font-weight: 700; font-size: 0.95rem;">Chức năng yêu cầu quyền Chủ cửa hàng (Admin)</div>
-                        <div style="font-size: 0.825rem; color: #b45309; margin-top: 2px;">
-                            Bạn đang xem với vai trò <strong>Nhân viên bán hàng (Huỳnh Thị Mỹ Linh)</strong>. Bạn chỉ có quyền bán hàng, xem hóa đơn và tra cứu tồn kho.
-                        </div>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary" onclick="setCurrentRole('admin')" style="flex-shrink: 0; background: #2563eb; border-color: #2563eb;">
-                    <i data-lucide="shield"></i>
-                    <span>Chuyển sang Chủ cửa hàng</span>
-                </button>
-            `;
-            contentView.insertBefore(warningBanner, contentView.firstChild);
-        }
-    // E) CREATE-INVOICE.HTML POS CASHIER BADGE
+    // D) CREATE-INVOICE.HTML POS CASHIER BADGE
     const cashierSpan = document.getElementById('pos-cashier-name');
     if (cashierSpan) {
         cashierSpan.textContent = `${user.fullName} (${user.code})`;
