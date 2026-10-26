@@ -296,12 +296,22 @@ function initRoleBasedUI() {
 
         const roleWidget = document.createElement('div');
         roleWidget.className = 'topbar-role-selector-widget';
+        roleWidget.style.cssText = `
+            display: inline-flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            gap: 4px;
+            margin-right: 0.75rem;
+        `;
         roleWidget.innerHTML = `
-            <button type="button" class="role-tab-btn ${isStaff ? 'active staff' : ''}" onclick="setCurrentRole('staff')" title="Chuyển sang vai trò Nhân viên bán hàng">
+            <button type="button" class="role-tab-btn ${isStaff ? 'active staff' : ''}" onclick="setCurrentRole('staff')" title="Chuyển sang vai trò Nhân viên bán hàng" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.4rem 0.85rem; border-radius: 7px; font-size: 0.8rem; font-weight: ${isStaff ? '700' : '600'}; border: none; cursor: pointer; transition: all 0.15s; background: ${isStaff ? '#ffffff' : 'transparent'}; color: ${isStaff ? '#047857' : '#64748b'}; box-shadow: ${isStaff ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
                 <i data-lucide="user-check" style="width: 14px; height: 14px;"></i>
                 <span>NV Bán hàng</span>
             </button>
-            <button type="button" class="role-tab-btn ${!isStaff ? 'active admin' : ''}" onclick="setCurrentRole('admin')" title="Chuyển sang vai trò Chủ cửa hàng">
+            <button type="button" class="role-tab-btn ${!isStaff ? 'active admin' : ''}" onclick="setCurrentRole('admin')" title="Chuyển sang vai trò Chủ cửa hàng" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.4rem 0.85rem; border-radius: 7px; font-size: 0.8rem; font-weight: ${!isStaff ? '700' : '600'}; border: none; cursor: pointer; transition: all 0.15s; background: ${!isStaff ? '#ffffff' : 'transparent'}; color: ${!isStaff ? '#1d4ed8' : '#64748b'}; box-shadow: ${!isStaff ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
                 <i data-lucide="shield" style="width: 14px; height: 14px;"></i>
                 <span>Chủ cửa hàng</span>
             </button>
@@ -319,6 +329,12 @@ function initRoleBasedUI() {
     topbarUserElements.forEach(el => {
         el.style.position = 'relative';
         el.style.cursor = 'pointer';
+        el.title = 'Bấm để xem thông tin cá nhân & phân quyền vai trò';
+        el.onclick = () => window.location.href = 'profile.html';
+
+        // Remove any old dropdown menu to avoid leaking into topbar
+        const oldMenu = el.querySelector('.user-dropdown-menu');
+        if (oldMenu) oldMenu.remove();
 
         const avatar = el.querySelector('.avatar-circle');
         if (avatar) {
@@ -332,78 +348,6 @@ function initRoleBasedUI() {
 
         const roleSpan = el.querySelector('.user-role');
         if (roleSpan) roleSpan.textContent = user.title;
-
-        // Check if dropdown already exists
-        let dropdown = el.querySelector('.user-dropdown-menu') || document.getElementById('user-role-dropdown');
-        if (!dropdown) {
-            dropdown = document.createElement('div');
-            dropdown.className = 'user-dropdown-menu';
-            dropdown.id = 'user-role-dropdown';
-            el.appendChild(dropdown);
-        }
-
-        dropdown.innerHTML = `
-            <div class="dropdown-user-header">
-                <div class="avatar-circle" style="background-color: ${user.avatarColor}; color: #ffffff; width: 38px; height: 38px; font-weight: 700;">${user.avatarText}</div>
-                <div style="flex: 1; overflow: hidden;">
-                    <div style="font-weight: 700; font-size: 0.875rem; color: #0f172a; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${user.fullName}</div>
-                    <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
-                        <span class="role-pill-badge ${user.badgeClass}">${user.badgeText}</span>
-                        <span style="font-size: 0.72rem; color: #64748b; font-weight: 600;">(${user.code})</span>
-                    </div>
-                </div>
-            </div>
-
-            <a href="profile.html" class="dropdown-item">
-                <i data-lucide="user" style="width: 16px; height: 16px;"></i>
-                <span>Xem thông tin cá nhân & vai trò</span>
-            </a>
-            <a href="create-invoice.html" class="dropdown-item">
-                <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i>
-                <span>Bán hàng - Tạo hóa đơn</span>
-            </a>
-            <a href="products.html" class="dropdown-item">
-                <i data-lucide="boxes" style="width: 16px; height: 16px;"></i>
-                <span>Tra cứu hàng hóa & tồn kho</span>
-            </a>
-
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-role-switch-title">Chuyển vai trò trải nghiệm:</div>
-
-            <button type="button" class="dropdown-item ${isStaff ? 'active-role' : ''}" onclick="setCurrentRole('staff'); event.stopPropagation();" style="width: 100%; border: none; background: ${isStaff ? '#ecfdf5' : 'transparent'}; font-weight: ${isStaff ? '700' : '500'};">
-                <i data-lucide="user-check" style="width: 16px; height: 16px; color: #059669;"></i>
-                <span style="color: ${isStaff ? '#047857' : '#334155'};">Nhân viên bán hàng (Mỹ Linh)</span>
-                ${isStaff ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #059669;"></i>' : ''}
-            </button>
-
-            <button type="button" class="dropdown-item ${!isStaff ? 'active-role' : ''}" onclick="setCurrentRole('admin'); event.stopPropagation();" style="width: 100%; border: none; background: ${!isStaff ? '#eff6ff' : 'transparent'}; font-weight: ${!isStaff ? '700' : '500'};">
-                <i data-lucide="shield" style="width: 16px; height: 16px; color: #2563eb;"></i>
-                <span style="color: ${!isStaff ? '#1d4ed8' : '#334155'};">Chủ cửa hàng (Admin)</span>
-                ${!isStaff ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #2563eb;"></i>' : ''}
-            </button>
-
-            <div class="dropdown-divider"></div>
-            <a href="login.html" class="dropdown-item text-danger">
-                <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
-                <span>Đăng xuất</span>
-            </a>
-        `;
-
-        el.onclick = function(e) {
-            e.stopPropagation();
-            toggleUserDropdown();
-            refreshIcons();
-        };
-    });
-
-    // Close dropdown on outside click
-    document.addEventListener('click', (e) => {
-        const dropdown = document.getElementById('user-role-dropdown');
-        if (dropdown && dropdown.classList.contains('show')) {
-            if (!dropdown.contains(e.target)) {
-                dropdown.classList.remove('show');
-            }
-        }
     });
 
     // 2. REBUILD SIDEBAR NAVIGATION BASED ON ACTIVE ROLE
@@ -709,21 +653,34 @@ function initRoleBasedUI() {
                 if (!document.querySelector('.pos-shortcut-banner')) {
                     const shortcutBanner = document.createElement('div');
                     shortcutBanner.className = 'pos-shortcut-banner';
+                    shortcutBanner.style.cssText = `
+                        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+                        border-radius: 14px;
+                        padding: 1.25rem 1.75rem;
+                        color: #ffffff;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-bottom: 1.5rem;
+                        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+                        flex-wrap: wrap;
+                        gap: 1rem;
+                    `;
                     shortcutBanner.innerHTML = `
                         <div class="pos-shortcut-info">
-                            <h4 style="font-size: 1.1rem; margin-bottom: 0.35rem; font-weight: 800;">Bàn làm việc Bán hàng & Thu ngân</h4>
-                            <p style="margin: 0; opacity: 0.9; font-size: 0.85rem;">Tạo hóa đơn tức thì, tính tiền và in biên lai hoặc tra cứu tồn kho sản phẩm</p>
+                            <h4 style="font-size: 1.1rem; margin: 0 0 0.35rem 0; font-weight: 800; color: #ffffff;">Bàn làm việc Bán hàng & Thu ngân</h4>
+                            <p style="margin: 0; opacity: 0.95; font-size: 0.85rem; color: #ecfdf5;">Tạo hóa đơn tức thì, tính tiền in biên lai hoặc tra cứu tồn kho sản phẩm</p>
                         </div>
-                        <div class="pos-shortcut-actions">
-                            <a href="create-invoice.html" class="pos-shortcut-btn primary">
+                        <div class="pos-shortcut-actions" style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+                            <a href="create-invoice.html" class="pos-shortcut-btn primary" style="background: #ffffff; color: #047857; text-decoration: none; border-radius: 8px; padding: 0.65rem 1.25rem; font-size: 0.875rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                 <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
                                 <span>Tạo hóa đơn bán hàng</span>
                             </a>
-                            <a href="sales.html" class="pos-shortcut-btn secondary">
+                            <a href="sales.html" class="pos-shortcut-btn secondary" style="background: rgba(255,255,255,0.18); color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px; padding: 0.65rem 1.15rem; font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                                 <i data-lucide="receipt" style="width: 18px; height: 18px;"></i>
                                 <span>Xem ds hóa đơn</span>
                             </a>
-                            <a href="products.html" class="pos-shortcut-btn secondary">
+                            <a href="products.html" class="pos-shortcut-btn secondary" style="background: rgba(255,255,255,0.18); color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px; padding: 0.65rem 1.15rem; font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                                 <i data-lucide="boxes" style="width: 18px; height: 18px;"></i>
                                 <span>Tra cứu tồn kho</span>
                             </a>
