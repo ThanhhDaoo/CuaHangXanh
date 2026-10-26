@@ -604,35 +604,27 @@ function initRoleBasedUI() {
                 if (!document.querySelector('.pos-shortcut-banner')) {
                     const shortcutBanner = document.createElement('div');
                     shortcutBanner.className = 'pos-shortcut-banner';
-                    shortcutBanner.style.cssText = `
-                        background: linear-gradient(135deg, #059669 0%, #047857 100%);
-                        border-radius: 14px;
-                        padding: 1.25rem 1.75rem;
-                        color: #ffffff;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                        margin-bottom: 1.5rem;
-                        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
-                        flex-wrap: wrap;
-                        gap: 1rem;
-                    `;
                     shortcutBanner.innerHTML = `
-                        <div class="pos-shortcut-info">
-                            <h4 style="font-size: 1.1rem; margin: 0 0 0.35rem 0; font-weight: 800; color: #ffffff;">Bàn làm việc Bán hàng & Thu ngân</h4>
-                            <p style="margin: 0; opacity: 0.95; font-size: 0.85rem; color: #ecfdf5;">Tạo hóa đơn tức thì, tính tiền in biên lai hoặc tra cứu tồn kho sản phẩm</p>
+                        <div class="pos-shortcut-info" style="display: flex; align-items: center; gap: 0.85rem;">
+                            <div style="width: 44px; height: 44px; border-radius: 10px; background: #ecfdf5; border: 1px solid #a7f3d0; display: flex; align-items: center; justify-content: center; color: #047857; flex-shrink: 0;">
+                                <i data-lucide="store" style="width: 20px; height: 20px;"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 1.05rem; margin: 0 0 0.2rem 0; font-weight: 700; color: #0f172a;">Bàn làm việc Bán hàng & Thu ngân</h4>
+                                <p style="margin: 0; font-size: 0.825rem; color: #64748b;">Tạo hóa đơn tức thì, tính tiền in biên lai hoặc tra cứu tồn kho sản phẩm</p>
+                            </div>
                         </div>
                         <div class="pos-shortcut-actions" style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
-                            <a href="create-invoice.html" class="pos-shortcut-btn primary" style="background: #ffffff; color: #047857; text-decoration: none; border-radius: 8px; padding: 0.65rem 1.25rem; font-size: 0.875rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
+                            <a href="create-invoice.html" class="pos-shortcut-btn primary">
+                                <i data-lucide="plus-circle" style="width: 16px; height: 16px;"></i>
                                 <span>Tạo hóa đơn bán hàng</span>
                             </a>
-                            <a href="sales.html" class="pos-shortcut-btn secondary" style="background: rgba(255,255,255,0.18); color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px; padding: 0.65rem 1.15rem; font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <i data-lucide="receipt" style="width: 18px; height: 18px;"></i>
+                            <a href="sales.html" class="pos-shortcut-btn secondary">
+                                <i data-lucide="receipt" style="width: 15px; height: 15px; color: #64748b;"></i>
                                 <span>Xem ds hóa đơn</span>
                             </a>
-                            <a href="products.html" class="pos-shortcut-btn secondary" style="background: rgba(255,255,255,0.18); color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); border-radius: 8px; padding: 0.65rem 1.15rem; font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <i data-lucide="boxes" style="width: 18px; height: 18px;"></i>
+                            <a href="products.html" class="pos-shortcut-btn secondary">
+                                <i data-lucide="boxes" style="width: 15px; height: 15px; color: #64748b;"></i>
                                 <span>Tra cứu tồn kho</span>
                             </a>
                         </div>

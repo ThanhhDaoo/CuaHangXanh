@@ -3586,37 +3586,60 @@ td.text-center .action-btn + .action-btn {
 
 /* Quick Action Buttons for Staff */
 .pos-shortcut-banner {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
-    border-radius: 14px;
-    padding: 1.25rem 1.75rem;
-    color: #ffffff;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.15rem 1.5rem;
+    color: #0f172a;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.pos-shortcut-btn {
-    background: #ffffff;
-    color: #047857;
-    border: none;
+.pos-shortcut-btn.primary {
+    background: #059669;
+    color: #ffffff;
+    border: 1px solid #059669;
     border-radius: 8px;
-    padding: 0.65rem 1.25rem;
-    font-size: 0.875rem;
+    padding: 0.6rem 1.15rem;
+    font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(5, 150, 105, 0.2);
     transition: all 0.15s ease;
 }
 
-.pos-shortcut-btn:hover {
-    background: #f0fdf4;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+.pos-shortcut-btn.primary:hover {
+    background: #047857;
+    border-color: #047857;
+}
+
+.pos-shortcut-btn.secondary {
+    background: #ffffff;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.pos-shortcut-btn.secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #0f172a;
 }
 
 /* Role Selector Widget in Topbar */
