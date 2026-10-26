@@ -656,8 +656,21 @@ function initRoleBasedUI() {
             }
 
             const chartCard = document.querySelector('.card:has(#revenueChart)');
+            const dashboardGrid = document.querySelector('.dashboard-grid');
             if (chartCard) {
                 chartCard.style.display = 'none';
+            }
+            if (dashboardGrid) {
+                dashboardGrid.style.gridTemplateColumns = '1fr';
+            }
+        } else {
+            const chartCard = document.querySelector('.card:has(#revenueChart)');
+            const dashboardGrid = document.querySelector('.dashboard-grid');
+            if (chartCard) {
+                chartCard.style.display = '';
+            }
+            if (dashboardGrid) {
+                dashboardGrid.style.gridTemplateColumns = '';
             }
         }
     }
