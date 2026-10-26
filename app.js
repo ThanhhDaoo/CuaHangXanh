@@ -145,6 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
     refreshIcons();
     initRoleBasedUI();
 
+    document.querySelectorAll('.logout-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+    });
+
     if (document.getElementById('revenueChart')) renderRevenueChart();
     if (document.getElementById('invoice-tbody')) renderInvoicesTable();
     if (document.getElementById('import-tbody')) renderImportsTable();
@@ -243,43 +250,46 @@ const USER_ROLES = {
     }
 };
 
+// --------------------------------------------------------------------------
+// 3.1 HỆ THỐNG TÀI KHOẢN VÀ ĐĂNG NHẬP (AUTHENTICATION)
+// --------------------------------------------------------------------------
+const SYSTEM_ACCOUNTS = {
+    admin: {
+        username: 'admin',
+        email: 'admin@taphoaxanh.vn',
+        password: '123',
+        roleKey: 'admin',
+        displayName: 'Nguyễn Văn Quản Lý'
+    },
+    mylinh: {
+        username: 'mylinh',
+        email: 'mylinh.huynh@taphoaxanh.vn',
+        password: '123',
+        roleKey: 'staff',
+        displayName: 'Huỳnh Thị Mỹ Linh'
+    }
+};
+
+function fillLoginCredentials(username, password) {
+    const userField = document.getElementById('login-email');
+    const passField = document.getElementById('login-password');
+    if (userField) userField.value = username;
+    if (passField) passField.value = password;
+    showToast(`Đã điền tài khoản: ${username} (Mật khẩu: ${password})`, 'info');
+}
+
+function logout() {
+    localStorage.removeItem('taphoaxanh_current_role');
+    localStorage.removeItem('taphoaxanh_logged_user');
+    showToast('Đang đăng xuất khỏi hệ thống...', 'info');
+    setTimeout(() => {
+        window.location.href = 'login.html';
+    }, 350);
+}
+
 function getCurrentUser() {
-    const roleKey = localStorage.getItem('taphoaxanh_current_role') || 'staff';
-    return USER_ROLES[roleKey] || USER_ROLES.staff;
-}
-
-function setCurrentRole(roleKey) {
-    if (USER_ROLES[roleKey]) {
-        localStorage.setItem('taphoaxanh_current_role', roleKey);
-        showToast(`Đã chuyển sang vai trò: ${USER_ROLES[roleKey].name}`, 'success');
-        setTimeout(() => {
-            window.location.reload();
-        }, 300);
-    }
-}
-
-function toggleCurrentRole() {
-    const current = getCurrentUser();
-    const nextKey = current.roleKey === 'admin' ? 'staff' : 'admin';
-    setCurrentRole(nextKey);
-}
-
-function loginAsRole(roleKey) {
-    if (USER_ROLES[roleKey]) {
-        localStorage.setItem('taphoaxanh_current_role', roleKey);
-        showToast(`Đăng nhập thành công với vai trò: ${USER_ROLES[roleKey].name}`, 'success');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 350);
-    }
-}
-
-function toggleUserDropdown(event) {
-    if (event) event.stopPropagation();
-    const dropdown = document.getElementById('user-role-dropdown');
-    if (dropdown) {
-        dropdown.classList.toggle('show');
-    }
+    const roleKey = localStorage.getItem('taphoaxanh_current_role') || 'admin';
+    return USER_ROLES[roleKey] || USER_ROLES.admin;
 }
 
 function initRoleBasedUI() {
@@ -288,41 +298,11 @@ function initRoleBasedUI() {
     const currentPath = window.location.pathname;
     const pageName = currentPath.split('/').pop() || 'index.html';
 
-    // 1. INJECT ROLE SWITCHER WIDGET & UPDATE TOPBAR USER PROFILE
+    // 1. CẬP NHẬT THÔNG TIN NGƯỜI DÙNG TRÊN TOPBAR (KHÔNG HIỂN THỊ NÚT CHUYỂN VAI TRÒ)
     const topbar = document.querySelector('header.topbar');
     if (topbar) {
         const oldWidget = topbar.querySelector('.topbar-role-selector-widget');
         if (oldWidget) oldWidget.remove();
-
-        const roleWidget = document.createElement('div');
-        roleWidget.className = 'topbar-role-selector-widget';
-        roleWidget.style.cssText = `
-            display: inline-flex;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 3px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            gap: 4px;
-            margin-right: 0.75rem;
-        `;
-        roleWidget.innerHTML = `
-            <button type="button" class="role-tab-btn ${isStaff ? 'active staff' : ''}" onclick="setCurrentRole('staff')" title="Chuyển sang vai trò Nhân viên bán hàng" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.4rem 0.85rem; border-radius: 7px; font-size: 0.8rem; font-weight: ${isStaff ? '700' : '600'}; border: none; cursor: pointer; transition: all 0.15s; background: ${isStaff ? '#ffffff' : 'transparent'}; color: ${isStaff ? '#047857' : '#64748b'}; box-shadow: ${isStaff ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-                <i data-lucide="user-check" style="width: 14px; height: 14px;"></i>
-                <span>NV Bán hàng</span>
-            </button>
-            <button type="button" class="role-tab-btn ${!isStaff ? 'active admin' : ''}" onclick="setCurrentRole('admin')" title="Chuyển sang vai trò Chủ cửa hàng" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.4rem 0.85rem; border-radius: 7px; font-size: 0.8rem; font-weight: ${!isStaff ? '700' : '600'}; border: none; cursor: pointer; transition: all 0.15s; background: ${!isStaff ? '#ffffff' : 'transparent'}; color: ${!isStaff ? '#1d4ed8' : '#64748b'}; box-shadow: ${!isStaff ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'};">
-                <i data-lucide="shield" style="width: 14px; height: 14px;"></i>
-                <span>Chủ cửa hàng</span>
-            </button>
-        `;
-
-        const topbarUser = topbar.querySelector('.topbar-user');
-        if (topbarUser) {
-            topbar.insertBefore(roleWidget, topbarUser);
-        } else {
-            topbar.appendChild(roleWidget);
-        }
     }
 
     const topbarUserElements = document.querySelectorAll('.topbar-user');
@@ -475,38 +455,9 @@ function initRoleBasedUI() {
             `;
         }
 
-        // Add role indicator below sidebar header
-        const sidebarHeader = document.querySelector('.sidebar-header');
-        if (sidebarHeader) {
-            let roleIndicator = sidebarHeader.parentNode.querySelector('.sidebar-role-indicator');
-            if (!roleIndicator) {
-                roleIndicator = document.createElement('div');
-                roleIndicator.className = 'sidebar-role-indicator';
-                sidebarHeader.parentNode.insertBefore(roleIndicator, navList.parentNode);
-            }
-            roleIndicator.style.cssText = `
-                margin: 0.65rem 1rem 0.25rem 1rem;
-                padding: 0.5rem 0.75rem;
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                font-size: 0.75rem;
-                font-weight: 600;
-                background: ${isStaff ? '#ecfdf5' : '#eff6ff'};
-                border: 1px solid ${isStaff ? '#a7f3d0' : '#bfdbfe'};
-                color: ${isStaff ? '#047857' : '#1d4ed8'};
-            `;
-            roleIndicator.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <i data-lucide="${isStaff ? 'user-check' : 'shield'}" style="width: 14px; height: 14px;"></i>
-                    <span>${isStaff ? 'NV: Huỳnh Thị Mỹ Linh' : 'Chủ: Admin Quản lý'}</span>
-                </div>
-                <button type="button" onclick="toggleCurrentRole()" title="Bấm để đổi vai trò" style="background: none; border: none; cursor: pointer; color: inherit; padding: 2px; display: flex; align-items: center;">
-                    <i data-lucide="arrow-left-right" style="width: 13px; height: 13px;"></i>
-                </button>
-            `;
-        }
+        // Xóa hoàn toàn widget chuyển vai trò trên sidebar nếu có
+        const oldIndicator = document.querySelector('.sidebar-role-indicator');
+        if (oldIndicator) oldIndicator.remove();
     }
 
     // 3. STRICT ACCESS CONTROL (403 ACCESS DENIED) FOR STAFF ON ADMIN PAGES
@@ -582,10 +533,10 @@ function initRoleBasedUI() {
                                 <i data-lucide="user"></i>
                                 <span>Xem thông tin cá nhân</span>
                             </a>
-                            <button type="button" class="btn" onclick="setCurrentRole('admin')" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.65rem 1.25rem; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe;">
-                                <i data-lucide="shield"></i>
-                                <span>Chuyển sang Chủ cửa hàng</span>
-                            </button>
+                            <a href="login.html" class="btn" onclick="logout()" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.65rem 1.25rem; background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; text-decoration: none;">
+                                <i data-lucide="log-in"></i>
+                                <span>Đăng nhập tài khoản Chủ cửa hàng</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -738,14 +689,27 @@ function handleLoginPageSubmit(event) {
         return;
     }
 
-    if (email.toLowerCase().includes('admin') || email.toLowerCase().includes('quanly')) {
-        localStorage.setItem('taphoaxanh_current_role', 'admin');
-    } else {
-        localStorage.setItem('taphoaxanh_current_role', 'staff');
+    const lowerInput = email.toLowerCase();
+    let account = null;
+
+    if ((lowerInput === 'admin' || lowerInput === 'admin@taphoaxanh.vn') && (password === '123' || password === '123456')) {
+        account = SYSTEM_ACCOUNTS.admin;
+    } else if ((lowerInput === 'mylinh' || lowerInput === 'mylinh.huynh@taphoaxanh.vn' || lowerInput === 'staff') && (password === '123' || password === '123456')) {
+        account = SYSTEM_ACCOUNTS.mylinh;
     }
 
-    showToast('Đăng nhập thành công! Đang chuyển hướng...', 'success');
-    setTimeout(() => window.location.href = 'index.html', 500);
+    if (!account) {
+        showToast('Tài khoản hoặc mật khẩu không chính xác! Vui lòng thử lại với admin / 123 hoặc mylinh / 123.', 'danger');
+        return;
+    }
+
+    localStorage.setItem('taphoaxanh_current_role', account.roleKey);
+    localStorage.setItem('taphoaxanh_logged_user', account.username);
+
+    showToast(`Đăng nhập thành công! Xin chào ${account.displayName}`, 'success');
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 450);
 }
 
 function togglePasswordVisibility(inputId, btn) {

@@ -158,10 +158,10 @@
                         </div>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline" onclick="toggleCurrentRole()" style="display: inline-flex; align-items: center; gap: 0.5rem; border-color: #CBD5E1; font-weight: 600;">
-                            <i data-lucide="refresh-cw" style="width: 15px; height: 15px; color: #059669;"></i>
-                            <span id="profile-switch-btn-text">Đổi sang vai trò: Chủ cửa hàng</span>
-                        </button>
+                        <a href="login.html" class="btn btn-outline" onclick="logout()" style="display: inline-flex; align-items: center; gap: 0.5rem; border-color: #fecaca; color: #dc2626; background: #fef2f2; font-weight: 600; text-decoration: none;">
+                            <i data-lucide="log-out" style="width: 15px; height: 15px; color: #dc2626;"></i>
+                            <span>Đăng xuất tài khoản</span>
+                        </a>
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
     <!-- TOAST CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="app.js?v=11"></script>
+    <script src="app.js?v=25"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             renderProfilePage();
@@ -314,13 +314,6 @@
 
             const branchText = document.getElementById('profile-branch-text');
             if (branchText) branchText.textContent = user.branch;
-
-            const switchBtnText = document.getElementById('profile-switch-btn-text');
-            if (switchBtnText) {
-                switchBtnText.textContent = user.roleKey === 'admin' 
-                    ? 'Chuyển sang vai trò: Nhân viên bán hàng' 
-                    : 'Chuyển sang vai trò: Chủ cửa hàng (Admin)';
-            }
 
             // Info Card
             const infoName = document.getElementById('info-val-name');
