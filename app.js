@@ -222,14 +222,14 @@ const USER_ROLES = {
         roleKey: 'admin',
         id: 'QL001',
         code: 'QL001',
-        name: 'Nguyễn Văn Quản Lý',
-        fullName: 'Nguyễn Văn Quản Lý',
+        name: 'Admin',
+        fullName: 'Admin',
         roleTitle: 'Chủ cửa hàng / Quản trị viên',
         title: 'Chủ cửa hàng',
         badgeText: 'Chủ cửa hàng',
         badgeClass: 'admin',
         avatarText: 'AD',
-        avatarColor: '#2563eb',
+        avatarColor: '#059669',
         phone: '0909 888 999',
         email: 'admin@taphoaxanh.vn',
         branch: 'Tạp Hóa Xanh - Toàn chuỗi',
@@ -259,7 +259,7 @@ const SYSTEM_ACCOUNTS = {
         email: 'admin@taphoaxanh.vn',
         password: '123',
         roleKey: 'admin',
-        displayName: 'Nguyễn Văn Quản Lý'
+        displayName: 'Admin'
     },
     mylinh: {
         username: 'mylinh',

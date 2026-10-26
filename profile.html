@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="styles.css?v=27">
+    <link rel="stylesheet" href="styles.css?v=29">
 </head>
 <body>
 
@@ -267,7 +267,7 @@
     <!-- TOAST CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="app.js?v=28"></script>
+    <script src="app.js?v=29"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             renderProfilePage();
@@ -281,7 +281,7 @@
             const avatarLarge = document.getElementById('profile-avatar-large');
             if (avatarLarge) {
                 avatarLarge.textContent = user.avatarText;
-                avatarLarge.style.backgroundColor = user.avatarColor || (isAdmin ? '#2563eb' : '#059669');
+                avatarLarge.style.backgroundColor = user.avatarColor || '#059669';
             }
             
             const fullNameElem = document.getElementById('profile-full-name');
@@ -307,7 +307,7 @@
             const infoCode = document.getElementById('info-val-code');
             if (infoCode) {
                 infoCode.textContent = user.id;
-                infoCode.style.color = isAdmin ? '#1d4ed8' : '#059669';
+                infoCode.style.color = '#059669';
             }
 
             const infoRole = document.getElementById('info-val-role');
@@ -341,7 +341,7 @@
             if (isAdmin) {
                 if (activityTitle) activityTitle.textContent = 'Hoạt động cửa hàng hôm nay';
                 if (statLbl1) statLbl1.textContent = 'Tổng đơn hàng';
-                if (statVal1) { statVal1.textContent = '74'; statVal1.style.color = '#2563eb'; }
+                if (statVal1) { statVal1.textContent = '74'; statVal1.style.color = '#059669'; }
                 if (statLbl2) statLbl2.textContent = 'Doanh số ngày';
                 if (statVal2) statVal2.textContent = '45.280.000đ';
                 if (statLbl3) statLbl3.textContent = 'Nhập hàng duyệt';
