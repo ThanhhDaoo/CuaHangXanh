@@ -143,6 +143,7 @@ const state = {
 // --------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
     refreshIcons();
+    initRoleBasedUI();
 
     if (document.getElementById('revenueChart')) renderRevenueChart();
     if (document.getElementById('invoice-tbody')) renderInvoicesTable();
@@ -176,8 +177,430 @@ function formatNumber(num) {
 }
 
 // --------------------------------------------------------------------------
-// 3. LOGIN & AUTH
+// 3. LOGIN & ROLE-BASED ACCESS CONTROL (RBAC)
 // --------------------------------------------------------------------------
+const USER_ROLES = {
+    staff: {
+        roleKey: 'staff',
+        id: 'NV002',
+        code: 'NV002',
+        name: 'Huỳnh Thị Mỹ Linh',
+        fullName: 'Huỳnh Thị Mỹ Linh',
+        roleTitle: 'Nhân viên bán hàng & Thu ngân',
+        title: 'Nhân viên bán hàng',
+        badgeText: 'Nhân viên bán hàng',
+        badgeClass: 'staff',
+        avatarText: 'ML',
+        avatarColor: '#059669',
+        phone: '0938 123 456',
+        email: 'mylinh.huynh@taphoaxanh.vn',
+        branch: 'Tạp Hóa Xanh - Chi nhánh 1',
+        store: 'Tạp Hóa Xanh - Chi nhánh 1',
+        shift: 'Ca sáng (07:00 - 15:00)',
+        joinDate: '15/03/2023',
+        permissions: [
+            { module: 'Bán hàng & Hóa đơn', desc: 'Tạo hóa đơn, quét mã vạch bán hàng, in biên lai, tra cứu lịch sử hóa đơn trong ca', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Đổi trả hàng hóa', desc: 'Tiếp nhận yêu cầu đổi hàng từ khách, lập phiếu đổi hàng hóa theo hóa đơn cũ', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Tra cứu hàng hóa & tồn kho', desc: 'Xem danh sách mặt hàng, đơn vị tính, số lượng tồn kho thực tế và giá bán lẻ', access: 'Xem thông tin (Cho phép)' },
+            { module: 'Thông tin cá nhân & ca trực', desc: 'Xem hồ sơ nhân viên, vai trò, lịch trực ca, báo cáo doanh số cá nhân trong ca', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Thêm / Sửa / Xóa hàng hóa', desc: 'Tạo mới sản phẩm, sửa giá bán, cập nhật giá vốn hoặc xóa hàng khỏi hệ thống', access: 'Không có quyền' },
+            { module: 'Nhập hàng từ nhà cung cấp', desc: 'Lập đơn nhập hàng, xác nhận công nợ và thanh toán phiếu nhập kho', access: 'Không có quyền' },
+            { module: 'Quản lý nhà cung cấp', desc: 'Thêm, sửa, xóa thông tin đối tác và nhà cung ứng sản phẩm', access: 'Không có quyền' },
+            { module: 'Quản lý loại hàng & danh mục', desc: 'Phân loại nhóm ngành hàng, cấu hình danh mục sản phẩm', access: 'Không có quyền' },
+            { module: 'Quản lý giá vốn & giá bán', desc: 'Xem giá gốc nhập kho, cấu hình tỷ suất lợi nhuận và giá niêm yết', access: 'Không có quyền' },
+            { module: 'Báo cáo doanh thu & tài chính', desc: 'Xem biểu đồ doanh thu tổng, báo cáo lợi nhuận và biến động tài chính cửa hàng', access: 'Không có quyền' }
+        ]
+    },
+    admin: {
+        roleKey: 'admin',
+        id: 'QL001',
+        code: 'QL001',
+        name: 'Nguyễn Văn Quản Lý',
+        fullName: 'Nguyễn Văn Quản Lý',
+        roleTitle: 'Chủ cửa hàng / Quản trị viên',
+        title: 'Chủ cửa hàng',
+        badgeText: 'Chủ cửa hàng',
+        badgeClass: 'admin',
+        avatarText: 'AD',
+        avatarColor: '#2563eb',
+        phone: '0909 888 999',
+        email: 'admin@taphoaxanh.vn',
+        branch: 'Tạp Hóa Xanh - Toàn chuỗi',
+        store: 'Tạp Hóa Xanh - Toàn chuỗi',
+        shift: 'Toàn thời gian (Toàn quyền hệ thống)',
+        joinDate: '01/01/2022',
+        permissions: [
+            { module: 'Bán hàng & Hóa đơn', desc: 'Tạo hóa đơn, xem, xóa, điều chỉnh hóa đơn, xuất file kế toán', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Đổi trả hàng hóa', desc: 'Tiếp nhận, xử lý, duyệt hoàn tiền và hủy phiếu đổi hàng', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Quản lý hàng hóa', desc: 'Thêm mới, sửa, xóa, theo dõi tồn kho min/max, cảnh báo hết hạn', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Nhập hàng', desc: 'Tạo phiếu nhập, duyệt kho, thanh toán công nợ nhà cung cấp', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Nhà cung cấp', desc: 'Thêm mới, sửa thông tin, xem hợp đồng và lịch sử công nợ', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Danh mục loại hàng', desc: 'Quản lý nhóm hàng, danh mục sản phẩm', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Quản lý giá & Giá vốn', desc: 'Điều chỉnh giá bán, bảo mật giá vốn, tính toán biên độ lợi nhuận', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Báo cáo thống kê & Tài chính', desc: 'Xem biểu đồ doanh thu, lãi lỗ, tồn kho chuyên sâu theo ngày/tháng', access: 'Toàn quyền (Cho phép)' },
+            { module: 'Quản trị nhân sự & Phân quyền', desc: 'Phân ca làm việc, cấp tài khoản và gán vai trò nhân viên', access: 'Toàn quyền (Cho phép)' }
+        ]
+    }
+};
+
+function getCurrentUser() {
+    const roleKey = localStorage.getItem('taphoaxanh_current_role') || 'staff';
+    return USER_ROLES[roleKey] || USER_ROLES.staff;
+}
+
+function setCurrentRole(roleKey) {
+    if (USER_ROLES[roleKey]) {
+        localStorage.setItem('taphoaxanh_current_role', roleKey);
+        showToast(`Đã chuyển sang vai trò: ${USER_ROLES[roleKey].name}`, 'success');
+        setTimeout(() => {
+            window.location.reload();
+        }, 300);
+    }
+}
+
+function toggleCurrentRole() {
+    const current = getCurrentUser();
+    const nextKey = current.roleKey === 'admin' ? 'staff' : 'admin';
+    setCurrentRole(nextKey);
+}
+
+function loginAsRole(roleKey) {
+    if (USER_ROLES[roleKey]) {
+        localStorage.setItem('taphoaxanh_current_role', roleKey);
+        showToast(`Đăng nhập thành công với vai trò: ${USER_ROLES[roleKey].name}`, 'success');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 350);
+    }
+}
+
+function toggleUserDropdown(event) {
+    if (event) event.stopPropagation();
+    const dropdown = document.getElementById('user-role-dropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
+}
+
+function initRoleBasedUI() {
+    const user = getCurrentUser();
+    const isStaff = user.roleKey === 'staff';
+    const currentPath = window.location.pathname;
+    const pageName = currentPath.split('/').pop() || 'index.html';
+
+    // 1. UPDATE TOPBAR USER BADGES & ATTACH FLOATING DROPDOWN MENU
+    const topbarUserElements = document.querySelectorAll('.topbar-user');
+    topbarUserElements.forEach(el => {
+        el.style.position = 'relative';
+        el.style.cursor = 'pointer';
+
+        const avatar = el.querySelector('.avatar-circle');
+        if (avatar) {
+            avatar.textContent = user.avatarText;
+            avatar.style.backgroundColor = user.avatarColor;
+            avatar.style.color = '#ffffff';
+        }
+
+        const nameSpan = el.querySelector('.user-name');
+        if (nameSpan) nameSpan.textContent = user.name;
+
+        const roleSpan = el.querySelector('.user-role');
+        if (roleSpan) roleSpan.textContent = user.title;
+
+        // Check if dropdown already exists
+        let dropdown = el.querySelector('.user-dropdown-menu') || document.getElementById('user-role-dropdown');
+        if (!dropdown) {
+            dropdown = document.createElement('div');
+            dropdown.className = 'user-dropdown-menu';
+            dropdown.id = 'user-role-dropdown';
+            el.appendChild(dropdown);
+        }
+
+        dropdown.innerHTML = `
+            <div class="dropdown-user-header">
+                <div class="avatar-circle" style="background-color: ${user.avatarColor}; color: #ffffff; width: 38px; height: 38px; font-weight: 700;">${user.avatarText}</div>
+                <div style="flex: 1; overflow: hidden;">
+                    <div style="font-weight: 700; font-size: 0.875rem; color: #0f172a; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${user.fullName}</div>
+                    <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+                        <span class="role-pill-badge ${user.badgeClass}">${user.badgeText}</span>
+                        <span style="font-size: 0.72rem; color: #64748b; font-weight: 600;">(${user.code})</span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="profile.html" class="dropdown-item">
+                <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+                <span>Xem thông tin cá nhân & vai trò</span>
+            </a>
+            <a href="create-invoice.html" class="dropdown-item">
+                <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i>
+                <span>Bán hàng - Tạo hóa đơn</span>
+            </a>
+            <a href="products.html" class="dropdown-item">
+                <i data-lucide="boxes" style="width: 16px; height: 16px;"></i>
+                <span>Tra cứu hàng hóa & tồn kho</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-role-switch-title">Chuyển vai trò trải nghiệm:</div>
+
+            <button type="button" class="dropdown-item ${user.roleKey === 'staff' ? 'active-role' : ''}" onclick="setCurrentRole('staff'); event.stopPropagation();" style="width: 100%; border: none; background: ${user.roleKey === 'staff' ? '#ecfdf5' : 'transparent'}; font-weight: ${user.roleKey === 'staff' ? '700' : '500'};">
+                <i data-lucide="user-check" style="width: 16px; height: 16px; color: #059669;"></i>
+                <span style="color: ${user.roleKey === 'staff' ? '#047857' : '#334155'};">Nhân viên bán hàng (Mỹ Linh)</span>
+                ${user.roleKey === 'staff' ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #059669;"></i>' : ''}
+            </button>
+
+            <button type="button" class="dropdown-item ${user.roleKey === 'admin' ? 'active-role' : ''}" onclick="setCurrentRole('admin'); event.stopPropagation();" style="width: 100%; border: none; background: ${user.roleKey === 'admin' ? '#eff6ff' : 'transparent'}; font-weight: ${user.roleKey === 'admin' ? '700' : '500'};">
+                <i data-lucide="shield" style="width: 16px; height: 16px; color: #2563eb;"></i>
+                <span style="color: ${user.roleKey === 'admin' ? '#1d4ed8' : '#334155'};">Chủ cửa hàng (Admin)</span>
+                ${user.roleKey === 'admin' ? '<i data-lucide="check" style="margin-left: auto; width: 15px; height: 15px; color: #2563eb;"></i>' : ''}
+            </button>
+
+            <div class="dropdown-divider"></div>
+            <a href="login.html" class="dropdown-item text-danger">
+                <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+                <span>Đăng xuất</span>
+            </a>
+        `;
+
+        el.onclick = function(e) {
+            e.stopPropagation();
+            toggleUserDropdown();
+            refreshIcons();
+        };
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('user-role-dropdown');
+        if (dropdown && dropdown.classList.contains('show')) {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        }
+    });
+
+    // 2. SIDEBAR NAVIGATION MANAGEMENT & INJECTING PROFILE LINK
+    const navList = document.querySelector('.sidebar-nav .nav-list');
+    if (navList) {
+        // Add "Thông tin cá nhân & Vai trò" if not present
+        const hasProfileLink = navList.querySelector('a[href="profile.html"]');
+        if (!hasProfileLink) {
+            const profileLi = document.createElement('li');
+            profileLi.className = 'nav-item';
+            profileLi.innerHTML = `
+                <a href="profile.html" class="nav-link ${pageName === 'profile.html' ? 'active' : ''}">
+                    <i data-lucide="user-check"></i>
+                    <span>Thông tin & Vai trò</span>
+                </a>
+            `;
+            navList.appendChild(profileLi);
+        }
+
+        // Add role indicator below sidebar header
+        const sidebarHeader = document.querySelector('.sidebar-header');
+        if (sidebarHeader && !sidebarHeader.parentNode.querySelector('.sidebar-role-indicator')) {
+            const roleIndicator = document.createElement('div');
+            roleIndicator.className = 'sidebar-role-indicator';
+            roleIndicator.style.cssText = `
+                margin: 0.65rem 1rem 0.25rem 1rem;
+                padding: 0.45rem 0.75rem;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: ${isStaff ? '#ecfdf5' : '#eff6ff'};
+                border: 1px solid ${isStaff ? '#a7f3d0' : '#bfdbfe'};
+                color: ${isStaff ? '#047857' : '#1d4ed8'};
+            `;
+            roleIndicator.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="${isStaff ? 'user-check' : 'shield'}" style="width: 14px; height: 14px;"></i>
+                    <span>${isStaff ? 'NV Bán hàng' : 'Chủ cửa hàng'}</span>
+                </div>
+                <button type="button" onclick="toggleCurrentRole()" title="Bấm để đổi vai trò" style="background: none; border: none; cursor: pointer; color: inherit; padding: 2px; display: flex; align-items: center;">
+                    <i data-lucide="arrow-left-right" style="width: 12px; height: 12px;"></i>
+                </button>
+            `;
+            sidebarHeader.parentNode.insertBefore(roleIndicator, navList.parentNode);
+        }
+
+        // IF STAFF ROLE: FILTER OUT ADMIN-ONLY MODULES
+        if (isStaff) {
+            const adminOnlyHrefs = [
+                'imports.html',
+                'suppliers.html',
+                'categories.html',
+                'prices.html',
+                'reports.html',
+                'inventory-report.html'
+            ];
+
+            const navItems = navList.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const link = item.querySelector('a');
+                if (link) {
+                    const href = link.getAttribute('href');
+                    if (adminOnlyHrefs.some(adminHref => href && href.includes(adminHref))) {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+    }
+
+    // 3. ROLE-SPECIFIC CUSTOMIZATIONS PER PAGE
+    // A) PRODUCTS.HTML (Tra cứu hàng hóa & Số lượng tồn)
+    if (pageName === 'products.html') {
+        if (isStaff) {
+            const titleElem = document.querySelector('.page-header .page-title');
+            if (titleElem) {
+                titleElem.innerHTML = `Tra cứu hàng hóa & Số lượng tồn <span class="role-pill-badge staff" style="font-size: 0.75rem; vertical-align: middle; margin-left: 8px;">Dành cho Bán hàng</span>`;
+            }
+            const addProductBtn = document.querySelector('button[onclick*="create-product.html"]');
+            if (addProductBtn) {
+                addProductBtn.style.display = 'none';
+            }
+        }
+    }
+
+    // B) PRODUCT-DETAIL.HTML
+    if (pageName === 'product-detail.html') {
+        if (isStaff) {
+            const inputs = document.querySelectorAll('.detail-fields-grid input');
+            inputs.forEach(input => {
+                input.setAttribute('readonly', 'true');
+                input.style.backgroundColor = '#f8fafc';
+                input.style.cursor = 'default';
+            });
+            const actionContainer = document.querySelector('.detail-main-card > div[style*="justify-content: flex-end"]');
+            if (actionContainer) {
+                actionContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 0.6rem 1rem; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; color: #047857; font-size: 0.85rem; font-weight: 600;">
+                        <i data-lucide="shield-alert" style="width: 18px; height: 18px;"></i>
+                        <span>Chế độ tra cứu dành cho Nhân viên bán hàng (Không có quyền chỉnh sửa / xóa hàng hóa)</span>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    // C) INDEX.HTML (DASHBOARD)
+    if (pageName === 'index.html' || pageName === '') {
+        if (isStaff) {
+            const banner = document.querySelector('.welcome-banner');
+            if (banner) {
+                banner.innerHTML = `
+                    <h1>Xin chào, Huỳnh Thị Mỹ Linh! 👋</h1>
+                    <p style="margin-top: 4px;">
+                        Vai trò: <span class="role-pill-badge staff">Nhân viên bán hàng</span> &bull; 
+                        Mã NV: <strong>NV002</strong> &bull; 
+                        Ca trực: <strong>Ca sáng (07:00 - 15:00)</strong> &bull; 
+                        Hôm nay là ${new Date().toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                    </p>
+                `;
+
+                if (!document.querySelector('.pos-shortcut-banner')) {
+                    const shortcutBanner = document.createElement('div');
+                    shortcutBanner.className = 'pos-shortcut-banner';
+                    shortcutBanner.innerHTML = `
+                        <div class="pos-shortcut-info">
+                            <h4>Bàn làm việc Bán hàng & Thu ngân</h4>
+                            <p>Tạo hóa đơn tức thì, tính tiền và in biên lai hoặc tra cứu tồn kho sản phẩm</p>
+                        </div>
+                        <div class="pos-shortcut-actions">
+                            <a href="create-invoice.html" class="pos-shortcut-btn primary">
+                                <i data-lucide="plus-circle" style="width: 18px; height: 18px;"></i>
+                                <span>Tạo hóa đơn bán hàng</span>
+                            </a>
+                            <a href="sales.html" class="pos-shortcut-btn secondary">
+                                <i data-lucide="receipt" style="width: 18px; height: 18px;"></i>
+                                <span>Xem ds hóa đơn</span>
+                            </a>
+                            <a href="products.html" class="pos-shortcut-btn secondary">
+                                <i data-lucide="boxes" style="width: 18px; height: 18px;"></i>
+                                <span>Tra cứu tồn kho</span>
+                            </a>
+                        </div>
+                    `;
+                    banner.parentNode.insertBefore(shortcutBanner, banner.nextSibling);
+                }
+            }
+
+            const kpiCards = document.querySelectorAll('.kpi-card');
+            if (kpiCards.length >= 4) {
+                const shiftMetrics = [
+                    { label: 'Hóa đơn trong ca', value: '18 đơn', icon: 'receipt' },
+                    { label: 'Doanh số ca hôm nay', value: '4.850.000đ', icon: 'wallet' },
+                    { label: 'Sản phẩm đã bán', value: '64 món', icon: 'package' },
+                    { label: 'Phiếu đổi trả xử lý', value: '2 phiếu', icon: 'refresh-cw' }
+                ];
+
+                kpiCards.forEach((card, idx) => {
+                    const m = shiftMetrics[idx];
+                    if (m) {
+                        const lbl = card.querySelector('.kpi-label');
+                        const val = card.querySelector('.kpi-value');
+                        const icon = card.querySelector('.kpi-icon i');
+                        if (lbl) lbl.textContent = m.label;
+                        if (val) val.textContent = m.value;
+                        if (icon) icon.setAttribute('data-lucide', m.icon);
+                    }
+                });
+            }
+
+            const chartCard = document.querySelector('.card:has(#revenueChart)');
+            if (chartCard) {
+                chartCard.style.display = 'none';
+            }
+        }
+    }
+
+    // D) RESTRICTED ADMIN PAGES (When staff tries to access directly)
+    const adminPages = ['imports.html', 'suppliers.html', 'categories.html', 'prices.html', 'reports.html', 'inventory-report.html'];
+    if (isStaff && adminPages.some(p => pageName === p)) {
+        const contentView = document.querySelector('.content-view');
+        if (contentView) {
+            const warningBanner = document.createElement('div');
+            warningBanner.style.cssText = `
+                background: #fffbeb;
+                border: 1.5px solid #fde68a;
+                border-radius: 10px;
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #92400e;
+            `;
+            warningBanner.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.85rem;">
+                    <i data-lucide="shield-alert" style="width: 28px; height: 28px; color: #d97706; flex-shrink: 0;"></i>
+                    <div>
+                        <div style="font-weight: 700; font-size: 0.95rem;">Chức năng yêu cầu quyền Chủ cửa hàng (Admin)</div>
+                        <div style="font-size: 0.825rem; color: #b45309; margin-top: 2px;">
+                            Bạn đang xem với vai trò <strong>Nhân viên bán hàng (Huỳnh Thị Mỹ Linh)</strong>. Bạn chỉ có quyền bán hàng, xem hóa đơn và tra cứu tồn kho.
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="setCurrentRole('admin')" style="flex-shrink: 0; background: #2563eb; border-color: #2563eb;">
+                    <i data-lucide="shield"></i>
+                    <span>Chuyển sang Chủ cửa hàng</span>
+                </button>
+            `;
+            contentView.insertBefore(warningBanner, contentView.firstChild);
+        }
+    // E) CREATE-INVOICE.HTML POS CASHIER BADGE
+    const cashierSpan = document.getElementById('pos-cashier-name');
+    if (cashierSpan) {
+        cashierSpan.textContent = `${user.fullName} (${user.code})`;
+    }
+
+    refreshIcons();
+}
+
 function handleLoginPageSubmit(event) {
     event.preventDefault();
     const email = document.getElementById('login-email')?.value.trim();
@@ -186,6 +609,12 @@ function handleLoginPageSubmit(event) {
     if (!email || !password) {
         showToast('Vui lòng nhập tài khoản và mật khẩu trước khi đăng nhập!', 'danger');
         return;
+    }
+
+    if (email.toLowerCase().includes('admin') || email.toLowerCase().includes('quanly')) {
+        localStorage.setItem('taphoaxanh_current_role', 'admin');
+    } else {
+        localStorage.setItem('taphoaxanh_current_role', 'staff');
     }
 
     showToast('Đăng nhập thành công! Đang chuyển hướng...', 'success');
@@ -473,6 +902,8 @@ function renderProductsTable(data = state.products) {
         return;
     }
 
+    const isStaff = getCurrentUser().roleKey === 'staff';
+
     tbody.innerHTML = data.map(p => `
         <tr>
             <td class="fw-600">
@@ -485,9 +916,11 @@ function renderProductsTable(data = state.products) {
                 <button class="action-btn" onclick="window.location.href='product-detail.html?id=${p.id}'" title="Xem chi tiết">
                     <i data-lucide="eye"></i>
                 </button>
+                ${!isStaff ? `
                 <button class="action-btn delete-btn" onclick="deleteProduct('${p.id}')" title="Xóa">
                     <i data-lucide="trash-2"></i>
                 </button>
+                ` : ''}
             </td>
         </tr>
     `).join('');

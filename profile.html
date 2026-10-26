@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Cá Nhân & Vai Trò - Tạp Hóa Xanh</title>
+    <meta name="description" content="Xem thông tin cá nhân và phân quyền vai trò nhân viên tại Tạp Hóa Xanh">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=11">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- SIDEBAR NAV -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <div class="logo-icon">
+                        <i data-lucide="leaf"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h3>Tạp hóa Xanh</h3>
+                        <span>Hệ thống quản lý</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">
+                            <i data-lucide="layout-dashboard"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item has-submenu">
+                        <a href="sales.html" class="nav-link">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="sales.html">Hóa đơn</a></li>
+                            <li><a href="returns.html">Đổi hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="imports.html" class="nav-link">
+                            <i data-lucide="package-plus"></i>
+                            <span>Nhập hàng</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="suppliers.html" class="nav-link">
+                            <i data-lucide="truck"></i>
+                            <span>Nhà cung cấp</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="products.html" class="nav-link">
+                            <i data-lucide="package"></i>
+                            <span>Hàng hóa</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="categories.html" class="nav-link">
+                            <i data-lucide="layers"></i>
+                            <span>Loại hàng</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="prices.html" class="nav-link">
+                            <i data-lucide="tag"></i>
+                            <span>Giá hàng hóa</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item has-submenu">
+                        <a href="reports.html" class="nav-link">
+                            <i data-lucide="bar-chart-2"></i>
+                            <span>Thống kê</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="reports.html">Thống kê tổng hợp</a></li>
+                            <li><a href="inventory-report.html">Thống kê tồn kho</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="profile.html" class="nav-link active">
+                            <i data-lucide="user-check"></i>
+                            <span>Thông tin cá nhân</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="profile.html" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    <span>Cài đặt</span>
+                </a>
+                <a href="login.html" class="nav-link logout-link">
+                    <i data-lucide="log-out"></i>
+                    <span>Đăng xuất</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-wrapper">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <span>Hệ thống &rsaquo; Thông tin cá nhân & Vai trò</span>
+                </div>
+                <div class="topbar-user" id="topbar-user-btn" onclick="toggleUserDropdown(event)">
+                    <div class="avatar-circle" id="header-avatar-circle">ML</div>
+                    <div class="user-info">
+                        <span class="user-name" id="header-user-name">Huỳnh Thị Mỹ Linh</span>
+                        <span class="user-role" id="header-user-role">Nhân viên bán hàng</span>
+                    </div>
+                    <i data-lucide="chevron-down" style="width: 14px; height: 14px; color: #94A3B8; margin-left: 2px;"></i>
+                </div>
+            </header>
+
+            <!-- MAIN CONTENT -->
+            <main class="content-view">
+                <!-- HERO PROFILE CARD -->
+                <div class="profile-hero-card">
+                    <div class="profile-hero-left">
+                        <div class="profile-avatar-large" id="profile-avatar-large">ML</div>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem;">
+                                <h1 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin: 0;" id="profile-full-name">Huỳnh Thị Mỹ Linh</h1>
+                                <span class="role-pill-badge staff" id="profile-role-badge">
+                                    <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
+                                    <span id="profile-role-title">Nhân viên bán hàng</span>
+                                </span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.25rem; font-size: 0.8125rem; color: #64748B;">
+                                <span><strong style="color: #334155;">Mã nhân viên:</strong> <span id="profile-emp-code">NV002</span></span>
+                                <span>&bull;</span>
+                                <span><strong style="color: #334155;">Chi nhánh:</strong> <span id="profile-branch-text">Chi nhánh 1 (Quận 10, TP.HCM)</span></span>
+                                <span>&bull;</span>
+                                <span style="color: #059669; font-weight: 600;"><i data-lucide="check-circle-2" style="width: 14px; height: 14px; vertical-align: middle;"></i> Đang hoạt động</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline" onclick="toggleCurrentRole()" style="display: inline-flex; align-items: center; gap: 0.5rem; border-color: #CBD5E1; font-weight: 600;">
+                            <i data-lucide="refresh-cw" style="width: 15px; height: 15px; color: #059669;"></i>
+                            <span id="profile-switch-btn-text">Đổi sang vai trò: Chủ cửa hàng</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2-COLUMN DETAILS GRID -->
+                <div class="profile-grid-2col">
+                    <!-- LEFT: PERSONAL & EMPLOYMENT INFO -->
+                    <div class="card" style="padding: 1.5rem 1.75rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
+                            <i data-lucide="user" style="width: 18px; height: 18px; color: #059669;"></i>
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Thông tin hồ sơ nhân viên</h3>
+                        </div>
+
+                        <div class="info-field-box">
+                            <span class="info-field-label">Họ và tên</span>
+                            <span class="info-field-value" id="info-val-name">Huỳnh Thị Mỹ Linh</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Mã số nhân viên</span>
+                            <span class="info-field-value" style="color: #059669;" id="info-val-code">NV002</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Chức danh / Vai trò</span>
+                            <span class="info-field-value" id="info-val-role">Nhân viên bán hàng (Cashier)</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Số điện thoại</span>
+                            <span class="info-field-value" id="info-val-phone">0987 654 321</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Email làm việc</span>
+                            <span class="info-field-value" id="info-val-email">mylinh.banhang@taphoaxanh.vn</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Ca làm việc</span>
+                            <span class="info-field-value" id="info-val-shift">Ca sáng (07:00 - 15:00)</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Vị trí trực</span>
+                            <span class="info-field-value">Quầy thu ngân 01</span>
+                        </div>
+                        <div class="info-field-box">
+                            <span class="info-field-label">Ngày bắt đầu làm việc</span>
+                            <span class="info-field-value" id="info-val-joindate">15/03/2024</span>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: TODAY'S SHIFT ACTIVITY & SHORTCUTS -->
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <!-- SHIFT PERFORMANCE STATS -->
+                        <div class="card" style="padding: 1.5rem 1.75rem;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <i data-lucide="clock" style="width: 18px; height: 18px; color: #059669;"></i>
+                                    <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Hoạt động trong ca hôm nay</h3>
+                                </div>
+                                <span style="font-size: 0.75rem; color: #64748B; font-weight: 600;">26/10/2024</span>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; margin-bottom: 1.25rem;">
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 0.85rem; text-align: center;">
+                                    <span style="font-size: 0.75rem; color: #64748B; display: block; margin-bottom: 0.25rem;">Hóa đơn đã tạo</span>
+                                    <span style="font-size: 1.35rem; font-weight: 800; color: #059669;">18</span>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 0.85rem; text-align: center;">
+                                    <span style="font-size: 0.75rem; color: #64748B; display: block; margin-bottom: 0.25rem;">Doanh số ca</span>
+                                    <span style="font-size: 1.15rem; font-weight: 800; color: #0F172A;">4.850.000đ</span>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 0.85rem; text-align: center;">
+                                    <span style="font-size: 0.75rem; color: #64748B; display: block; margin-bottom: 0.25rem;">Phiếu đổi hàng</span>
+                                    <span style="font-size: 1.35rem; font-weight: 800; color: #3B82F6;">2</span>
+                                </div>
+                            </div>
+
+                            <!-- QUICK ACTION POS SHORTCUTS -->
+                            <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                                <a href="create-invoice.html" class="btn btn-primary" style="justify-content: center; height: 42px; text-decoration: none; font-weight: 700;">
+                                    <i data-lucide="shopping-cart"></i>
+                                    <span>Bắt đầu phiên bán hàng (Tạo hóa đơn ngay)</span>
+                                </a>
+                                <a href="products.html" class="btn btn-outline" style="justify-content: center; height: 38px; text-decoration: none; font-weight: 600;">
+                                    <i data-lucide="search"></i>
+                                    <span>Tra cứu danh mục hàng hóa & số lượng tồn kho</span>
+                                </a>
+                                <a href="returns.html" class="btn btn-outline" style="justify-content: center; height: 38px; text-decoration: none; font-weight: 600;">
+                                    <i data-lucide="rotate-ccw"></i>
+                                    <span>Quản lý đổi hàng hóa</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERMISSION MATRIX CARD -->
+                <div class="card" style="padding: 1.5rem 1.75rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="shield" style="width: 18px; height: 18px; color: #059669;"></i>
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Bảng chi tiết phân quyền theo vai trò (<span id="permission-role-name">Nhân viên bán hàng</span>)</h3>
+                        </div>
+                        <span style="font-size: 0.75rem; color: #64748B;">Cập nhật theo phân quyền Tạp Hóa Xanh</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="permission-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">CHỨC NĂNG HỆ THỐNG</th>
+                                    <th style="width: 45%;">MÔ TẢ QUYỀN HẠN CỤ THỂ</th>
+                                    <th style="width: 30%;">TRẠNG THÁI TRUY CẬP</th>
+                                </tr>
+                            </thead>
+                            <tbody id="permission-tbody">
+                                <!-- Dynamic rows rendered by JS based on current role -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js?v=11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProfilePage();
+        });
+
+        function renderProfilePage() {
+            const user = getCurrentUser();
+            
+            // Hero card
+            const avatarLarge = document.getElementById('profile-avatar-large');
+            if (avatarLarge) avatarLarge.textContent = user.avatarText;
+            
+            const fullNameElem = document.getElementById('profile-full-name');
+            if (fullNameElem) fullNameElem.textContent = user.name;
+            
+            const roleBadge = document.getElementById('profile-role-badge');
+            const roleTitle = document.getElementById('profile-role-title');
+            if (roleTitle) roleTitle.textContent = user.roleTitle;
+            if (roleBadge) {
+                roleBadge.className = user.roleKey === 'admin' ? 'role-pill-badge admin' : 'role-pill-badge staff';
+            }
+
+            const empCodeElem = document.getElementById('profile-emp-code');
+            if (empCodeElem) empCodeElem.textContent = user.id;
+
+            const branchText = document.getElementById('profile-branch-text');
+            if (branchText) branchText.textContent = user.branch;
+
+            const switchBtnText = document.getElementById('profile-switch-btn-text');
+            if (switchBtnText) {
+                switchBtnText.textContent = user.roleKey === 'admin' 
+                    ? 'Chuyển sang vai trò: Nhân viên bán hàng' 
+                    : 'Chuyển sang vai trò: Chủ cửa hàng (Admin)';
+            }
+
+            // Info Card
+            const infoName = document.getElementById('info-val-name');
+            if (infoName) infoName.textContent = user.name;
+
+            const infoCode = document.getElementById('info-val-code');
+            if (infoCode) infoCode.textContent = user.id;
+
+            const infoRole = document.getElementById('info-val-role');
+            if (infoRole) infoRole.textContent = user.roleTitle;
+
+            const infoPhone = document.getElementById('info-val-phone');
+            if (infoPhone) infoPhone.textContent = user.phone;
+
+            const infoEmail = document.getElementById('info-val-email');
+            if (infoEmail) infoEmail.textContent = user.email;
+
+            const infoShift = document.getElementById('info-val-shift');
+            if (infoShift) infoShift.textContent = user.shift;
+
+            const infoJoin = document.getElementById('info-val-joindate');
+            if (infoJoin) infoJoin.textContent = user.joinDate;
+
+            // Permissions Matrix
+            const permRoleName = document.getElementById('permission-role-name');
+            if (permRoleName) permRoleName.textContent = user.roleTitle;
+
+            const permTbody = document.getElementById('permission-tbody');
+            if (permTbody) {
+                permTbody.innerHTML = user.permissions.map(p => `
+                    <tr>
+                        <td class="fw-700" style="color: #0F172A;">${p.module}</td>
+                        <td style="color: #475569;">${p.desc}</td>
+                        <td>
+                            <span class="permission-tag ${p.access.includes('Cho phép') || p.access.includes('Toàn quyền') ? 'allowed' : 'restricted'}">
+                                <i data-lucide="${p.access.includes('Cho phép') || p.access.includes('Toàn quyền') ? 'check-circle' : 'slash'}" style="width: 13px; height: 13px;"></i>
+                                ${p.access}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            refreshIcons();
+        }
+    </script>
+</body>
+</html>
