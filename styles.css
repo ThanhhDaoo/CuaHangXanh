@@ -3357,6 +3357,8 @@ td.text-center .action-btn + .action-btn {
     .login-modal-card { max-width: 420px; }
     .meta-card-flex { flex-direction: column; }
     .meta-card-note { width: 100%; }
+}
+
 /* --------------------------------------------------------------------------
    18. ROLE-BASED UI & USER PROFILE STYLES
    -------------------------------------------------------------------------- */
@@ -3483,7 +3485,7 @@ td.text-center .action-btn + .action-btn {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 1.75rem 2rem;
+    padding: 1.5rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -3507,85 +3509,79 @@ td.text-center .action-btn + .action-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.65rem;
-    font-weight: 700;
-    box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.25);
+    font-size: 1.55rem;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.22);
+    flex-shrink: 0;
 }
 
 .profile-grid-2col {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.25fr 0.95fr;
     gap: 1.5rem;
+    align-items: start;
     margin-bottom: 1.5rem;
 }
 
-.info-field-box {
+@media (max-width: 1024px) {
+    .profile-grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Modern Profile Info Grid */
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+}
+
+@media (max-width: 640px) {
+    .profile-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.profile-info-tile {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition: all 0.15s ease;
+}
+
+.profile-info-tile:hover {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.profile-info-tile .tile-label {
+    display: flex;
     align-items: center;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-.info-field-box:last-child {
-    border-bottom: none;
-}
-
-.info-field-label {
-    font-size: 0.825rem;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
     color: #64748b;
-    font-weight: 500;
-}
-
-.info-field-value {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #0f172a;
-}
-
-.permission-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.permission-table th {
-    background-color: #f8fafc;
-    color: #475569;
-    font-size: 0.725rem;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #e2e8f0;
 }
 
-.permission-table td {
-    padding: 0.85rem 1rem;
-    border-bottom: 1px solid #f1f5f9;
-    font-size: 0.8125rem;
-    vertical-align: middle;
+.profile-info-tile .tile-label i,
+.profile-info-tile .tile-label svg {
+    width: 13px;
+    height: 13px;
+    color: #059669;
 }
 
-.permission-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.725rem;
+.profile-info-tile .tile-value {
+    font-size: 0.9rem;
     font-weight: 600;
-}
-
-.permission-tag.allowed {
-    background-color: #ecfdf5;
-    color: #047857;
-    border: 1px solid #a7f3d0;
-}
-
-.permission-tag.restricted {
-    background-color: #f1f5f9;
-    color: #64748b;
-    border: 1px solid #e2e8f0;
+    color: #0f172a;
+    word-break: break-word;
 }
 
 /* Quick Action Buttons for Staff */

@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="styles.css?v=20">
+    <link rel="stylesheet" href="styles.css?v=26">
 </head>
 <body>
 
@@ -141,25 +141,27 @@
                     <div class="profile-hero-left">
                         <div class="profile-avatar-large" id="profile-avatar-large">ML</div>
                         <div>
-                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.35rem; flex-wrap: wrap;">
                                 <h1 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin: 0;" id="profile-full-name">Huỳnh Thị Mỹ Linh</h1>
                                 <span class="role-pill-badge staff" id="profile-role-badge">
                                     <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
                                     <span id="profile-role-title">Nhân viên bán hàng</span>
                                 </span>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 1.25rem; font-size: 0.8125rem; color: #64748B;">
+                            <div style="display: flex; align-items: center; gap: 1.25rem; font-size: 0.8125rem; color: #64748B; flex-wrap: wrap;">
                                 <span><strong style="color: #334155;">Mã nhân viên:</strong> <span id="profile-emp-code">NV002</span></span>
                                 <span>&bull;</span>
                                 <span><strong style="color: #334155;">Chi nhánh:</strong> <span id="profile-branch-text">Chi nhánh 1 (Quận 10, TP.HCM)</span></span>
                                 <span>&bull;</span>
-                                <span style="color: #059669; font-weight: 600;"><i data-lucide="check-circle-2" style="width: 14px; height: 14px; vertical-align: middle;"></i> Đang hoạt động</span>
+                                <span style="color: #059669; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i> Đang hoạt động
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <a href="login.html" class="btn btn-outline" onclick="logout()" style="display: inline-flex; align-items: center; gap: 0.5rem; border-color: #fecaca; color: #dc2626; background: #fef2f2; font-weight: 600; text-decoration: none;">
-                            <i data-lucide="log-out" style="width: 15px; height: 15px; color: #dc2626;"></i>
+                        <a href="login.html" class="btn btn-outline" onclick="logout()" style="display: inline-flex; align-items: center; gap: 0.5rem; border-color: #fecaca; color: #dc2626; background: #fff5f5; font-weight: 600; text-decoration: none; padding: 0.6rem 1.15rem; border-radius: 8px;">
+                            <i data-lucide="log-out" style="width: 16px; height: 16px; color: #dc2626;"></i>
                             <span>Đăng xuất tài khoản</span>
                         </a>
                     </div>
@@ -167,44 +169,49 @@
 
                 <!-- 2-COLUMN DETAILS GRID -->
                 <div class="profile-grid-2col">
-                    <!-- LEFT: PERSONAL & EMPLOYMENT INFO -->
+                    <!-- LEFT: PERSONAL & EMPLOYMENT INFO (ORGANIZED TILES) -->
                     <div class="card" style="padding: 1.5rem 1.75rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
-                            <i data-lucide="user" style="width: 18px; height: 18px; color: #059669;"></i>
-                            <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Thông tin hồ sơ nhân viên</h3>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="user" style="width: 18px; height: 18px; color: #059669;"></i>
+                                <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Thông tin chi tiết hồ sơ</h3>
+                            </div>
+                            <span style="font-size: 0.75rem; color: #64748B; background: #f1f5f9; padding: 3px 8px; border-radius: 6px;">Hồ sơ nhân sự</span>
                         </div>
 
-                        <div class="info-field-box">
-                            <span class="info-field-label">Họ và tên</span>
-                            <span class="info-field-value" id="info-val-name">Huỳnh Thị Mỹ Linh</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Mã số nhân viên</span>
-                            <span class="info-field-value" style="color: #059669;" id="info-val-code">NV002</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Chức danh / Vai trò</span>
-                            <span class="info-field-value" id="info-val-role">Nhân viên bán hàng (Cashier)</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Số điện thoại</span>
-                            <span class="info-field-value" id="info-val-phone">0987 654 321</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Email làm việc</span>
-                            <span class="info-field-value" id="info-val-email">mylinh.banhang@taphoaxanh.vn</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Ca làm việc</span>
-                            <span class="info-field-value" id="info-val-shift">Ca sáng (07:00 - 15:00)</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Vị trí trực</span>
-                            <span class="info-field-value">Quầy thu ngân 01</span>
-                        </div>
-                        <div class="info-field-box">
-                            <span class="info-field-label">Ngày bắt đầu làm việc</span>
-                            <span class="info-field-value" id="info-val-joindate">15/03/2024</span>
+                        <div class="profile-info-grid">
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="user"></i> Họ và tên</span>
+                                <span class="tile-value" id="info-val-name">Huỳnh Thị Mỹ Linh</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="hash"></i> Mã số nhân viên</span>
+                                <span class="tile-value" style="color: #059669; font-weight: 700;" id="info-val-code">NV002</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="shield"></i> Chức danh / Vai trò</span>
+                                <span class="tile-value" id="info-val-role">Nhân viên bán hàng (Cashier)</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="phone"></i> Số điện thoại</span>
+                                <span class="tile-value" id="info-val-phone">0938 123 456</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="mail"></i> Email làm việc</span>
+                                <span class="tile-value" id="info-val-email">mylinh.banhang@taphoaxanh.vn</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="clock"></i> Ca làm việc</span>
+                                <span class="tile-value" id="info-val-shift">Ca sáng (07:00 - 15:00)</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="map-pin"></i> Vị trí trực quầy</span>
+                                <span class="tile-value" id="info-val-station">Quầy thu ngân 01</span>
+                            </div>
+                            <div class="profile-info-tile">
+                                <span class="tile-label"><i data-lucide="calendar"></i> Ngày bắt đầu</span>
+                                <span class="tile-value" id="info-val-joindate">15/03/2023</span>
+                            </div>
                         </div>
                     </div>
 
@@ -215,35 +222,35 @@
                             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                                     <i data-lucide="clock" style="width: 18px; height: 18px; color: #059669;"></i>
-                                    <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Hoạt động trong ca hôm nay</h3>
+                                    <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;" id="activity-box-title">Hoạt động trong ca hôm nay</h3>
                                 </div>
-                                <span style="font-size: 0.75rem; color: #64748B; font-weight: 600;">26/10/2024</span>
+                                <span style="font-size: 0.75rem; color: #64748B; font-weight: 600;">26/10/2026</span>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; margin-bottom: 1.25rem;">
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 0.85rem; text-align: center;">
-                                    <span style="font-size: 0.75rem; color: #64748B; display: block; margin-bottom: 0.25rem;">Hóa đơn đã tạo</span>
-                                    <span style="font-size: 1.35rem; font-weight: 800; color: #059669;">18</span>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.25rem;">
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0.85rem 0.65rem; text-align: center;">
+                                    <span style="font-size: 0.72rem; color: #64748B; display: block; margin-bottom: 0.25rem;" id="stat-lbl-1">Hóa đơn đã tạo</span>
+                                    <span style="font-size: 1.25rem; font-weight: 800; color: #059669;" id="stat-val-1">18</span>
                                 </div>
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 0.85rem; text-align: center;">
-                                    <span style="font-size: 0.75rem; color: #64748B; display: block; margin-bottom: 0.25rem;">Doanh số ca</span>
-                                    <span style="font-size: 1.15rem; font-weight: 800; color: #0F172A;">4.850.000đ</span>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0.85rem 0.65rem; text-align: center;">
+                                    <span style="font-size: 0.72rem; color: #64748B; display: block; margin-bottom: 0.25rem;" id="stat-lbl-2">Doanh số ca</span>
+                                    <span style="font-size: 1.05rem; font-weight: 800; color: #0F172A;" id="stat-val-2">4.850.000đ</span>
                                 </div>
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 0.85rem; text-align: center;">
-                                    <span style="font-size: 0.75rem; color: #64748B; display: block; margin-bottom: 0.25rem;">Phiếu đổi hàng</span>
-                                    <span style="font-size: 1.35rem; font-weight: 800; color: #3B82F6;">2</span>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0.85rem 0.65rem; text-align: center;">
+                                    <span style="font-size: 0.72rem; color: #64748B; display: block; margin-bottom: 0.25rem;" id="stat-lbl-3">Phiếu đổi hàng</span>
+                                    <span style="font-size: 1.25rem; font-weight: 800; color: #3B82F6;" id="stat-val-3">2</span>
                                 </div>
                             </div>
 
-                            <!-- QUICK ACTION POS SHORTCUTS -->
-                            <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                            <!-- QUICK ACTION SHORTCUTS -->
+                            <div style="display: flex; flex-direction: column; gap: 0.65rem;" id="profile-quick-actions">
                                 <a href="create-invoice.html" class="btn btn-primary" style="justify-content: center; height: 42px; text-decoration: none; font-weight: 700;">
                                     <i data-lucide="shopping-cart"></i>
                                     <span>Bắt đầu phiên bán hàng (Tạo hóa đơn ngay)</span>
                                 </a>
                                 <a href="products.html" class="btn btn-outline" style="justify-content: center; height: 38px; text-decoration: none; font-weight: 600;">
                                     <i data-lucide="search"></i>
-                                    <span>Tra cứu danh mục hàng hóa & số lượng tồn kho</span>
+                                    <span>Tra cứu danh mục hàng hóa & tồn kho</span>
                                 </a>
                                 <a href="returns.html" class="btn btn-outline" style="justify-content: center; height: 38px; text-decoration: none; font-weight: 600;">
                                     <i data-lucide="rotate-ccw"></i>
@@ -253,32 +260,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- PERMISSION MATRIX CARD -->
-                <div class="card" style="padding: 1.5rem 1.75rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #E2E8F0;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <i data-lucide="shield" style="width: 18px; height: 18px; color: #059669;"></i>
-                            <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Bảng chi tiết phân quyền theo vai trò (<span id="permission-role-name">Nhân viên bán hàng</span>)</h3>
-                        </div>
-                        <span style="font-size: 0.75rem; color: #64748B;">Cập nhật theo phân quyền Tạp Hóa Xanh</span>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="permission-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 25%;">CHỨC NĂNG HỆ THỐNG</th>
-                                    <th style="width: 45%;">MÔ TẢ QUYỀN HẠN CỤ THỂ</th>
-                                    <th style="width: 30%;">TRẠNG THÁI TRUY CẬP</th>
-                                </tr>
-                            </thead>
-                            <tbody id="permission-tbody">
-                                <!-- Dynamic rows rendered by JS based on current role -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </main>
         </div>
     </div>
@@ -286,7 +267,7 @@
     <!-- TOAST CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
 
-    <script src="app.js?v=25"></script>
+    <script src="app.js?v=26"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             renderProfilePage();
@@ -294,10 +275,14 @@
 
         function renderProfilePage() {
             const user = getCurrentUser();
+            const isAdmin = user.roleKey === 'admin';
             
             // Hero card
             const avatarLarge = document.getElementById('profile-avatar-large');
-            if (avatarLarge) avatarLarge.textContent = user.avatarText;
+            if (avatarLarge) {
+                avatarLarge.textContent = user.avatarText;
+                avatarLarge.style.backgroundColor = user.avatarColor || (isAdmin ? '#2563eb' : '#059669');
+            }
             
             const fullNameElem = document.getElementById('profile-full-name');
             if (fullNameElem) fullNameElem.textContent = user.name;
@@ -306,7 +291,7 @@
             const roleTitle = document.getElementById('profile-role-title');
             if (roleTitle) roleTitle.textContent = user.roleTitle;
             if (roleBadge) {
-                roleBadge.className = user.roleKey === 'admin' ? 'role-pill-badge admin' : 'role-pill-badge staff';
+                roleBadge.className = isAdmin ? 'role-pill-badge admin' : 'role-pill-badge staff';
             }
 
             const empCodeElem = document.getElementById('profile-emp-code');
@@ -315,12 +300,15 @@
             const branchText = document.getElementById('profile-branch-text');
             if (branchText) branchText.textContent = user.branch;
 
-            // Info Card
+            // Info Tiles
             const infoName = document.getElementById('info-val-name');
             if (infoName) infoName.textContent = user.name;
 
             const infoCode = document.getElementById('info-val-code');
-            if (infoCode) infoCode.textContent = user.id;
+            if (infoCode) {
+                infoCode.textContent = user.id;
+                infoCode.style.color = isAdmin ? '#1d4ed8' : '#059669';
+            }
 
             const infoRole = document.getElementById('info-val-role');
             if (infoRole) infoRole.textContent = user.roleTitle;
@@ -334,27 +322,55 @@
             const infoShift = document.getElementById('info-val-shift');
             if (infoShift) infoShift.textContent = user.shift;
 
+            const infoStation = document.getElementById('info-val-station');
+            if (infoStation) infoStation.textContent = isAdmin ? 'Phòng Quản lý điều hành' : 'Quầy thu ngân 01';
+
             const infoJoin = document.getElementById('info-val-joindate');
             if (infoJoin) infoJoin.textContent = user.joinDate;
 
-            // Permissions Matrix
-            const permRoleName = document.getElementById('permission-role-name');
-            if (permRoleName) permRoleName.textContent = user.roleTitle;
+            // Activity & Shortcuts based on role
+            const activityTitle = document.getElementById('activity-box-title');
+            const statLbl1 = document.getElementById('stat-lbl-1');
+            const statVal1 = document.getElementById('stat-val-1');
+            const statLbl2 = document.getElementById('stat-lbl-2');
+            const statVal2 = document.getElementById('stat-val-2');
+            const statLbl3 = document.getElementById('stat-lbl-3');
+            const statVal3 = document.getElementById('stat-val-3');
+            const quickActions = document.getElementById('profile-quick-actions');
 
-            const permTbody = document.getElementById('permission-tbody');
-            if (permTbody) {
-                permTbody.innerHTML = user.permissions.map(p => `
-                    <tr>
-                        <td class="fw-700" style="color: #0F172A;">${p.module}</td>
-                        <td style="color: #475569;">${p.desc}</td>
-                        <td>
-                            <span class="permission-tag ${p.access.includes('Cho phép') || p.access.includes('Toàn quyền') ? 'allowed' : 'restricted'}">
-                                <i data-lucide="${p.access.includes('Cho phép') || p.access.includes('Toàn quyền') ? 'check-circle' : 'slash'}" style="width: 13px; height: 13px;"></i>
-                                ${p.access}
-                            </span>
-                        </td>
-                    </tr>
-                `).join('');
+            if (isAdmin) {
+                if (activityTitle) activityTitle.textContent = 'Hoạt động cửa hàng hôm nay';
+                if (statLbl1) statLbl1.textContent = 'Tổng đơn hàng';
+                if (statVal1) { statVal1.textContent = '74'; statVal1.style.color = '#2563eb'; }
+                if (statLbl2) statLbl2.textContent = 'Doanh số ngày';
+                if (statVal2) statVal2.textContent = '45.280.000đ';
+                if (statLbl3) statLbl3.textContent = 'Nhập hàng duyệt';
+                if (statVal3) statVal3.textContent = '3 đơn';
+
+                if (quickActions) {
+                    quickActions.innerHTML = `
+                        <a href="create-invoice.html" class="btn btn-primary" style="justify-content: center; height: 42px; text-decoration: none; font-weight: 700;">
+                            <i data-lucide="shopping-cart"></i>
+                            <span>Bán hàng & Tạo hóa đơn (POS)</span>
+                        </a>
+                        <a href="imports.html" class="btn btn-outline" style="justify-content: center; height: 38px; text-decoration: none; font-weight: 600;">
+                            <i data-lucide="package-plus"></i>
+                            <span>Quản lý nhập hàng từ nhà cung cấp</span>
+                        </a>
+                        <a href="reports.html" class="btn btn-outline" style="justify-content: center; height: 38px; text-decoration: none; font-weight: 600;">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Xem thống kê doanh thu & lợi nhuận</span>
+                        </a>
+                    `;
+                }
+            } else {
+                if (activityTitle) activityTitle.textContent = 'Hoạt động trong ca hôm nay';
+                if (statLbl1) statLbl1.textContent = 'Hóa đơn đã tạo';
+                if (statVal1) { statVal1.textContent = '18'; statVal1.style.color = '#059669'; }
+                if (statLbl2) statLbl2.textContent = 'Doanh số ca';
+                if (statVal2) statVal2.textContent = '4.850.000đ';
+                if (statLbl3) statLbl3.textContent = 'Phiếu đổi hàng';
+                if (statVal3) statVal3.textContent = '2';
             }
 
             refreshIcons();
